@@ -34,6 +34,7 @@
             android:id="@+id/input_dosis_prescrita"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
             android:hint="@string/dosis_prescrita" />
 
     </android.support.design.widget.TextInputLayout>
@@ -42,12 +43,14 @@
         android:id="@+id/input_layout_normalizacion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
         android:layout_below="@id/input_layout_dosis_prescrita">
 
         <EditText
             android:id="@+id/input_nomalizacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
             android:hint="@string/normalizacion" />
 
     </android.support.design.widget.TextInputLayout>
@@ -56,12 +59,15 @@
         android:id="@+id/input_layout_peso_maximo_dosis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
         android:layout_below="@id/input_layout_normalizacion">
 
         <EditText
             android:id="@+id/input_peso_maximo_dosis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
             android:hint="@string/peso_maximo_dosis" />
 
     </android.support.design.widget.TextInputLayout>

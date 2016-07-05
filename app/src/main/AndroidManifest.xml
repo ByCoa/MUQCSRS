@@ -14,7 +14,6 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="com.example.elviscoa.muqrsrs.Activity.SecondActivity"
-            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

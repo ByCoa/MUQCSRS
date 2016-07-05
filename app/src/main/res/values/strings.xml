@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MUQRSRS</string>
+    <string name="app_name">MU QC SRS</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="dosis_prescrita">Dosis prescrita (cGY)</string>
     <string name="normalizacion">Normalizacion</string>

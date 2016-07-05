@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 public class CSV {
 
-    private static final String CVS_SPLIT_BY=",";
+    private static final String CVS_SPLIT_BY="\",\"";
     public ArrayList<ArrayList<String>>  readTMRCVS(Context context,InputStream inputStream) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         ArrayList<ArrayList<String>> csvContentMatrix = new ArrayList<ArrayList<String>>();

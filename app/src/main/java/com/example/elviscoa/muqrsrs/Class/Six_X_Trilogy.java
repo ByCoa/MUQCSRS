@@ -32,6 +32,14 @@ public class Six_X_Trilogy {
         this.tmr = new TMR(context);
     }
 
+    public Six_X_Trilogy(Context context, Integer dosis_prescrita, Double normalizacion, Double peso_maximo_dosis){
+        this.dosis_prescrita = dosis_prescrita;
+        this.normalizacion = normalizacion;
+        this.peso_maximo_dosis = peso_maximo_dosis;
+        this.outputfactor = new OutputFactor(context);
+        this.tmr = new TMR(context);
+    }
+
     public Integer getEnergia (){
         return ENERGIA;
     }
@@ -66,6 +74,14 @@ public class Six_X_Trilogy {
 
     public void setMU_TPS(Double MU_TPS) {
         this.mu_tps = MU_TPS;
+    }
+
+    public void setOutputfactor (OutputFactor outputfactor){
+        this.outputfactor=outputfactor;
+    }
+
+    public void setTmr (TMR tmr){
+        this.tmr=tmr;
     }
 
     public Double getOutputfactor (){
