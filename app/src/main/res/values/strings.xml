@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MUQRSRS</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="dosis_prescrita">Dosis prescrita (cGY)</string>
+    <string name="normalizacion">Normalizacion</string>
+    <string name="peso_maximo_dosis">Peso al maximo de dosis</string>
+    <string name="profundidad">Profundidad</string>
+    <string name="peso_arco">Peso del Arco</string>
+    <string name="mu_tps">MU TPS</string>
+
+    <string name="title_section1">Arco 1</string>
+    <string name="title_section2">Arco 2</string>
+    <string name="title_section3">Arco 3</string>
+    <string name="title_section4">Arco 4</string>
+    <string name="title_section5">Arco 5</string>
+    <string name="title_section6">Arco 6</string>
+    <string name="title_section7">Arco 7</string>
+    <string name="title_section8">Arco 8</string>
+    <string name="title_section9">Arco 9</string>
+
+</resources>

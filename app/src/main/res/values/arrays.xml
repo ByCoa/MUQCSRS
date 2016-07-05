@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_cono">
+        <item>Cono 5</item>
+        <item>Cono 10</item>
+        <item>Cono 12</item>
+        <item>Cono 14</item>
+        <item>Cono 16</item>
+        <item>Cono 18</item>
+        <item>Cono 20</item>
+        <item>Cono 22</item>
+        <item>Cono 24</item>
+        <item>Cono 26</item>
+        <item>Cono 28</item>
+        <item>Cono 30</item>
+    </string-array>
+</resources>

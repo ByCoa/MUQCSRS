@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Activity.SecondActivity"
+    tools:showIn="@layout/second">
+
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cono"
+        android:entries="@array/array_cono"
+        android:spinnerMode="dialog" />
+
+    <EditText
+        android:id="@+id/label_output_factor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Output Factor: "
+        android:editable="false"
+        android:layout_below="@+id/cono"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_profundidad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/label_output_factor"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:id="@+id/input_profundidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/profundidad" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <EditText
+        android:id="@+id/label_tmr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="TMR: "
+        android:editable="false"
+        android:layout_below="@+id/input_layout_profundidad"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_peso_arco"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label_tmr">
+
+        <EditText
+            android:id="@+id/input_peso_arco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/peso_arco" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <EditText
+        android:id="@+id/label_dosis_fraccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Dosis por fraccion: "
+        android:editable="false"
+        android:layout_below="@+id/input_layout_peso_arco"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_mu_tps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label_dosis_fraccion">
+
+        <EditText
+            android:id="@+id/input_mu_tps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/mu_tps" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <EditText
+        android:id="@+id/label_percentage_dif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="%Dif: "
+        android:editable="false"
+        android:layout_below="@+id/input_layout_mu_tps"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false" />
+
+</RelativeLayout>
