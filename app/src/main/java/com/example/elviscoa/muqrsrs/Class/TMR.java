@@ -24,7 +24,7 @@ public class TMR {
         return Double.parseDouble(tmrMatrix.get(cono).get(getProfundidadIndex(profundidad)));
     }
 
-    private int getProfundidadIndex (Double profundidad){
+    public int getProfundidadIndex (Double profundidad){
         int i=0;
         Double j=2.0;
         while (profundidad>j){

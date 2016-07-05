@@ -10,10 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.elviscoa.muqrsrs.Class.OutputFactor;
 import com.example.elviscoa.muqrsrs.Class.Six_X_Trilogy;
@@ -114,6 +117,18 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
 
+        mu_tps.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    mu_tps_value=mu_tps.getText().toString();
+                    setPer_dif_text_value(mu_tps_value);
+                    return true;
+                }
+                return false;
+            }
+        });
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -124,22 +139,29 @@ public class SecondActivity extends AppCompatActivity {
         });
     }
 
+    public void setPer_dif_text_value (String mu_tps_value){
+        six_x_trilogy_class.setMU_TPS(Double.parseDouble(mu_tps_value));
+        per_dif.setText(String.valueOf(six_x_trilogy_class.getMU(outputFactor_class.getOutputFactor(Integer.parseInt(new Util().splitCono(cono_value))),tmr_class.getTMR(outputFactor_class.getCono_index(),Double.parseDouble(profundidad_value)))));
+    }
+
     public void setDosis_fraccion_text_value(String peso_arco_value){
         Log.i("format", peso_arco_value);
         six_x_trilogy_class.setPeso_del_arco(Double.parseDouble(peso_arco_value));
-        dosis_fraccion.setText(String.valueOf(new Util().roundThreeDecimals(six_x_trilogy_class.getDosisXFraccion())));
+        dosis_fraccion.setText(String.valueOf(six_x_trilogy_class.getDosisXFraccion()));
 
     }
     public void setTMR_text_value (Context context,String cono,String profundidad){
         if (!cono.equals("") && !profundidad.equals("")){
             tmr_class=new TMR(context);
-            tmr.setText("TMR: "+ String.valueOf(new Util().roundThreeDecimals(tmr_class.getTMR(outputFactor_class.getCono_index(),Double.parseDouble(profundidad)))));
+            six_x_trilogy_class.setProfundidad((double) tmr_class.getProfundidadIndex(Double.parseDouble(profundidad)));
+            tmr.setText("TMR: "+ String.valueOf(tmr_class.getTMR(outputFactor_class.getCono_index(),Double.parseDouble(profundidad))));
             six_x_trilogy_class.setTmr(tmr_class);
         }
     }
 
     public void setOutput_factor_text_value (Context context,String cono){
         outputFactor_class= new OutputFactor(context);
+        six_x_trilogy_class.setCono(outputFactor_class.getCono_index());
         output_factor.setText("Output Factor: "+String.valueOf(outputFactor_class.getOutputFactor(Integer.parseInt(new Util().splitCono(cono)))));
         six_x_trilogy_class.setOutputfactor(outputFactor_class);
     }

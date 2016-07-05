@@ -104,9 +104,11 @@ public class Six_X_Trilogy {
         return (dosis_prescrita*peso_del_arco)/peso_maximo_dosis;
     }
 
-    public Double getMU (){
-        return getDosisXFraccion()/(getTMR()*getOutputfactor()*D0*normalizacion);
+    public Double getMU (Double outputfactor,Double tmr)
+    {
+        return getDosisXFraccion()/(outputfactor*tmr*D0*normalizacion);
     }
+
 
     public Double getNormalizacion() {
         return normalizacion;

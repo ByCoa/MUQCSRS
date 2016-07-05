@@ -124,7 +124,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text"
-        android:text="%Dif: "
+        android:text="@string/mu_qc_srs"
         android:editable="false"
         android:layout_below="@+id/input_layout_mu_tps"
         android:layout_alignParentRight="true"
