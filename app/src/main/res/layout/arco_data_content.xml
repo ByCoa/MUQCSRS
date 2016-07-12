@@ -9,8 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Activity.SecondActivity"
-    tools:showIn="@layout/second">
+    tools:context=".Activity.ArcoActivity"
+    tools:showIn="@layout/test2">
 
 
     <Spinner
@@ -20,23 +20,36 @@
         android:entries="@array/array_cono"
         android:spinnerMode="dialog" />
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_output_factor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:textColorHint="@color/primary_text"
+        android:imeOptions="actionDone"
+        android:layout_below="@+id/cono"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
     <EditText
         android:id="@+id/input_output_factor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text"
-        android:text="Output Factor: "
+        android:hint="@string/output_factor"
         android:editable="false"
-        android:layout_below="@+id/cono"
         android:imeOptions="actionDone"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="false" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_profundidad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/input_output_factor"
+        android:layout_below="@+id/input_layout_output_factor"
         android:textColor="@color/primary_text"
         android:textColorHint="@color/primary_text"
         android:imeOptions="actionDone"
@@ -49,22 +62,30 @@
             android:layout_height="wrap_content"
             android:textColor="@color/primary_text"
             android:imeOptions="actionDone"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textColorHint="@color/primary_text"
             android:hint="@string/profundidad" />
-
     </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_tmr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:imeOptions="actionDone"
+        android:textColorHint="@color/primary_text"
+        android:layout_below="@+id/input_layout_profundidad">
 
     <EditText
         android:id="@+id/input_tmr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text"
-        android:text="TMR: "
+        android:hint="@string/tmr"
         android:editable="false"
-        android:layout_below="@+id/input_layout_profundidad"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="false" />
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_peso_arco"
@@ -73,7 +94,7 @@
         android:textColor="@color/primary_text"
         android:imeOptions="actionDone"
         android:textColorHint="@color/primary_text"
-        android:layout_below="@id/input_tmr">
+        android:layout_below="@id/input_layout_tmr">
 
         <EditText
             android:id="@+id/input_peso_arco"
@@ -81,22 +102,32 @@
             android:layout_height="wrap_content"
             android:textColor="@color/primary_text"
             android:imeOptions="actionDone"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textColorHint="@color/primary_text"
             android:hint="@string/peso_arco" />
 
     </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_dosis_fraccion"
+        android:layout_width="match_parent"
+        android:textColor="@color/primary_text"
+        android:textColorHint="@color/primary_text"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/input_layout_peso_arco">
 
     <EditText
         android:id="@+id/input_dosis_fraccion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text"
-        android:text="Dosis por fraccion: "
+        android:hint="@string/dosis_por_fraccion"
         android:editable="false"
         android:layout_below="@+id/input_layout_peso_arco"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="false" />
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_mu_tps"
@@ -105,7 +136,7 @@
         android:textColorHint="@color/primary_text"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
-        android:layout_below="@id/input_dosis_fraccion">
+        android:layout_below="@id/input_layout_dosis_fraccion">
 
         <EditText
             android:id="@+id/input_mu_tps"
@@ -113,21 +144,31 @@
             android:layout_height="wrap_content"
             android:textColor="@color/primary_text"
             android:imeOptions="actionDone"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textColorHint="@color/primary_text"
             android:hint="@string/mu_tps" />
 
     </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_mu_qc_srs"
+        android:layout_width="match_parent"
+        android:textColor="@color/primary_text"
+        android:textColorHint="@color/primary_text"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@+id/input_layout_mu_tps">
 
     <EditText
         android:id="@+id/input_percentage_dif"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text"
-        android:text="@string/mu_qc_srs"
+        android:hint="@string/mu_qc_srs"
         android:editable="false"
-        android:layout_below="@+id/input_layout_mu_tps"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="false" />
 
+    </android.support.design.widget.TextInputLayout>
 </RelativeLayout>

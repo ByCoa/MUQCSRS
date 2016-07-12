@@ -1,20 +1,22 @@
-package com.example.elviscoa.muqrsrs.Activity;
+package com.example.elviscoa.muqrsrs.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.elviscoa.muqrsrs.Activity.ArcoActivity;
 import com.example.elviscoa.muqrsrs.Class.OutputFactor;
 import com.example.elviscoa.muqrsrs.Class.Six_X_Trilogy;
 import com.example.elviscoa.muqrsrs.Class.TMR;
@@ -22,19 +24,11 @@ import com.example.elviscoa.muqrsrs.Class.Util;
 import com.example.elviscoa.muqrsrs.R;
 
 /**
- * Created by soluciones on 7/5/2016.
+ * Created by elvis on 09/07/16.
  */
-public class SecondActivity extends AppCompatActivity {
-    //Constants
-    private static final String STRINGDOSIS_PRESCRITA="DOSIS_PRESCRITA";
-    private static final String STRINGNORMALIZACION="NORMALIZACION";
-    private static final String STRINGPESO_MAXIMO_DOSIS="PESO_MAXIMO_DOSIS";
-    //Extras
-    private Integer DOSIS_PRESCRITA=2000;
-    private Double NORMALIZACION=1.0;
-    private Double PESO_MAXIMO_DOSIS=5.052;
+public class Arco3 extends Fragment {
     //UI
-    private Spinner  cono;
+    private Spinner cono;
     private EditText output_factor;
     private EditText profundidad;
     private EditText tmr;
@@ -61,33 +55,23 @@ public class SecondActivity extends AppCompatActivity {
     private TMR tmr_class;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.arco_data_layout);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        initInstancesTabs();
-        cono=(Spinner) findViewById(R.id.cono);
-        Bundle extras = getIntent().getExtras();
-        /*
-        DOSIS_PRESCRITA=extras.getInt(STRINGDOSIS_PRESCRITA);
-        NORMALIZACION=extras.getDouble(STRINGNORMALIZACION);
-        PESO_MAXIMO_DOSIS=extras.getDouble(STRINGPESO_MAXIMO_DOSIS);
-        */
-        output_factor=(EditText) findViewById(R.id.input_output_factor);
-        profundidad=(EditText) findViewById(R.id.input_profundidad);
-        tmr=(EditText) findViewById(R.id.input_tmr);
-        peso_arco=(EditText) findViewById(R.id.input_peso_arco);
-        dosis_fraccion=(EditText) findViewById(R.id.input_dosis_fraccion);
-        mu_tps=(EditText) findViewById(R.id.input_mu_tps);
-        per_dif=(EditText) findViewById(R.id.input_percentage_dif);
-        six_x_trilogy_class= new Six_X_Trilogy(SecondActivity.this,DOSIS_PRESCRITA,NORMALIZACION,PESO_MAXIMO_DOSIS);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view= inflater.inflate(R.layout.arco_data_content, container, false);
+        cono=(Spinner) view.findViewById(R.id.cono);
+        output_factor=(EditText) view.findViewById(R.id.input_output_factor);
+        profundidad=(EditText) view.findViewById(R.id.input_profundidad);
+        tmr=(EditText) view.findViewById(R.id.input_tmr);
+        peso_arco=(EditText) view.findViewById(R.id.input_peso_arco);
+        dosis_fraccion=(EditText) view.findViewById(R.id.input_dosis_fraccion);
+        mu_tps=(EditText) view.findViewById(R.id.input_mu_tps);
+        per_dif=(EditText) view.findViewById(R.id.input_percentage_dif);
+        ArcoActivity arcoActivity= (ArcoActivity) getActivity();
+        six_x_trilogy_class= new Six_X_Trilogy(getActivity(), arcoActivity.getDOSIS_PRESCRITA(),arcoActivity.getNORMALIZACION(),arcoActivity.getPESO_MAXIMO_DOSIS());
         cono.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 cono_value=cono.getSelectedItem().toString();
-                setOutput_factor_text_value(SecondActivity.this,cono_value);           }
+                setOutput_factor_text_value(getActivity(),cono_value);           }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
@@ -101,7 +85,7 @@ public class SecondActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     profundidad_value = profundidad.getText().toString();
-                    setTMR_text_value(SecondActivity.this, cono_value, profundidad_value);
+                    setTMR_text_value(getActivity(), cono_value, profundidad_value);
                 }
                 return false;
             }
@@ -130,14 +114,7 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        return view;
     }
 
     public void setPer_dif_text_value (String mu_tps_value){
@@ -159,7 +136,7 @@ public class SecondActivity extends AppCompatActivity {
         }
 
     }
-    public void setTMR_text_value (Context context,String cono,String profundidad){
+    public void setTMR_text_value (Context context, String cono, String profundidad){
         if (!cono.equals("") && !profundidad.equals("") && Double.parseDouble(profundidad)>=2.0 &&  Double.parseDouble(profundidad)<=25.0){
             tmr_class=new TMR();
             six_x_trilogy_class.setProfundidad((double) tmr_class.getProfundidadIndex(Double.parseDouble(profundidad)));
@@ -173,15 +150,5 @@ public class SecondActivity extends AppCompatActivity {
         six_x_trilogy_class.setCono(outputFactor_class.getCono_index());
         output_factor.setText(String.valueOf(outputFactor_class.getOutputFactor(Integer.parseInt(new Util().splitCono(cono)))));
         six_x_trilogy_class.setOutputfactor(outputFactor_class);
-    }
-
-
-    private void initInstancesTabs() {
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        for (String tabs: this.getResources().getStringArray(R.array.tabs)){
-            tabLayout.addTab(tabLayout.newTab().setText(tabs));
-        }
-
     }
 }

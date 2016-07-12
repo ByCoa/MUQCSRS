@@ -9,8 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Activity.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context=".Activity.GeneralDataActivity"
+    tools:showIn="@layout/general_data_layout">
 
 
 
@@ -28,6 +28,7 @@
         android:id="@+id/input_layout_dosis_prescrita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
         android:layout_below="@id/label_energia">
 
         <EditText
@@ -35,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
+            android:inputType="number"
             android:hint="@string/dosis_prescrita" />
 
     </android.support.design.widget.TextInputLayout>
@@ -51,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
             android:hint="@string/normalizacion" />
 
     </android.support.design.widget.TextInputLayout>

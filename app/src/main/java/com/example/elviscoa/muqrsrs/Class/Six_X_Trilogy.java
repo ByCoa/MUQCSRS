@@ -29,7 +29,7 @@ public class Six_X_Trilogy {
         this.normalizacion = normalizacion;
         this.peso_maximo_dosis = peso_maximo_dosis;
         this.outputfactor = new OutputFactor(context);
-        this.tmr = new TMR(context);
+        this.tmr = new TMR();
     }
 
     public Six_X_Trilogy(Context context, Integer dosis_prescrita, Double normalizacion, Double peso_maximo_dosis){
@@ -37,7 +37,7 @@ public class Six_X_Trilogy {
         this.normalizacion = normalizacion;
         this.peso_maximo_dosis = peso_maximo_dosis;
         this.outputfactor = new OutputFactor(context);
-        this.tmr = new TMR(context);
+        this.tmr = new TMR();
     }
 
     public Integer getEnergia (){

@@ -7,7 +7,7 @@
     <string name="profundidad">Profundidad</string>
     <string name="peso_arco">Peso del Arco</string>
     <string name="mu_tps">MU TPS</string>
-
+    <string name="mu_qc_srs">MU QC SRS</string>
     <string name="title_section1">Arco 1</string>
     <string name="title_section2">Arco 2</string>
     <string name="title_section3">Arco 3</string>
@@ -17,6 +17,12 @@
     <string name="title_section7">Arco 7</string>
     <string name="title_section8">Arco 8</string>
     <string name="title_section9">Arco 9</string>
-    <string name="mu_qc_srs">MU QC SRS:</string>
+    <string name="dosis_por_fraccion">Dosis por fraccion</string>
+    <string name="tmr">TMR</string>
+    <string name="output_factor">Output Factor</string>
+    <string name="action_settings">Upload</string>
+    <string name="call_ocr_api">Call OCR API</string>
+    <string name="ocr_api_result">OCR API RESULT</string>
+
 
 </resources>
