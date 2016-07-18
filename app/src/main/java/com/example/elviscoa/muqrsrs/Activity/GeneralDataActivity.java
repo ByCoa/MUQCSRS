@@ -36,11 +36,12 @@ public class GeneralDataActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!dosis_prescrita.getText().equals("") && !normalizacion.getText().equals("") && !peso_maximo_dosis.getText().equals("")){
-                    Intent i = new Intent(GeneralDataActivity.this, SecondActivity.class);
+                if(!dosis_prescrita.getText().toString().equals("") && !normalizacion.getText().toString().equals("") && !peso_maximo_dosis.getText().toString().equals("")){
+                    Intent i = new Intent(GeneralDataActivity.this, ArcoActivity.class);
                     i.putExtra(DOSIS_PRESCRITA, dosis_prescrita.getText().toString());
                     i.putExtra(NORMALIZACION, normalizacion.getText().toString());
                     i.putExtra(PESO_MAXIMO_DOSIS, peso_maximo_dosis.getText().toString());
+                    GeneralDataActivity.this.startActivity(i);
                 }
             }
         });

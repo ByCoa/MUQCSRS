@@ -37,12 +37,15 @@ public class ArcoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test2);
-        /*
+
         Bundle extras = getIntent().getExtras();
-        DOSIS_PRESCRITA=extras.getInt(STRINGDOSIS_PRESCRITA);
-        NORMALIZACION=extras.getDouble(STRINGNORMALIZACION);
-        PESO_MAXIMO_DOSIS=extras.getDouble(STRINGPESO_MAXIMO_DOSIS);
-        */
+        if (extras==null) {
+
+        } else {
+            DOSIS_PRESCRITA = extras.getInt(STRINGDOSIS_PRESCRITA);
+            NORMALIZACION = extras.getDouble(STRINGNORMALIZACION);
+            PESO_MAXIMO_DOSIS = extras.getDouble(STRINGPESO_MAXIMO_DOSIS);
+        }
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
