@@ -26,10 +26,8 @@ public class Util {
     }
     public Double roundThreeDecimals(Double d)
     {
-        String x=String.valueOf(d);
-        x.replace(",",".");
-        DecimalFormat threeDForm = new DecimalFormat("#.###");
-        return Double.valueOf(threeDForm.format(Double.parseDouble(x)));
+        double roundOff = (double) Math.round(d * 1000) / 1000;
+        return roundOff;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)

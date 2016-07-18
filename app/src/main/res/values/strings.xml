@@ -23,6 +23,7 @@
     <string name="action_settings">Upload</string>
     <string name="call_ocr_api">Call OCR API</string>
     <string name="ocr_api_result">OCR API RESULT</string>
+    <string name="generar_reporte">Generar Reporte</string>
 
 
 </resources>

@@ -16,6 +16,8 @@ import com.example.elviscoa.muqrsrs.Fragment.Arco6;
 import com.example.elviscoa.muqrsrs.Fragment.Arco7;
 import com.example.elviscoa.muqrsrs.Fragment.Arco8;
 import com.example.elviscoa.muqrsrs.Fragment.Arco9;
+import com.example.elviscoa.muqrsrs.Fragment.GenerarPDFFragment;
+import com.example.elviscoa.muqrsrs.Library.GenerarPDF;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,9 @@ public class Pager extends FragmentStatePagerAdapter {
             case 8:
                 Arco9 arco9= new Arco9();
                 return arco9;
+            case 9:
+                GenerarPDFFragment generarPDFFragment= new GenerarPDFFragment();
+                return generarPDFFragment;
             default:
                 return null;
         }
