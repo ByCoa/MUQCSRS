@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activity.ArcoActivity"
-    tools:showIn="@layout/test2">
+    tools:showIn="@layout/arco_data_layout">
 
 
     <Spinner
@@ -171,4 +171,14 @@
         android:layout_alignParentEnd="false" />
 
     </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabarc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:tint="@color/icons"
+        android:src="@drawable/ic_save_white_24dp" />
+
 </RelativeLayout>

@@ -12,15 +12,46 @@
     tools:context=".Activity.GeneralDataActivity"
     tools:showIn="@layout/general_data_layout">
 
-
-
-    <EditText
-        android:id="@+id/label_energia"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_patient_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Energia (MV): 6X"
-        android:editable="false"/>
+        android:imeOptions="actionDone">
+        <EditText
+            android:id="@+id/input_patient_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Patient ID" />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_plan_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/input_layout_patient_id">
+        <EditText
+            android:id="@+id/input_plan_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Plan ID"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_energia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/input_layout_plan_id">
+        <EditText
+            android:id="@+id/label_energia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Energia (MV)"
+            android:text="6X"
+            android:editable="false"/>
+    </android.support.design.widget.TextInputLayout>
 
 
 
@@ -29,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
-        android:layout_below="@id/label_energia">
+        android:layout_below="@id/input_layout_energia">
 
         <EditText
             android:id="@+id/input_dosis_prescrita"

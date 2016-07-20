@@ -1,19 +1,15 @@
 package com.example.elviscoa.muqrsrs.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.example.elviscoa.muqrsrs.Adapter.Pager;
+import com.example.elviscoa.muqrsrs.Database.Database;
 import com.example.elviscoa.muqrsrs.R;
 
 /**
@@ -24,25 +20,33 @@ public class ArcoActivity extends AppCompatActivity {
     private static final String STRINGDOSIS_PRESCRITA="DOSIS_PRESCRITA";
     private static final String STRINGNORMALIZACION="NORMALIZACION";
     private static final String STRINGPESO_MAXIMO_DOSIS="PESO_MAXIMO_DOSIS";
+    private static final String STRINGDATE="DATE";
     //Extras
     private Integer DOSIS_PRESCRITA=2000;
     private Double NORMALIZACION=1.0;
     private Double PESO_MAXIMO_DOSIS=5.052;
+    private String DATE="";
     //UI
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private FloatingActionButton fab;
+    //Database
+    private Database dbHandler = new Database(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test2);
-        /*
+        setContentView(R.layout.arc_data_layout);
+
         Bundle extras = getIntent().getExtras();
-        DOSIS_PRESCRITA=extras.getInt(STRINGDOSIS_PRESCRITA);
-        NORMALIZACION=extras.getDouble(STRINGNORMALIZACION);
-        PESO_MAXIMO_DOSIS=extras.getDouble(STRINGPESO_MAXIMO_DOSIS);
-        */
+        if (extras==null) {
+
+        } else {
+            DOSIS_PRESCRITA = Integer.valueOf(extras.getString(STRINGDOSIS_PRESCRITA));
+            NORMALIZACION = Double.valueOf(extras.getString(STRINGNORMALIZACION));
+            PESO_MAXIMO_DOSIS = Double.valueOf(extras.getString(STRINGPESO_MAXIMO_DOSIS));
+            DATE = extras.getString(STRINGDATE);
+        }
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,6 +65,7 @@ public class ArcoActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                Log.d("Page", String.valueOf(tab.getPosition()));
             }
 
             @Override
@@ -75,22 +80,6 @@ public class ArcoActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public Integer getDOSIS_PRESCRITA() {
         return DOSIS_PRESCRITA;
     }
@@ -101,5 +90,13 @@ public class ArcoActivity extends AppCompatActivity {
 
     public Double getPESO_MAXIMO_DOSIS() {
         return PESO_MAXIMO_DOSIS;
+    }
+
+    public String getDATE() {
+        return DATE;
+    }
+
+    public Database getDbHandler() {
+        return dbHandler;
     }
 }

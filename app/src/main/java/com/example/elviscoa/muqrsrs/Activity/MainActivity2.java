@@ -60,7 +60,7 @@ public class MainActivity2 extends Activity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if(userChoosenTask.equals("Take Photo"))
                         cameraIntent();
-                    else if(userChoosenTask.equals("Choose from Library"))
+                    else if(userChoosenTask.equals("Choose from com.example.elviscoa.muqrsrs.Library"))
                         galleryIntent();
                 } else {
                     //code for deny
@@ -70,7 +70,7 @@ public class MainActivity2 extends Activity {
     }
 
     private void selectImage() {
-        final CharSequence[] items = { "Take Photo", "Choose from Library",
+        final CharSequence[] items = { "Take Photo", "Choose from com.example.elviscoa.muqrsrs.Library",
                 "Cancel" };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity2.this);
@@ -85,8 +85,8 @@ public class MainActivity2 extends Activity {
                     if(result)
                         cameraIntent();
 
-                } else if (items[item].equals("Choose from Library")) {
-                    userChoosenTask ="Choose from Library";
+                } else if (items[item].equals("Choose from com.example.elviscoa.muqrsrs.Library")) {
+                    userChoosenTask ="Choose from com.example.elviscoa.muqrsrs.Library";
                     if(result)
                         galleryIntent();
 
