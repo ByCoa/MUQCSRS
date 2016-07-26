@@ -67,12 +67,8 @@ public class TMR {
 
     public int getProfundidadIndex (Double profundidad){
         int i=0;
-        Double j=2.0;
-        while (profundidad>j){
-            j=j+0.1;
-            i++;
-        }
-        return i;
+        Double COTAI=2.0;
+        return (int) ((profundidad-COTAI)*10);
     }
 
 

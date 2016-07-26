@@ -10,14 +10,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activity.ArcoActivity">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_patient_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone">
+        <EditText
+            android:id="@+id/input_patient_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Patient ID" />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_plan_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/input_layout_patient_id">
+        <EditText
+            android:id="@+id/input_plan_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Plan ID"/>
+    </android.support.design.widget.TextInputLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:height="48dp"
         android:layout_centerInParent="true"
         android:text="@string/generar_reporte"
-        android:background="#fff"
+        android:background="@color/accent"
         android:textColor="@color/secondary_text"
         android:id="@+id/generarpdf"/>
 </RelativeLayout>

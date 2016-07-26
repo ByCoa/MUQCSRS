@@ -12,44 +12,31 @@
     tools:context=".Activity.GeneralDataActivity"
     tools:showIn="@layout/general_data_layout">
 
+
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_patient_id"
+        android:id="@+id/input_layout_d_zero"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone">
         <EditText
-            android:id="@+id/input_patient_id"
+            android:id="@+id/input_d_zero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Patient ID" />
+            android:hint="@string/d_zero"/>
     </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_plan_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:layout_below="@id/input_layout_patient_id">
-        <EditText
-            android:id="@+id/input_plan_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Plan ID"/>
-    </android.support.design.widget.TextInputLayout>
-
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_energia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
-        android:layout_below="@id/input_layout_plan_id">
+        android:layout_below="@id/input_layout_d_zero">
         <EditText
             android:id="@+id/label_energia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Energia (MV)"
-            android:text="6X"
+            android:hint="@string/energia"
+            android:text="@string/six_x"
             android:editable="false"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -105,5 +92,13 @@
             android:hint="@string/peso_maximo_dosis" />
 
     </android.support.design.widget.TextInputLayout>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cant_arco"
+        android:layout_below="@id/input_layout_peso_maximo_dosis"
+        android:entries="@array/cant_arc"
+        android:spinnerMode="dialog" />
 
 </RelativeLayout>
