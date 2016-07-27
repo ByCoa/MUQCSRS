@@ -41,6 +41,6 @@
         android:layout_centerInParent="true"
         android:text="@string/generar_reporte"
         android:background="@color/accent"
-        android:textColor="@color/secondary_text"
+        android:textColor="@color/icons"
         android:id="@+id/generarpdf"/>
 </RelativeLayout>

@@ -137,7 +137,7 @@ public class Arco4 extends Fragment {
                     database.createArc("ARCO4", cono_value, output_factor_value, profundidad_value, tmr_value, peso_arco_value, dosis_fraccion_value, mu_tps_value, per_dif_value, arcoActivity.getDATE());
                     database.close();
                 }
-                Toast.makeText(getActivity(), "ARCO 4 Guardado exitosamente", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.arc4_saved, Toast.LENGTH_LONG).show();
             }
         });
     }

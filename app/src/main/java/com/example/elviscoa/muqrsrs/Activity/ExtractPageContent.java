@@ -3,11 +3,16 @@ package com.example.elviscoa.muqrsrs.Activity;
 /**
  * Created by soluciones on 7/24/2016.
  */
+import android.content.Context;
+
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import com.example.elviscoa.muqrsrs.R;
 import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
@@ -37,6 +42,18 @@ public class ExtractPageContent {
         reader.close();
         out.flush();
         out.close();
+    }
+
+    public void read (File INPUTFILE,Context context){
+        try {
+            PdfReader reader = new PdfReader("android.resource://" + context.getPackageName() + "/" + R.raw.srs);
+            int n = reader.getNumberOfPages();
+            String str=PdfTextExtractor.getTextFromPage(reader, 2); //Extracting the content from a particular page.
+            System.out.println(str);
+            reader.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     /**

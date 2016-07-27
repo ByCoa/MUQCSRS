@@ -138,9 +138,9 @@ public class Arco1 extends Fragment {
                     database.write();
                     database.createArc("ARCO1", cono_value, output_factor_value, profundidad_value, tmr_value, peso_arco_value, dosis_fraccion_value, mu_tps_value, per_dif_value, arcoActivity.getDATE());
                     database.close();
-                    GenerarPDF.GenerarPDF(arcoActivity, database, arcoActivity.getDATE());
+                    //GenerarPDF.GenerarPDF(arcoActivity, database, arcoActivity.getDATE());
                 }
-                Toast.makeText(getActivity(), "ARCO 1 Guardado exitosamente", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.arc1_saved, Toast.LENGTH_LONG).show();
             }
         });
     }

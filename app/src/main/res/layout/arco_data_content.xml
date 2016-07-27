@@ -21,6 +21,7 @@
         android:spinnerMode="dialog" />
 
     <android.support.design.widget.TextInputLayout
+        android:visibility="invisible"
         android:id="@+id/input_layout_output_factor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,7 +50,7 @@
         android:id="@+id/input_layout_profundidad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/input_layout_output_factor"
+        android:layout_below="@+id/cono"
         android:textColor="@color/primary_text"
         android:textColorHint="@color/primary_text"
         android:imeOptions="actionDone"
@@ -72,6 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text"
+        android:visibility="invisible"
         android:imeOptions="actionDone"
         android:textColorHint="@color/primary_text"
         android:layout_below="@+id/input_layout_profundidad">
@@ -94,7 +96,7 @@
         android:textColor="@color/primary_text"
         android:imeOptions="actionDone"
         android:textColorHint="@color/primary_text"
-        android:layout_below="@id/input_layout_tmr">
+        android:layout_below="@id/input_layout_profundidad">
 
         <EditText
             android:id="@+id/input_peso_arco"
@@ -115,6 +117,7 @@
         android:textColorHint="@color/primary_text"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
+        android:visibility="invisible"
         android:layout_below="@id/input_layout_peso_arco">
 
     <EditText
@@ -136,7 +139,7 @@
         android:textColorHint="@color/primary_text"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
-        android:layout_below="@id/input_layout_dosis_fraccion">
+        android:layout_below="@id/input_layout_peso_arco">
 
         <EditText
             android:id="@+id/input_mu_tps"
@@ -158,6 +161,7 @@
         android:textColorHint="@color/primary_text"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
+        android:visibility="invisible"
         android:layout_below="@+id/input_layout_mu_tps">
 
     <EditText

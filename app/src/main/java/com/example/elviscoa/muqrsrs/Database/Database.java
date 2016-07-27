@@ -150,4 +150,12 @@ public class Database extends SQLiteOpenHelper {
         return  this.query("SELECT * FROM ARCS WHERE DATE='"+Date+"'");
 
     }
+
+    public void updateGeneralData (String PATIENT_ID,String PLAN_ID, String DATE){
+        ContentValues newGeneral= new ContentValues();
+        newGeneral.put(this.PATIENT_ID, PATIENT_ID);
+        newGeneral.put(this.PLAN_ID, PLAN_ID);
+        DATABASE.update(TABLE_GENERALS,newGeneral,"DATE="+DATE,null);
+
+    }
 }

@@ -1,12 +1,17 @@
 package com.example.elviscoa.muqrsrs.Library;
 
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
@@ -26,17 +31,25 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import com.example.elviscoa.muqrsrs.R;
+import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
+import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
+import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
+
 /**
  * Created by soluciones on 7/14/2016.
  */
@@ -66,15 +79,17 @@ public class GenerarPDF {
     public static void GenerarPDF(Context context, Database dbHandler, String dateact) {
         try {
             Document document = new Document(PageSize.LETTER,20,20,20,20);
-            PdfWriter.getInstance(document, new FileOutputStream(crearFichero()));
+            File nameFile= crearFichero();
+            PdfWriter.getInstance(document, new FileOutputStream(nameFile));
             fillGereralData(dbHandler, dateact);
-            fillArcData(dbHandler,dateact);
+            fillArcData(dbHandler, dateact);
             document.open();
             addMetaData(document);
-            addImagePDF(document,context);
+            addImagePDF(document, context);
             addTitlePage(document);
             addContent(document);
             document.close();
+            confirnDialog(context,nameFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -96,7 +111,7 @@ public class GenerarPDF {
         Paragraph preface = new Paragraph();
         // We add one empty line
         addEmptyLine(preface, 1);
-        preface.add(new Paragraph("MU QC SRS Report", BOLDFONT));
+        preface.add(new Paragraph("MU QC srs Report", BOLDFONT));
         addEmptyLine(preface, 1);
         document.add(preface);
 
@@ -147,7 +162,7 @@ public class GenerarPDF {
         addEmptyLine(paragraph, 2);
         createFirstTable(paragraph);
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph("MU QC SRS"));
+        paragraph.add(new Paragraph("MU QC srs"));
         paragraph.add(new Paragraph("Dosimetric"));
         paragraph.add(new Paragraph("Parameters"));
 
@@ -163,63 +178,34 @@ public class GenerarPDF {
     }
 
     private static void createFirstTable(Paragraph paragraph) throws BadElementException {
-        PdfPTable table = new PdfPTable(10);
+        PdfPTable table = new PdfPTable(5);
 
-        PdfPCell cellHeader = new PdfPCell(new Phrase("Arc ID"));
+        PdfPCell cellHeader = new PdfPCell(new Phrase(""));
         cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellHeader);
 
-        cellHeader = new PdfPCell(new Phrase("Arc 1"));
+        cellHeader = new PdfPCell(new Phrase("Cone (mm)"));
         cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellHeader);
 
-        cellHeader = new PdfPCell(new Phrase("Arc 2"));
+        cellHeader = new PdfPCell(new Phrase("Depth (cm)"));
         cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellHeader);
 
-        cellHeader = new PdfPCell(new Phrase("Arc 3"));
+        cellHeader = new PdfPCell(new Phrase("Weight Factor"));
         cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellHeader);
 
-        cellHeader = new PdfPCell(new Phrase("Arc 4"));
-        cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cellHeader);
-
-        cellHeader = new PdfPCell(new Phrase("Arc 5"));
-        cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cellHeader);
-
-        cellHeader = new PdfPCell(new Phrase("Arc 6"));
-        cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cellHeader);
-
-        cellHeader = new PdfPCell(new Phrase("Arc 7"));
-        cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cellHeader);
-
-        cellHeader = new PdfPCell(new Phrase("Arc 8"));
-        cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cellHeader);
-
-        cellHeader = new PdfPCell(new Phrase("Arc 9"));
+        cellHeader = new PdfPCell(new Phrase("MU TPS"));
         cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellHeader);
         table.setHeaderRows(1);
 
-        table.addCell("Cone (mm)");
-        for (int i=0;i<9;i++){
+        for (int i=0;i<sixXTrilogyArrayList.size();i++){
+            table.addCell("Arco "+i+1);
             table.addCell(sixXTrilogyArrayList.get(i).getCono());
-        }
-        table.addCell("Depth (cm)");
-        for (int i=0;i<9;i++){
             table.addCell(sixXTrilogyArrayList.get(i).getProfundidad());
-        }
-        table.addCell("Weight Factor");
-        for (int i=0;i<9;i++){
             table.addCell(sixXTrilogyArrayList.get(i).getPeso_del_arco());
-        }
-        table.addCell("MU TPS");
-        for (int i=0;i<9;i++){
             table.addCell(sixXTrilogyArrayList.get(i).getMu_tps());
         }
         paragraph.add(table);
@@ -227,67 +213,38 @@ public class GenerarPDF {
     }
 
     private static void createParametersTable(Paragraph paragraph) throws BadElementException {
-        PdfPTable table = new PdfPTable(10);
+        PdfPTable table = new PdfPTable(5);
 
-        PdfPCell cellHeader = new PdfPCell(new Phrase("Arc ID"));
+        PdfPCell cellHeader = new PdfPCell(new Phrase(""));
         cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellHeader);
 
-        cellHeader = new PdfPCell(new Phrase("Arc 1"));
+        cellHeader = new PdfPCell(new Phrase("S(c,p)"));
         cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellHeader);
 
-        cellHeader = new PdfPCell(new Phrase("Arc 2"));
+        cellHeader = new PdfPCell(new Phrase("Aver. TMR"));
         cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellHeader);
 
-        cellHeader = new PdfPCell(new Phrase("Arc 3"));
+        cellHeader = new PdfPCell(new Phrase("MU QC srs"));
         cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellHeader);
 
-        cellHeader = new PdfPCell(new Phrase("Arc 4"));
-        cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cellHeader);
-
-        cellHeader = new PdfPCell(new Phrase("Arc 5"));
-        cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cellHeader);
-
-        cellHeader = new PdfPCell(new Phrase("Arc 6"));
-        cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cellHeader);
-
-        cellHeader = new PdfPCell(new Phrase("Arc 7"));
-        cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cellHeader);
-
-        cellHeader = new PdfPCell(new Phrase("Arc 8"));
-        cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cellHeader);
-
-        cellHeader = new PdfPCell(new Phrase("Arc 9"));
+        cellHeader = new PdfPCell(new Phrase("%Delta"));
         cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellHeader);
         table.setHeaderRows(1);
 
-        table.addCell("S(c,p)");
-        for (int i=0;i<9;i++){
+        for (int i=0;i<sixXTrilogyArrayList.size();i++){
+            table.addCell("Arco "+i+1);
             table.addCell(sixXTrilogyArrayList.get(i).getOutputfactor());
-        }
-        table.addCell("Aver. TMR");
-        for (int i=0;i<9;i++){
             table.addCell(sixXTrilogyArrayList.get(i).getTmr());
-        }
-        table.addCell("MU QC SRS");
-        for (int i=0;i<9;i++){
             table.addCell(sixXTrilogyArrayList.get(i).getMu_qc_srs());
-        }
-        table.addCell("%Delta");
-        for (int i=0;i<9;i++){
             Double a,b;
             a= Double.valueOf(sixXTrilogyArrayList.get(i).getMu_qc_srs());
             b= Double.valueOf(sixXTrilogyArrayList.get(i).getMu_tps());
-            table.addCell(String.valueOf(new Util().roundThreeDecimals(((b - a) / a)*100)));
+            table.addCell(String.valueOf(new Util().roundThreeDecimals(((b - a) / a) * 100)));
         }
         paragraph.add(table);
 
@@ -335,6 +292,23 @@ public class GenerarPDF {
         return ruta;
     }
 
+    public static void viewPdf(Context context,File file) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+        intent.setDataAndType(Uri.fromFile(file),"application/pdf");
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            // No application to view, ask to download one
+            Intent marketIntent = new Intent(Intent.ACTION_VIEW);
+            marketIntent.setData(Uri.parse("market://details?id=com.adobe.reader"));
+            context.startActivity(marketIntent);
+        }
+    }
+
     private static void fillGereralData(Database dbHandler, String date){
         Cursor c = dbHandler.getGeneralData(date);
         if (c.moveToFirst()){
@@ -372,4 +346,60 @@ public class GenerarPDF {
         dbHandler.close();
     }
 
+    public static void confirnDialog(final Context context, final File nameFile){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+        // set title
+        alertDialogBuilder.setTitle(R.string.title_dialog);
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage(context.getString(R.string.msg_dialog))
+                .setCancelable(false)
+                .setPositiveButton(context.getString((R.string.yes_dialog)), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        viewPdf(context,nameFile);
+                    }
+                })
+                .setNegativeButton(context.getString((R.string.no_dialog)), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show it
+        alertDialog.show();
+    }
+
+
+    public static String read(String fname) {
+        BufferedReader br = null;
+        String response = null;
+        try {
+            StringBuffer output = new StringBuffer();
+            String fpath = "/sdcard/" + fname + ".pdf";
+
+            PdfReader reader = new PdfReader(new FileInputStream(fpath));
+            PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+
+            StringWriter strW = new StringWriter();
+
+            TextExtractionStrategy strategy;
+            for (int i = 1; i <= reader.getNumberOfPages(); i++) {
+                strategy = parser.processContent(i,
+                        new SimpleTextExtractionStrategy());
+
+                strW.write(strategy.getResultantText());
+
+            }
+
+            response = strW.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return response;
+    }
 }

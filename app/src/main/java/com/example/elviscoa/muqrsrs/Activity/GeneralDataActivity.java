@@ -1,5 +1,6 @@
 package com.example.elviscoa.muqrsrs.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -12,7 +13,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.elviscoa.muqrsrs.Database.Database;
+import com.example.elviscoa.muqrsrs.Library.GenerarPDF;
 import com.example.elviscoa.muqrsrs.R;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
 public class GeneralDataActivity extends AppCompatActivity {
     //putExtra
@@ -45,25 +49,26 @@ public class GeneralDataActivity extends AppCompatActivity {
         normalizacion   = (EditText) findViewById(R.id.input_nomalizacion);
         peso_maximo_dosis=(EditText) findViewById(R.id.input_peso_maximo_dosis);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        //GenerarPDF.GenerarPDF(this);
+        //read(this);
+        Log.i("Response", String.valueOf(GenerarPDF.read("srs")));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!d_zero.getText().toString().equals("") && !cant_arcos.getSelectedItem().toString().equals("") && !dosis_prescrita.getText().toString().equals("")
-                        && !normalizacion.getText().toString().equals("") && !peso_maximo_dosis.getText().toString().equals("")){
+                if (!d_zero.getText().toString().equals("") && !cant_arcos.getSelectedItem().toString().equals("") && !dosis_prescrita.getText().toString().equals("")
+                        && !normalizacion.getText().toString().equals("") && !peso_maximo_dosis.getText().toString().equals("")) {
                     Intent i = new Intent(GeneralDataActivity.this, ArcoActivity.class);
                     i.putExtra(D_ZERO, d_zero.getText().toString());
                     i.putExtra(ARCOS, cant_arcos.getSelectedItem().toString());
                     i.putExtra(DOSIS_PRESCRITA, dosis_prescrita.getText().toString());
                     i.putExtra(NORMALIZACION, normalizacion.getText().toString());
                     i.putExtra(PESO_MAXIMO_DOSIS, peso_maximo_dosis.getText().toString());
-                    setGeneralData("", "",
+                    setGeneralData("         ", "           ",
                             "6X", d_zero.getText().toString(), dosis_prescrita.getText().toString(),
                             String.valueOf(Double.parseDouble(normalizacion.getText().toString())),
                             peso_maximo_dosis.getText().toString());
                     //GenerarPDF.GenerarPDF(GeneralDataActivity.this, dbHandler, String.valueOf(tsLong));
                     //fillRecentProductList(dbHandler, String.valueOf(tsLong));
-                    i.putExtra("DATE",String.valueOf(tsLong));
+                    i.putExtra("DATE", String.valueOf(tsLong));
                     Log.d("DATE", String.valueOf(tsLong));
                     GeneralDataActivity.this.startActivity(i);
                 }
@@ -98,5 +103,4 @@ public class GeneralDataActivity extends AppCompatActivity {
         }
         dbHandler.close();
     }
-
 }
