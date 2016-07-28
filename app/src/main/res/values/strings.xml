@@ -58,5 +58,6 @@
     <string name="site">Site:</string>
     <string name="city">City: Caracas</string>
     <string name="whatsapp">Whatsapp: +58 412 2337556</string>
+    <string name="report">REPORT</string>
 
 </resources>

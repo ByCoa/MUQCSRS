@@ -179,4 +179,19 @@ public class Arco2 extends Fragment {
         output_factor_value=output_factor.getText().toString();
         six_x_trilogy_class.setOutputfactor(outputFactor_class);
     }
+    public String getCono (){
+        return cono.getSelectedItem().toString();
+    }
+
+    public String getPrdofundidad (){
+        return profundidad.getText().toString();
+    }
+
+    public String getPesoArco (){
+        return peso_arco.getText().toString();
+    }
+
+    public String getMonitorUnits (){
+        return mu_tps.getText().toString();
+    }
 }

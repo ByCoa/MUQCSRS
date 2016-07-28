@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.elviscoa.muqrsrs.Database.Database;
+import com.example.elviscoa.muqrsrs.Library.GenerarPDF;
 import com.example.elviscoa.muqrsrs.R;
 
 public class GeneralDataActivity extends AppCompatActivity {
@@ -60,7 +61,7 @@ public class GeneralDataActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
         //read(this);
-        //Log.i("Response", String.valueOf(GenerarPDF.read("srs")));
+        Log.i("Response", String.valueOf(GenerarPDF.read("srs")));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

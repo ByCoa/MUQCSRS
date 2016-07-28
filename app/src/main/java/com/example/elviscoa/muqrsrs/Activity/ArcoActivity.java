@@ -56,6 +56,7 @@ public class ArcoActivity extends AppCompatActivity {
     //UI
     private Toolbar toolbar;
     private TabLayout tabLayout;
+    private Pager adapter;
     private FloatingActionButton fab;
     //Database
     private Database dbHandler = new Database(this);
@@ -87,12 +88,13 @@ public class ArcoActivity extends AppCompatActivity {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         setupViewPager (viewPager,idx);
         tabLayout.setupWithViewPager(viewPager);
-        /*viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                Log.d("Page", String.valueOf(tab.getPosition()));
+                Log.d("Page", String.valueOf(adapter.getPageTitle(tab.getPosition())));
+                getFragmentPager(tab.getPosition(), String.valueOf(adapter.getPageTitle(tab.getPosition())));
             }
 
             @Override
@@ -104,7 +106,7 @@ public class ArcoActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });*/
+        });
     }
 
     public Integer getDOSIS_PRESCRITA() {
@@ -127,8 +129,101 @@ public class ArcoActivity extends AppCompatActivity {
         return dbHandler;
     }
 
+    public void getFragmentPager (int Arco,String title){
+        int i=0;
+        if (title.equals(getString(R.string.report))){
+
+        }else {
+
+            switch (Arco) {
+                case 0:
+                    Arco1 arco1 = (Arco1) adapter.getItem(Arco);
+                    Log.i("Spinner", arco1.getCono());
+                    break;
+                case 1:
+                    Arco2 arco2 = (Arco2) adapter.getItem(Arco);
+
+                    break;
+                case 2:
+                    Arco3 arco3 = (Arco3) adapter.getItem(Arco);
+
+                    break;
+                case 3:
+                    Arco4 arco4 = (Arco4) adapter.getItem(Arco);
+
+                    break;
+                case 4:
+                    Arco5 arco5 = (Arco5) adapter.getItem(Arco);
+
+                    break;
+                case 5:
+                    Arco6 arco6 = (Arco6) adapter.getItem(Arco);
+
+                    break;
+                case 6:
+                    Arco7 arco7 = (Arco7) adapter.getItem(Arco);
+
+                    break;
+                case 7:
+                    Arco8 arco8 = (Arco8) adapter.getItem(Arco);
+
+                    break;
+                case 8:
+                    Arco9 arco9 = (Arco9) adapter.getItem(Arco);
+
+                    break;
+                case 9:
+                    Arco10 arco10 = (Arco10) adapter.getItem(Arco);
+
+                    break;
+                case 10:
+                    Arco11 arco11 = (Arco11) adapter.getItem(Arco);
+
+                    break;
+                case 11:
+                    Arco12 arco12 = (Arco12) adapter.getItem(Arco);
+
+                    break;
+                case 12:
+                    Arco13 arco13 = (Arco13) adapter.getItem(Arco);
+
+                    break;
+                case 13:
+                    Arco14 arco14 = (Arco14) adapter.getItem(Arco);
+
+                    break;
+                case 14:
+                    Arco15 arco15 = (Arco15) adapter.getItem(Arco);
+
+                    break;
+                case 15:
+                    Arco16 arco16 = (Arco16) adapter.getItem(Arco);
+
+                    break;
+                case 16:
+                    Arco17 arco17 = (Arco17) adapter.getItem(Arco);
+
+                    break;
+                case 17:
+                    Arco18 arco18 = (Arco18) adapter.getItem(Arco);
+
+                    break;
+                case 18:
+                    Arco19 arco19 = (Arco19) adapter.getItem(Arco);
+
+                    break;
+                case 19:
+                    GenerarPDFFragment generarPDFFragment = new GenerarPDFFragment();
+                    adapter.addFragment(generarPDFFragment, "REPORTE");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     private void setupViewPager(ViewPager viewPager,int Arcos) {
-        Pager adapter = new Pager(getSupportFragmentManager(),Arcos);
+        adapter = new Pager(getSupportFragmentManager(),Arcos);
         int i=0;
         for (String tabs: this.getResources().getStringArray(R.array.tabs)){
             if (i==Arcos)
@@ -212,7 +307,7 @@ public class ArcoActivity extends AppCompatActivity {
                     break;
                 case 19:
                     GenerarPDFFragment generarPDFFragment= new GenerarPDFFragment();
-                    adapter.addFragment(generarPDFFragment, "REPORTE");
+                    adapter.addFragment(generarPDFFragment, getString(R.string.report));
                     break;
                 default:
                     break;
