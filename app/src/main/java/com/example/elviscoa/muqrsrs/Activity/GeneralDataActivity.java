@@ -1,22 +1,25 @@
 package com.example.elviscoa.muqrsrs.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.elviscoa.muqrsrs.Database.Database;
-import com.example.elviscoa.muqrsrs.Library.GenerarPDF;
 import com.example.elviscoa.muqrsrs.R;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
 public class GeneralDataActivity extends AppCompatActivity {
     //putExtra
@@ -25,6 +28,7 @@ public class GeneralDataActivity extends AppCompatActivity {
     private static final String DOSIS_PRESCRITA="DOSIS_PRESCRITA";
     private static final String NORMALIZACION="NORMALIZACION";
     private static final String PESO_MAXIMO_DOSIS="PESO_MAXIMO_DOSIS";
+    private String drawerTitle;
     private Long tsLong;
     //UI
     private EditText dosis_prescrita;
@@ -33,24 +37,30 @@ public class GeneralDataActivity extends AppCompatActivity {
     private EditText d_zero;
     private Spinner  cant_arcos;
     private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
     private FloatingActionButton fab;
     //Database
     private Database dbHandler = new Database(this);
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.general_data_layout);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setToolbar();
         d_zero          = (EditText) findViewById(R.id.input_d_zero);
         cant_arcos      = (Spinner) findViewById(R.id.cant_arco);
         dosis_prescrita = (EditText) findViewById(R.id.input_dosis_prescrita);
         normalizacion   = (EditText) findViewById(R.id.input_nomalizacion);
         peso_maximo_dosis=(EditText) findViewById(R.id.input_peso_maximo_dosis);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_design_support_layout);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
         //read(this);
-        Log.i("Response", String.valueOf(GenerarPDF.read("srs")));
+        //Log.i("Response", String.valueOf(GenerarPDF.read("srs")));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +84,57 @@ public class GeneralDataActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem menuItem) {
+            menuItem.setChecked(true);
+            drawerLayout.closeDrawers();
+            Toast.makeText(GeneralDataActivity.this, menuItem.getTitle(), Toast.LENGTH_LONG).show();
+            if (menuItem.getTitle().toString().equals("Contact us")){
+                Intent i = new Intent(GeneralDataActivity.this, ContentFragment.class);
+                GeneralDataActivity.this.startActivity(i);
+            }
+
+            return true;
+            }
+        });
+
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void setToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_18dp);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
 
     public void setGeneralData (String PATIENT_ID, String PLAN_ID,
                                 String ENERGY, String D_ZERO, String DOSIS_PRESCRITA,

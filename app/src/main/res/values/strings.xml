@@ -50,6 +50,13 @@
     <string name="arc3_saved">ARC 3 successfully saved</string>
     <string name="arc2_saved">ARC 2 successfully saved</string>
     <string name="arc1_saved">ARC 1 successfully saved</string>
-
+    <string name="closeDrawer">Navigation View</string>
+    <string name="openDrawer">Navigation View Closed</string>
+    <string name="contact_caps">CONTACT</string>
+    <string name="country_ve">Country: Venezuela</string>
+    <string name="url">www.fisicaderadiaciones.com.ve</string>
+    <string name="site">Site:</string>
+    <string name="city">City: Caracas</string>
+    <string name="whatsapp">Whatsapp: +58 412 2337556</string>
 
 </resources>

@@ -202,7 +202,7 @@ public class GenerarPDF {
         table.setHeaderRows(1);
 
         for (int i=0;i<sixXTrilogyArrayList.size();i++){
-            table.addCell("Arco "+i+1);
+            table.addCell("Arco "+(i+1));
             table.addCell(sixXTrilogyArrayList.get(i).getCono());
             table.addCell(sixXTrilogyArrayList.get(i).getProfundidad());
             table.addCell(sixXTrilogyArrayList.get(i).getPeso_del_arco());
@@ -237,7 +237,7 @@ public class GenerarPDF {
         table.setHeaderRows(1);
 
         for (int i=0;i<sixXTrilogyArrayList.size();i++){
-            table.addCell("Arco "+i+1);
+            table.addCell("Arco "+(i+1));
             table.addCell(sixXTrilogyArrayList.get(i).getOutputfactor());
             table.addCell(sixXTrilogyArrayList.get(i).getTmr());
             table.addCell(sixXTrilogyArrayList.get(i).getMu_qc_srs());

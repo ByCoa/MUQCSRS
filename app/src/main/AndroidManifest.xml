@@ -20,7 +20,7 @@
 
         </activity>
         <activity
-            android:name="com.example.elviscoa.muqrsrs.Activity.MainActivity2">
+            android:name="com.example.elviscoa.muqrsrs.Activity.ContentFragment">
         </activity>
         <activity
             android:name=".Activity.ArcoActivity">
