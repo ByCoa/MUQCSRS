@@ -8,18 +8,17 @@ import com.example.elviscoa.muqrsrs.R;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by soluciones on 7/2/2016.
  */
 public class OutputFactor {
-    private InputStream outputFactorSTREAM;
     private Integer cono_index;
-    private ArrayList<String> tmrArray;
+    private static final ArrayList<String> tmrArray= new ArrayList<String>(Arrays.asList(new String[]{"0.71507140932363", "0.84621880894638","0.87129830234438", "0.8878752357855", "0.89968094853139", "0.90846681922197",
+            "0.91838291380625", "0.92219679633867", "0.92677345537757", "0.9279176201373", "0.93135011441648", "0.93516399694889"}));
+    public OutputFactor (){
 
-    public OutputFactor (Context context){
-        this.outputFactorSTREAM = context.getResources().openRawResource(R.raw.outputfactor);
-        this.tmrArray=new CSV().readOutputFactorCVS(context,outputFactorSTREAM);
     }
 
     public Double getOutputFactor (int cono){
@@ -29,15 +28,6 @@ public class OutputFactor {
 
     public Integer getCono_index (){
         return cono_index;
-    }
-
-    public Double roundThreeDecimals(Double d)
-    {
-        String x=String.valueOf(d);
-        x=x.replace(",",".");
-        Log.i("format", x);
-        DecimalFormat threeDForm = new DecimalFormat("#.###");
-        return Double.valueOf(threeDForm.format(Double.parseDouble(x)));
     }
 
     public int getIndexConoFromString (int cono){

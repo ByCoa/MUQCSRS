@@ -116,10 +116,11 @@ public class Database extends SQLiteOpenHelper {
 
     public void createArc(String ARC,String CON, String OUT,
                                String PRO, String TMR, String PESO_ARCO, String DOS,
-                               String MU_TPS, String MU_QC_SRS, String DAT) {
+                               String MU_TPS, String MU_QC_SRS, String DAT, String ENERGY, String D_ZERO, String DOSIS_PRESCRITA,
+                               String NORMALIZACION, String PESO_MAXIMO_DOSIS) {
         if (!(ARC.equals(""))) {
             ContentValues newArc= new ContentValues();
-            newArc.put(this.CONO, new Util().splitCono(CON));
+            newArc.put(this.CONO, CON);
             newArc.put(this.OUTPUT_FACTOR, new Util().roundThreeDecimals(Double.parseDouble(OUT)));
             newArc.put(this.PROFUNDIDAD, String.valueOf(Double.valueOf(PRO)));
             newArc.put(this.TMR, new Util().roundThreeDecimals(Double.parseDouble(TMR)));
@@ -128,6 +129,7 @@ public class Database extends SQLiteOpenHelper {
             newArc.put(this.MU_QC_SRS, new Util().roundThreeDecimals(Double.parseDouble(MU_QC_SRS)));
             newArc.put(this.MU_TPS, new Util().roundThreeDecimals(Double.parseDouble(MU_TPS)));
             newArc.put(this.DATEF, DAT);
+            createGeneralData ("            ","             ",DAT,ENERGY,D_ZERO,DOSIS_PRESCRITA,NORMALIZACION,PESO_MAXIMO_DOSIS);
             newArc.put(this.ARC, ARC);
             DATABASE.insert(TABLE_ARCS, null, newArc);
         }

@@ -70,57 +70,6 @@ public class Arco14 extends Fragment {
         mu_tps=(EditText) view.findViewById(R.id.input_mu_tps);
         per_dif=(EditText) view.findViewById(R.id.input_percentage_dif);
         fab= (FloatingActionButton) view.findViewById(R.id.fabarc);
-        final ArcoActivity arcoActivity= (ArcoActivity) getActivity();
-        six_x_trilogy_class= new Six_X_Trilogy(getActivity(), arcoActivity.getDOSIS_PRESCRITA(),arcoActivity.getNORMALIZACION(),arcoActivity.getPESO_MAXIMO_DOSIS());
-        cono.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                cono_value = cono.getSelectedItem().toString();
-                setOutput_factor_text_value(getActivity(), cono_value);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                return;
-            }
-
-        });
-
-
-        profundidad.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    profundidad_value = profundidad.getText().toString();
-                    setTMR_text_value(getActivity(), cono_value, profundidad_value);
-                }
-                return false;
-            }
-        });
-
-
-        peso_arco.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    peso_arco_value = peso_arco.getText().toString();
-                    setDosis_fraccion_text_value(peso_arco_value);
-                }
-                return false;
-            }
-        });
-
-        mu_tps.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    mu_tps_value=mu_tps.getText().toString();
-                    setPer_dif_text_value(mu_tps_value);
-                }
-                return false;
-            }
-        });
-
         return view;
     }
 
@@ -134,7 +83,7 @@ public class Arco14 extends Fragment {
                     final ArcoActivity arcoActivity = (ArcoActivity) getActivity();
                     Database database = new Database(getActivity());
                     database.write();
-                    database.createArc("ARCO14", cono_value, output_factor_value, profundidad_value, tmr_value, peso_arco_value, dosis_fraccion_value, mu_tps_value, per_dif_value, arcoActivity.getDATE());
+                    //database.createArc("ARCO14", cono_value, output_factor_value, profundidad_value, tmr_value, peso_arco_value, dosis_fraccion_value, mu_tps_value, per_dif_value, arcoActivity.getDATE());
                     database.close();
                 }
                 Toast.makeText(getActivity(), R.string.arc14_saved, Toast.LENGTH_LONG).show();
@@ -173,7 +122,7 @@ public class Arco14 extends Fragment {
     }
 
     public void setOutput_factor_text_value (Context context,String cono){
-        outputFactor_class= new OutputFactor(context);
+        outputFactor_class= new OutputFactor();
         six_x_trilogy_class.setCono(outputFactor_class.getCono_index());
         output_factor.setText(String.valueOf(outputFactor_class.getOutputFactor(Integer.parseInt(new Util().splitCono(cono)))));
         output_factor_value=output_factor.getText().toString();

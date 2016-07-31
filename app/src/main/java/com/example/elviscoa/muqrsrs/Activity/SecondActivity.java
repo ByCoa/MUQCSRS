@@ -169,7 +169,7 @@ public class SecondActivity extends AppCompatActivity {
     }
 
     public void setOutput_factor_text_value (Context context,String cono){
-        outputFactor_class= new OutputFactor(context);
+        outputFactor_class= new OutputFactor();
         six_x_trilogy_class.setCono(outputFactor_class.getCono_index());
         output_factor.setText(String.valueOf(outputFactor_class.getOutputFactor(Integer.parseInt(new Util().splitCono(cono)))));
         six_x_trilogy_class.setOutputfactor(outputFactor_class);

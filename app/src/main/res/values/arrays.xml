@@ -1,61 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="array_cono">
-        <item>Cono 5</item>
-        <item>Cono 10</item>
-        <item>Cono 12</item>
-        <item>Cono 14</item>
-        <item>Cono 16</item>
-        <item>Cono 18</item>
-        <item>Cono 20</item>
-        <item>Cono 22</item>
-        <item>Cono 24</item>
-        <item>Cono 26</item>
-        <item>Cono 28</item>
-        <item>Cono 30</item>
+        <item>Cone 5</item>
+        <item>Cone 10</item>
+        <item>Cone 12</item>
+        <item>Cone 14</item>
+        <item>Cone 16</item>
+        <item>Cone 18</item>
+        <item>Cone 20</item>
+        <item>Cone 22</item>
+        <item>Cone 24</item>
+        <item>Cone 26</item>
+        <item>Cone 28</item>
+        <item>Cone 30</item>
     </string-array>
 
     <string-array name="cant_arc">
-        <item>1  ARCO</item>
-        <item>2  ARCOS</item>
-        <item>3  ARCOS</item>
-        <item>4  ARCOS</item>
-        <item>5  ARCOS</item>
-        <item>6  ARCOS</item>
-        <item>7  ARCOS</item>
-        <item>8  ARCOS</item>
-        <item>9  ARCOS</item>
-        <item>10 ARCOS</item>
-        <item>11 ARCOS</item>
-        <item>12 ARCOS</item>
-        <item>13 ARCOS</item>
-        <item>14 ARCOS</item>
-        <item>15 ARCOS</item>
-        <item>16 ARCOS</item>
-        <item>17 ARCOS</item>
-        <item>18 ARCOS</item>
-        <item>19 ARCOS</item>
+        <item>1  ARC</item>
+        <item>2  ARCS</item>
+        <item>3  ARCS</item>
+        <item>4  ARCS</item>
+        <item>5  ARCS</item>
+        <item>6  ARCS</item>
+        <item>7  ARCS</item>
+        <item>8  ARCS</item>
+        <item>9  ARCS</item>
+        <item>10 ARCS</item>
+        <item>11 ARCS</item>
+        <item>12 ARCS</item>
+        <item>13 ARCS</item>
+        <item>14 ARCS</item>
+        <item>15 ARCS</item>
+        <item>16 ARCS</item>
+        <item>17 ARCS</item>
+        <item>18 ARCS</item>
+        <item>19 ARCS</item>
     </string-array>
 
     <string-array name="tabs">
-        <item>ARCO 1</item>
-        <item>ARCO 2</item>
-        <item>ARCO 3</item>
-        <item>ARCO 4</item>
-        <item>ARCO 5</item>
-        <item>ARCO 6</item>
-        <item>ARCO 7</item>
-        <item>ARCO 8</item>
-        <item>ARCO 9</item>
-        <item>ARCO 10</item>
-        <item>ARCO 11</item>
-        <item>ARCO 12</item>
-        <item>ARCO 13</item>
-        <item>ARCO 14</item>
-        <item>ARCO 15</item>
-        <item>ARCO 16</item>
-        <item>ARCO 17</item>
-        <item>ARCO 18</item>
-        <item>ARCO 19</item>
+        <item>ARC 1</item>
+        <item>ARC 2</item>
+        <item>ARC 3</item>
+        <item>ARC 4</item>
+        <item>ARC 5</item>
+        <item>ARC 6</item>
+        <item>ARC 7</item>
+        <item>ARC 8</item>
+        <item>ARC 9</item>
+        <item>ARC 10</item>
+        <item>ARC 11</item>
+        <item>ARC 12</item>
+        <item>ARC 13</item>
+        <item>ARC 14</item>
+        <item>ARC 15</item>
+        <item>ARC 16</item>
+        <item>ARC 17</item>
+        <item>ARC 18</item>
+        <item>ARC 19</item>
     </string-array>
 </resources>

@@ -20,7 +20,7 @@ public class Six_X_Trilogy {
 
 
 
-    public Six_X_Trilogy(Context context, Integer cono, Double profundidad, Double peso_del_arco, Double mu_tps, Integer dosis_prescrita, Double normalizacion, Double peso_maximo_dosis){
+    public Six_X_Trilogy(Integer cono, Double profundidad, Double peso_del_arco, Double mu_tps, Integer dosis_prescrita, Double normalizacion, Double peso_maximo_dosis){
         this.cono = cono;
         this.profundidad = profundidad;
         this.peso_del_arco = peso_del_arco;
@@ -28,7 +28,7 @@ public class Six_X_Trilogy {
         this.dosis_prescrita = dosis_prescrita;
         this.normalizacion = normalizacion;
         this.peso_maximo_dosis = peso_maximo_dosis;
-        this.outputfactor = new OutputFactor(context);
+        this.outputfactor = new OutputFactor();
         this.tmr = new TMR();
     }
 
@@ -36,13 +36,18 @@ public class Six_X_Trilogy {
         this.dosis_prescrita = dosis_prescrita;
         this.normalizacion = normalizacion;
         this.peso_maximo_dosis = peso_maximo_dosis;
-        this.outputfactor = new OutputFactor(context);
+        this.outputfactor = new OutputFactor();
         this.tmr = new TMR();
     }
 
-    public Integer getEnergia (){
-        return ENERGIA;
+    public String getEnergia (){
+        return String.valueOf(ENERGIA);
     }
+
+    public String getD_ZERO (){
+        return String.valueOf(D0);
+    }
+    public Double getPeso_maximo_dosis () { return peso_maximo_dosis;}
 
     public Integer getCono() {
         return cono;
@@ -89,7 +94,7 @@ public class Six_X_Trilogy {
     }
 
     public Double getTMR (){
-        return tmr.getTMR(cono, profundidad);
+        return tmr.getTMR(outputfactor.getIndexConoFromString(cono), profundidad);
     }
 
     public Integer getDosisprescrita() {

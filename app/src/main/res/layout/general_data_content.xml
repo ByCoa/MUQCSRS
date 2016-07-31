@@ -104,4 +104,38 @@
         android:entries="@array/cant_arc"
         android:spinnerMode="dialog" />
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_treatment_per"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/cant_arco">
+
+        <EditText
+            android:id="@+id/input_treatment_per"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            android:hint="Treatment Percentage" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_dose_fraction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/input_layout_treatment_per">
+
+        <EditText
+            android:id="@+id/input_dose_fraction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            android:hint="@string/peso_maximo_dosis" />
+
+    </android.support.design.widget.TextInputLayout>
+
 </RelativeLayout>

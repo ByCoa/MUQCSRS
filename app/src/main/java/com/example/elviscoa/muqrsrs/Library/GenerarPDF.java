@@ -378,7 +378,8 @@ public class GenerarPDF {
         String response = null;
         try {
             StringBuffer output = new StringBuffer();
-            String fpath = "/sdcard/" + fname + ".pdf";
+
+            String fpath = fname;
 
             PdfReader reader = new PdfReader(new FileInputStream(fpath));
             PdfReaderContentParser parser = new PdfReaderContentParser(reader);

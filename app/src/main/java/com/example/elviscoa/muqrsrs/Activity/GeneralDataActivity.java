@@ -1,7 +1,11 @@
 package com.example.elviscoa.muqrsrs.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -20,10 +24,15 @@ import android.widget.Toast;
 
 import com.example.elviscoa.muqrsrs.Database.Database;
 import com.example.elviscoa.muqrsrs.Library.GenerarPDF;
+import com.example.elviscoa.muqrsrs.Library.compressImage;
 import com.example.elviscoa.muqrsrs.R;
+import com.theartofdev.edmodo.cropper.CropImage;
+
+import java.util.ArrayList;
 
 public class GeneralDataActivity extends AppCompatActivity {
     //putExtra
+    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private static final String D_ZERO ="D_ZERO";
     private static final String ARCOS ="ARCOS";
     private static final String DOSIS_PRESCRITA="DOSIS_PRESCRITA";
@@ -41,6 +50,8 @@ public class GeneralDataActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private FloatingActionButton fab;
+    private FloatingActionButton fabpdf;
+    private FloatingActionButton fabcamera;
     //Database
     private Database dbHandler = new Database(this);
 
@@ -57,11 +68,20 @@ public class GeneralDataActivity extends AppCompatActivity {
         normalizacion   = (EditText) findViewById(R.id.input_nomalizacion);
         peso_maximo_dosis=(EditText) findViewById(R.id.input_peso_maximo_dosis);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fabpdf = (FloatingActionButton) findViewById(R.id.fabpdf);
+        fabcamera = (FloatingActionButton) findViewById(R.id.fabcamera);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_design_support_layout);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
-
+        //bitmap();
         //read(this);
-        Log.i("Response", String.valueOf(GenerarPDF.read("srs")));
+        //Log.i("Response", String.valueOf(GenerarPDF.read("srs")));
+        fabpdf.setOnClickListener(new View.OnClickListener() {
+                                   @Override
+                                   public void onClick(View view) {
+                                    galleryIntent();
+                                   }
+        });
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,6 +156,14 @@ public class GeneralDataActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    private void bitmap (){
+
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.papel1e);
+        bm = compressImage.getResizedBitmap(bm,500);
+        Log.i("Image encode", compressImage.encodeToBase(bm, Bitmap.CompressFormat.JPEG, 100));
+
+    }
+
 
     public void setGeneralData (String PATIENT_ID, String PLAN_ID,
                                 String ENERGY, String D_ZERO, String DOSIS_PRESCRITA,
@@ -163,5 +191,76 @@ public class GeneralDataActivity extends AppCompatActivity {
             }while (c.moveToNext());
         }
         dbHandler.close();
+    }
+
+    private void galleryIntent()
+    {
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        Log.d("requestCode", "" + requestCode);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SELECT_FILE) {
+                Log.d("data", String.valueOf(data.getData()));//onSelectFromGalleryResult(data);
+                Log.i("Response", GenerarPDF.read(String.valueOf(data.getData().getPath())));
+                getPDFData(GenerarPDF.read(String.valueOf(data.getData().getPath())));
+            }
+            else if (requestCode == REQUEST_CAMERA)
+                Log.d("requestCode", "EntréCamaera");//onCaptureImageResult(data);
+            else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                Log.d("Activity result", "" + result);
+                if (resultCode == RESULT_OK) {
+                    Uri resultUri = result.getUri();
+                    Log.d("resultUri", "" + resultUri);
+                    //onSelectFromGalleryResult(resultUri);
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    Exception error = result.getError();
+                    Log.d("resultUri", "" + error);
+
+                }
+            }
+        }
+    }
+
+    private void getPDFData (String data){
+        String[] splinter= data.split("\n");
+        Log.i("Splinter", String.valueOf(splinter.length));
+
+        for (int i=0;i<splinter.length;i++){
+            if (splinter[i].startsWith("Total Dose:")){
+                String Aux[]=splinter[i].split(" ");
+                Log.i("Total Dose", String.valueOf(Aux[2]));
+            }
+            if (splinter[i].startsWith("Dose / Fraction:")){
+                String Aux[]=splinter[i].split(" ");
+                Log.i("Dose/Fraction", String.valueOf(Aux[3]));
+            }
+            if (splinter[i].startsWith("Repeat Factor:")){
+                String Aux[]=splinter[i].split(" ");
+                Log.i("Repeat Factor", String.valueOf(Aux[2]));
+            }
+            if (splinter[i].startsWith("Treatment Percentage:")){
+                String Aux[]=splinter[i].split(" ");
+                Log.i("Treatment Percetage", String.valueOf(Aux[2]));
+            }
+            if (splinter[i].startsWith("Campo")){
+                String Aux[]=splinter[i].split(" ");
+                Log.i("Campo size", String.valueOf(Aux.length));
+                if (Aux.length==17)
+                    Log.i(Aux[0] + " " + Aux[1], "Cone: "+Aux[6] +" Weight Factor: "+ Aux[10] +" MU: "+ Aux[14]+" Aver. D: "+ Aux[16]  );
+                else if (Aux.length==14)
+                    Log.i(Aux[0] + " " + Aux[1], "Cone: "+Aux[3] +" Weight Factor: "+ Aux[7] +" MU: "+ Aux[11]+" Aver. D: "+ Aux[13] );
+            }
+        }
     }
 }

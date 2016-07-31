@@ -59,5 +59,6 @@
     <string name="city">City: Caracas</string>
     <string name="whatsapp">Whatsapp: +58 412 2337556</string>
     <string name="report">REPORT</string>
+    <string name="field_empty">Empty fields in ARC:</string>
 
 </resources>
