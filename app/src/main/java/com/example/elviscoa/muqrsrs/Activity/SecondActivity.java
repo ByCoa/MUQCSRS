@@ -67,7 +67,7 @@ public class SecondActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initInstancesTabs();
-        cono=(Spinner) findViewById(R.id.cono);
+        cono=(Spinner) findViewById(R.id.cone);
         Bundle extras = getIntent().getExtras();
         /*
         DOSIS_PRESCRITA=extras.getInt(STRINGDOSIS_PRESCRITA);
@@ -153,7 +153,7 @@ public class SecondActivity extends AppCompatActivity {
 
     public void setDosis_fraccion_text_value(String peso_arco_value){
         if (!cono.equals("") && !profundidad.equals("") && Double.parseDouble(profundidad_value)>=2.0 &&  Double.parseDouble(profundidad_value)<=25.0 && peso_arco_value!=null) {
-            six_x_trilogy_class.setPeso_del_arco(Double.parseDouble(peso_arco_value));
+            six_x_trilogy_class.setWeight_factor(Double.parseDouble(peso_arco_value));
             dosis_fraccion.setText(String.valueOf(six_x_trilogy_class.getDosisXFraccion()));
             dosis_fraccion_value = dosis_fraccion.getText().toString();
         }
@@ -162,7 +162,7 @@ public class SecondActivity extends AppCompatActivity {
     public void setTMR_text_value (Context context,String cono,String profundidad){
         if (!cono.equals("") && !profundidad.equals("") && Double.parseDouble(profundidad)>=2.0 &&  Double.parseDouble(profundidad)<=25.0){
             tmr_class=new TMR();
-            six_x_trilogy_class.setProfundidad((double) tmr_class.getProfundidadIndex(Double.parseDouble(profundidad)));
+            six_x_trilogy_class.setAver_depth_cm((double) tmr_class.getProfundidadIndex(Double.parseDouble(profundidad)));
             tmr.setText(String.valueOf(tmr_class.getTMR(outputFactor_class.getCono_index(),Double.parseDouble(profundidad))));
             six_x_trilogy_class.setTmr(tmr_class);
         }
@@ -170,7 +170,7 @@ public class SecondActivity extends AppCompatActivity {
 
     public void setOutput_factor_text_value (Context context,String cono){
         outputFactor_class= new OutputFactor();
-        six_x_trilogy_class.setCono(outputFactor_class.getCono_index());
+        six_x_trilogy_class.setCone(outputFactor_class.getCono_index());
         output_factor.setText(String.valueOf(outputFactor_class.getOutputFactor(Integer.parseInt(new Util().splitCono(cono)))));
         six_x_trilogy_class.setOutputfactor(outputFactor_class);
     }

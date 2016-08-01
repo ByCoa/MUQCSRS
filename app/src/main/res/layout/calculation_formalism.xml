@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -20,9 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/contact_caps"
+        android:text="CALCULATION FORMALISM"
         android:layout_margin="@dimen/activity_vertical_margin"
-        android:textSize="@dimen/title_size"
+        android:textSize="26dp"
         android:textColor="@color/primary_text"
         android:textStyle="bold"
         android:id="@+id/title"
@@ -32,58 +36,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/site"
+        android:text="The Calculation Formalism comes from the Eclipse Cone Planning Training Manual. You can download from myvarian.com if you have access. This is an extract from this document:"
         android:layout_margin="@dimen/activity_vertical_margin"
         android:textColor="@color/secondary_text"
-        android:textSize="22dp"
-        android:textStyle="bold"
+        android:textSize="20dp"
         android:id="@+id/content1" />
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/url"
-        android:autoLink="web"
-        android:textColor="@color/secondary_text"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        android:id="@+id/content2"
+        android:id="@+id/imageView"
+        android:src="@drawable/formalism"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/whatsapp"
+        android:text="The dosimetric data comes from a Trilogy CLINAC, installed in The Hospital de Clinicas Caracas in Venezuela. This data were measured with stereotactic diode PTW ® TN60017, and were compared against the Golden Beam Data from Varian Medical Systems ®, finding for depths greater than Dmax, differences smaller than 1.10% with σ = 0.60% for TPR for all cones, and 0.10% with σ = 0.25% for output factors (OF) of cones from 10 mm to 30 mm. For the 5 mm cone we found a difference of 2.15%. This data was introduced into the Cone Dose Calculation Algorithm from Varian Medical Systems ®."
         android:textColor="@color/secondary_text"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        android:id="@+id/content5" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Email: radfis@gmail.com"
-        android:textColor="@color/secondary_text"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        android:id="@+id/content6" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Thanks for contacting us, we will reply to you as soon as possible."
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:textSize="@dimen/content_size"
-        android:textColor="@color/secondary_text"
-        android:id="@+id/content"
-        android:layout_gravity="bottom" />
-
+        android:textSize="20dp"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:id="@+id/content2"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
+</ScrollView>

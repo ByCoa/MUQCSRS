@@ -6,36 +6,50 @@ import android.content.Context;
  * Created by soluciones on 7/3/2016.
  */
 public class Six_X_Trilogy {
+    //General Data
     private static final Integer ENERGIA=6;
-    private static final Integer D0=1;
-    private Integer cono;
-    private Double profundidad;
-    private Double peso_del_arco;
-    private Double mu_tps;
+    private Double total_dose;
+    private Integer number_of_fraction;
+    private Double dose_fraction;
+    private Double treatment_percentage;
+    private Double weight_dose_maximum;
+    private Integer D0;
+    private Double repeat_factor;
+    //Arc Data
+    private Integer cone;
     private OutputFactor outputfactor;
+    private Double aver_depth_cm;
     private TMR tmr;
+    private Double weight_factor;
+    private Double mu_tps;
+    private Double mu_qc_srs;
+
     private Integer dosis_prescrita;
+    private Integer dosis_fraction;
     private Double normalizacion;
-    private Double peso_maximo_dosis;
 
 
 
-    public Six_X_Trilogy(Integer cono, Double profundidad, Double peso_del_arco, Double mu_tps, Integer dosis_prescrita, Double normalizacion, Double peso_maximo_dosis){
-        this.cono = cono;
-        this.profundidad = profundidad;
-        this.peso_del_arco = peso_del_arco;
+    public Six_X_Trilogy(Integer cone, Double aver_depth_cm, Double weight_factor, Double mu_tps, Integer dosis_prescrita, Double normalizacion, Double weight_dose_maximum){
+        this.cone = cone;
+        this.aver_depth_cm = aver_depth_cm;
+        this.weight_factor = weight_factor;
         this.mu_tps = mu_tps;
         this.dosis_prescrita = dosis_prescrita;
         this.normalizacion = normalizacion;
-        this.peso_maximo_dosis = peso_maximo_dosis;
+        this.weight_dose_maximum = weight_dose_maximum;
         this.outputfactor = new OutputFactor();
         this.tmr = new TMR();
     }
 
-    public Six_X_Trilogy(Context context, Integer dosis_prescrita, Double normalizacion, Double peso_maximo_dosis){
+    public Six_X_Trilogy(Context context, Integer dosis_prescrita, Double normalizacion, Double weight_dose_maximum){
         this.dosis_prescrita = dosis_prescrita;
         this.normalizacion = normalizacion;
-        this.peso_maximo_dosis = peso_maximo_dosis;
+        this.weight_dose_maximum = weight_dose_maximum;
+        this.outputfactor = new OutputFactor();
+        this.tmr = new TMR();
+    }
+    public Six_X_Trilogy (){
         this.outputfactor = new OutputFactor();
         this.tmr = new TMR();
     }
@@ -47,30 +61,30 @@ public class Six_X_Trilogy {
     public String getD_ZERO (){
         return String.valueOf(D0);
     }
-    public Double getPeso_maximo_dosis () { return peso_maximo_dosis;}
+    public Double getWeight_dose_maximum() { return weight_dose_maximum;}
 
-    public Integer getCono() {
-        return cono;
+    public Integer getCone() {
+        return cone;
     }
 
-    public void setCono(Integer cono) {
-        this.cono = cono;
+    public void setCone(Integer cone) {
+        this.cone = cone;
     }
 
-    public Double getProfundidad() {
-        return profundidad;
+    public Double getAver_depth_cm() {
+        return aver_depth_cm;
     }
 
-    public void setProfundidad(Double profundidad) {
-        this.profundidad = profundidad;
+    public void setAver_depth_cm(Double aver_depth_cm) {
+        this.aver_depth_cm = aver_depth_cm;
     }
 
-    public Double getPeso_del_arco() {
-        return peso_del_arco;
+    public Double getWeight_factor() {
+        return weight_factor;
     }
 
-    public void setPeso_del_arco(Double peso_del_arco) {
-        this.peso_del_arco = peso_del_arco;
+    public void setWeight_factor(Double weight_factor) {
+        this.weight_factor = weight_factor;
     }
 
     public Double getMU_TPS() {
@@ -90,11 +104,11 @@ public class Six_X_Trilogy {
     }
 
     public Double getOutputfactor (){
-        return outputfactor.getOutputFactor(cono);
+        return outputfactor.getOutputFactor(cone);
     }
 
     public Double getTMR (){
-        return tmr.getTMR(outputfactor.getIndexConoFromString(cono), profundidad);
+        return tmr.getTMR(outputfactor.getIndexConoFromString(cone), aver_depth_cm);
     }
 
     public Integer getDosisprescrita() {
@@ -106,7 +120,7 @@ public class Six_X_Trilogy {
     }
 
     public Double getDosisXFraccion (){
-        return (dosis_prescrita*peso_del_arco)/peso_maximo_dosis;
+        return (dosis_prescrita* weight_factor)/ weight_dose_maximum;
     }
 
     public Double getMU (Double outputfactor,Double tmr)
@@ -121,5 +135,57 @@ public class Six_X_Trilogy {
 
     public void setNormalizacion(Double normalizacion) {
         this.normalizacion = normalizacion;
+    }
+
+    public Integer getDosis_fraction() {
+        return dosis_fraction;
+    }
+
+    public void setDosis_fraction(Integer dosis_fraction) {
+        this.dosis_fraction = dosis_fraction;
+    }
+
+    public void setD0(Integer d0) {
+        D0 = d0;
+    }
+
+    public Double getTotal_dose() {
+        return total_dose;
+    }
+
+    public void setTotal_dose(Double total_dose) {
+        this.total_dose = total_dose;
+    }
+
+    public Integer getNumber_of_fraction() {
+        return number_of_fraction;
+    }
+
+    public void setNumber_of_fraction(Integer number_of_fraction) {
+        this.number_of_fraction = number_of_fraction;
+    }
+
+    public Double getDose_fraction() {
+        return dose_fraction;
+    }
+
+    public void setDose_fraction(Double dose_fraction) {
+        this.dose_fraction = dose_fraction;
+    }
+
+    public Double getTreatment_percentage() {
+        return treatment_percentage;
+    }
+
+    public void setTreatment_percentage(Double treatment_percentage) {
+        this.treatment_percentage = treatment_percentage;
+    }
+
+    public Double getRepeat_factor() {
+        return repeat_factor;
+    }
+
+    public void setRepeat_factor(Double repeat_factor) {
+        this.repeat_factor = repeat_factor;
     }
 }

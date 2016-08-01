@@ -16,7 +16,7 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/cono"
+        android:id="@+id/cone"
         android:entries="@array/array_cono"
         android:spinnerMode="dialog" />
 
@@ -28,7 +28,7 @@
         android:textColor="@color/primary_text"
         android:textColorHint="@color/primary_text"
         android:imeOptions="actionDone"
-        android:layout_below="@+id/cono"
+        android:layout_below="@+id/cone"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -50,7 +50,7 @@
         android:id="@+id/input_layout_profundidad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cono"
+        android:layout_below="@+id/cone"
         android:textColor="@color/primary_text"
         android:textColorHint="@color/primary_text"
         android:imeOptions="actionDone"
@@ -65,7 +65,7 @@
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
             android:textColorHint="@color/primary_text"
-            android:hint="@string/profundidad" />
+            android:hint="@string/aver_depth_cm" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout

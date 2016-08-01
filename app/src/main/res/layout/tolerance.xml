@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/contact_caps"
+        android:text="@string/tolerance"
         android:layout_margin="@dimen/activity_vertical_margin"
         android:textSize="@dimen/title_size"
         android:textColor="@color/primary_text"
@@ -32,58 +32,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/site"
+        android:text="@string/tolerance_title"
         android:layout_margin="@dimen/activity_vertical_margin"
         android:textColor="@color/secondary_text"
         android:textSize="22dp"
-        android:textStyle="bold"
         android:id="@+id/content1" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/url"
-        android:autoLink="web"
+        android:text="http://www.aapm.org/pubs/reports/RPT_114.pdf"
         android:textColor="@color/secondary_text"
+        android:autoLink="web"
         android:textSize="22dp"
         android:textStyle="bold"
         android:id="@+id/content2"
         android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/whatsapp"
-        android:textColor="@color/secondary_text"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        android:id="@+id/content5" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Email: radfis@gmail.com"
-        android:textColor="@color/secondary_text"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        android:id="@+id/content6" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Thanks for contacting us, we will reply to you as soon as possible."
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:textSize="@dimen/content_size"
-        android:textColor="@color/secondary_text"
-        android:id="@+id/content"
-        android:layout_gravity="bottom" />
-
 
 </LinearLayout>

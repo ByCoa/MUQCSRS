@@ -45,79 +45,36 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_dosis_prescrita"
+        android:id="@+id/input_layout_total_dose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
         android:layout_below="@id/input_layout_d_zero">
 
         <EditText
-            android:id="@+id/input_dosis_prescrita"
+            android:id="@+id/input_total_dose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
             android:inputType="number"
-            android:hint="@string/dosis_prescrita" />
+            android:hint="@string/total_dose" />
 
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_normalizacion"
+        android:id="@+id/input_layout_number_fraction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
-        android:layout_below="@id/input_layout_dosis_prescrita">
+        android:layout_below="@id/input_layout_total_dose">
 
         <EditText
-            android:id="@+id/input_nomalizacion"
+            android:id="@+id/input_number_fraction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
-            android:hint="@string/normalizacion" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_peso_maximo_dosis"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:layout_below="@id/input_layout_normalizacion">
-
-        <EditText
-            android:id="@+id/input_peso_maximo_dosis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:inputType="numberDecimal"
-            android:hint="@string/peso_maximo_dosis" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cant_arco"
-        android:layout_marginTop="15dp"
-        android:layout_below="@id/input_layout_peso_maximo_dosis"
-        android:entries="@array/cant_arc"
-        android:spinnerMode="dialog" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_treatment_per"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:layout_below="@id/cant_arco">
-
-        <EditText
-            android:id="@+id/input_treatment_per"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:inputType="numberDecimal"
-            android:hint="Treatment Percentage" />
+            android:hint="@string/number_fraction" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -126,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
-        android:layout_below="@id/input_layout_treatment_per">
+        android:layout_below="@id/input_layout_number_fraction">
 
         <EditText
             android:id="@+id/input_dose_fraction"
@@ -134,8 +91,52 @@
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
-            android:hint="@string/peso_maximo_dosis" />
+            android:hint="@string/dose_fraction" />
 
     </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_treatment_per"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/input_layout_dose_fraction">
+
+        <EditText
+            android:id="@+id/input_treatment_per"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            android:hint="@string/treatment_percentage" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_weight_dose_maximum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:layout_below="@id/input_layout_treatment_per">
+
+        <EditText
+            android:id="@+id/input_weight_dose_maximum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            android:hint="@string/weight_dose_maximum" />
+
+    </android.support.design.widget.TextInputLayout>
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cant_arco"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/input_layout_weight_dose_maximum"
+        android:entries="@array/cant_arc"
+        android:spinnerMode="dialog" />
+
 
 </RelativeLayout>

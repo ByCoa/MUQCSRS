@@ -3,9 +3,6 @@ package com.example.elviscoa.muqrsrs.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -160,8 +157,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco1.getCono().equals("") && !arco1.getMonitorUnits().equals("") && !arco1.getPesoArco().equals("") && !arco1.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco1.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco1.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco1.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco1.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco1", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco1", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(0, six_arc);
                             full.set(0,true);
                         }else{
@@ -173,8 +170,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco2.getCono().equals("") && !arco2.getMonitorUnits().equals("") && !arco2.getPesoArco().equals("") && !arco2.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco2.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco2.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco2.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco2.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco2", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco2", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(1, six_arc);
                             full.set(1,true);
                         }else{
@@ -186,8 +183,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco3.getCono().equals("") && !arco3.getMonitorUnits().equals("") && !arco3.getPesoArco().equals("") && !arco3.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco3.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco3.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco3.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco3.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco3", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco3", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(2, six_arc);
                             full.set(2,true);
                         }else{
@@ -199,8 +196,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco4.getCono().equals("") && !arco4.getMonitorUnits().equals("") && !arco4.getPesoArco().equals("") && !arco4.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco4.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco4.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco4.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco4.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco4", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco4", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(3, six_arc);
                             full.set(3,true);
                         }else{
@@ -212,8 +209,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco5.getCono().equals("") && !arco5.getMonitorUnits().equals("") && !arco5.getPesoArco().equals("") && !arco5.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco5.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco5.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco5.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco5.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco5", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco5", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(4, six_arc);
                             full.set(4,true);
                         }else{
@@ -225,8 +222,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco6.getCono().equals("") && !arco6.getMonitorUnits().equals("") && !arco6.getPesoArco().equals("") && !arco6.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco6.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco6.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco6.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco6.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco6", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco6", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(5, six_arc);
                             full.set(5,true);
                         }else{
@@ -238,8 +235,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco7.getCono().equals("") && !arco7.getMonitorUnits().equals("") && !arco7.getPesoArco().equals("") && !arco7.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco7.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco7.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco7.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco7.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco7", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco7", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(6, six_arc);
                             full.set(6,true);
                         }else{
@@ -251,8 +248,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco8.getCono().equals("") && !arco8.getMonitorUnits().equals("") && !arco8.getPesoArco().equals("") && !arco8.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco8.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco8.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco8.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco8.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco8", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco8", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(7, six_arc);
                             full.set(7,true);
                         }else{
@@ -264,8 +261,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco9.getCono().equals("") && !arco9.getMonitorUnits().equals("") && !arco9.getPesoArco().equals("") && !arco9.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco9.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco9.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco9.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco9.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco9", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco9", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(8, six_arc);
                             full.set(8,true);
                         }else{
@@ -277,8 +274,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco10.getCono().equals("") && !arco10.getMonitorUnits().equals("") && !arco10.getPesoArco().equals("") && !arco10.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco10.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco10.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco10.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco10.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco10", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco10", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(9, six_arc);
                             full.set(9,true);
                         }else{
@@ -290,8 +287,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco11.getCono().equals("") && !arco11.getMonitorUnits().equals("") && !arco11.getPesoArco().equals("") && !arco11.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco11.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco11.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco11.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco11.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco11", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco11", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(10, six_arc);
                             full.set(10,true);
                         }else{
@@ -303,8 +300,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco12.getCono().equals("") && !arco12.getMonitorUnits().equals("") && !arco12.getPesoArco().equals("") && !arco12.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco12.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco12.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco12.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco12.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco12", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco12", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(11, six_arc);
                             full.set(11,true);
                         }else{
@@ -316,8 +313,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco13.getCono().equals("") && !arco13.getMonitorUnits().equals("") && !arco13.getPesoArco().equals("") && !arco13.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco13.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco13.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco13.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco13.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco13", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco13", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(12, six_arc);
                             full.set(12,true);
                         }else{
@@ -329,8 +326,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco14.getCono().equals("") && !arco14.getMonitorUnits().equals("") && !arco14.getPesoArco().equals("") && !arco14.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco14.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco14.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco14.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco14.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco14", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco14", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(13, six_arc);
                             full.set(13,true);
                         }else{
@@ -342,8 +339,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco15.getCono().equals("") && !arco15.getMonitorUnits().equals("") && !arco15.getPesoArco().equals("") && !arco15.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco15.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco15.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco15.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco15.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco15", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco15", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(14, six_arc);
                             full.set(14,true);
                         }else{
@@ -355,8 +352,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco16.getCono().equals("") && !arco16.getMonitorUnits().equals("") && !arco16.getPesoArco().equals("") && !arco16.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco16.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco16.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco16.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco16.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco16", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco16", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(15, six_arc);
                             full.set(15,true);
                         }else{
@@ -368,8 +365,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco17.getCono().equals("") && !arco17.getMonitorUnits().equals("") && !arco17.getPesoArco().equals("") && !arco17.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco17.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco17.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco17.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco17.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco17", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco17", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
 
                             ArcosArray.set(16, six_arc);
                             full.set(16,true);
@@ -382,8 +379,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco18.getCono().equals("") && !arco18.getMonitorUnits().equals("") && !arco18.getPesoArco().equals("") && !arco18.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco18.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco18.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco18.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco18.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco18", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco18", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(17, six_arc);
                             full.set(17,true);
                         }else{
@@ -395,8 +392,8 @@ public class ArcoActivity extends AppCompatActivity {
                         if (!arco19.getCono().equals("") && !arco19.getMonitorUnits().equals("") && !arco19.getPesoArco().equals("") && !arco19.getPrdofundidad().equals("")) {
                             six_arc = new Six_X_Trilogy(Integer.parseInt(new Util().splitCono(arco19.getCono())), new Util().roundThreeDecimals(Double.parseDouble(arco19.getPrdofundidad())), new Util().roundThreeDecimals(Double.parseDouble(arco19.getPesoArco()))
                                     , new Util().roundThreeDecimals(Double.parseDouble(arco19.getMonitorUnits())), getDOSIS_PRESCRITA(), getNORMALIZACION(), getPESO_MAXIMO_DOSIS());
-                            Log.i("Arco19", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getPeso_maximo_dosis()
-                                    + " Cono: " + six_arc.getCono() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getProfundidad() + " TMR: " + six_arc.getTMR());
+                            Log.i("Arco19", "Dosis prescrita: " + six_arc.getDosisprescrita() + " Normalizacion: " + six_arc.getNormalizacion() + " Peso Maximo Dosis: " + six_arc.getWeight_dose_maximum()
+                                    + " Cono: " + six_arc.getCone() + " Output Factor: " + six_arc.getOutputfactor() + " Profundidad: " + six_arc.getAver_depth_cm() + " TMR: " + six_arc.getTMR());
                             ArcosArray.set(18, six_arc);
                             full.set(18,true);
                         }else{

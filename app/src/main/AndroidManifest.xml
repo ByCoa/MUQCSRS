@@ -19,11 +19,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.elviscoa.muqrsrs.Activity.ContentFragment">
+            android:name=".Activity.Contact">
+        </activity>
+        <activity
+            android:name=".Activity.Tolerance">
+        </activity>
+        <activity
+            android:name=".Activity.CalculationFormalism">
+        </activity>
+        <activity
+            android:name=".Activity.MyOwnData">
+        </activity>
+        <activity
+            android:name=".Activity.WhoWeAre">
         </activity>
         <activity
             android:name=".Activity.ArcoActivity">
-
         </activity>
         <activity
             android:screenOrientation="landscape"

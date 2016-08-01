@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">MU QC SRS</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="dosis_prescrita">Prescribed Dose (cGY)</string>
-    <string name="normalizacion">Normalization</string>
-    <string name="peso_maximo_dosis">Weight Dose</string>
-    <string name="profundidad">Depth</string>
+    <string name="total_dose">Total dose (cGY)</string>
+    <string name="number_fraction">Number of fraction</string>
+    <string name="weight_dose_maximum">Weight at dose maximum</string>
+    <string name="dose_fraction">Dose/Fraction</string>
+    <string name="aver_depth_cm">Depth</string>
     <string name="peso_arco">Weight Factor</string>
     <string name="mu_tps">MU TPS</string>
     <string name="mu_qc_srs">MU QC SRS</string>
@@ -60,5 +61,14 @@
     <string name="whatsapp">Whatsapp: +58 412 2337556</string>
     <string name="report">REPORT</string>
     <string name="field_empty">Empty fields in ARC:</string>
+    <string name="treatment_percentage">Treatment Percentage</string>
+    <string name="who_we_are">WHO WE ARE?</string>
+    <string name="franklyn_reggio">MSc. Franklyn Reggio</string>
+    <string name="jugleys_seijas">MSc. Jugleys Seijas</string>
+    <string name="lk_franklyn_reggio">https://www.linkedin.com/in/franklyn-reggio-b469b1124/en</string>
+    <string name="my_own_data">MY OWN DATA</string>
+    <string name="my_own_content">Do you want to use your own SRS dosimetric data with MU QC SRS?</string>
+    <string name="tolerance">TOLERANCE</string>
+    <string name="tolerance_title">The Tolerances uses in MU QC SRS comes from 114 AAPM report published in 2011:</string>
 
 </resources>

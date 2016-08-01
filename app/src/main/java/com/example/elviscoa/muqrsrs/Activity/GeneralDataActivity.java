@@ -1,6 +1,7 @@
 package com.example.elviscoa.muqrsrs.Activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -22,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.elviscoa.muqrsrs.Class.Six_X_Trilogy;
 import com.example.elviscoa.muqrsrs.Database.Database;
 import com.example.elviscoa.muqrsrs.Library.GenerarPDF;
 import com.example.elviscoa.muqrsrs.Library.compressImage;
@@ -40,11 +42,15 @@ public class GeneralDataActivity extends AppCompatActivity {
     private static final String PESO_MAXIMO_DOSIS="PESO_MAXIMO_DOSIS";
     private String drawerTitle;
     private Long tsLong;
+    //Array
+    private ArrayList<String> extrasString = new ArrayList<String>();
     //UI
-    private EditText dosis_prescrita;
-    private EditText normalizacion;
-    private EditText peso_maximo_dosis;
     private EditText d_zero;
+    private EditText total_dose;
+    private EditText number_fraction;
+    private EditText dose_fraction;
+    private EditText treatment_per;
+    private EditText weight_dose_maximum;
     private Spinner  cant_arcos;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -64,9 +70,11 @@ public class GeneralDataActivity extends AppCompatActivity {
         setToolbar();
         d_zero          = (EditText) findViewById(R.id.input_d_zero);
         cant_arcos      = (Spinner) findViewById(R.id.cant_arco);
-        dosis_prescrita = (EditText) findViewById(R.id.input_dosis_prescrita);
-        normalizacion   = (EditText) findViewById(R.id.input_nomalizacion);
-        peso_maximo_dosis=(EditText) findViewById(R.id.input_peso_maximo_dosis);
+        dose_fraction = (EditText) findViewById(R.id.input_dose_fraction);
+        total_dose = (EditText) findViewById(R.id.input_total_dose);
+        number_fraction =(EditText) findViewById(R.id.input_number_fraction);
+        treatment_per = (EditText) findViewById(R.id.input_treatment_per);
+        weight_dose_maximum = (EditText) findViewById(R.id.input_weight_dose_maximum);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fabpdf = (FloatingActionButton) findViewById(R.id.fabpdf);
         fabcamera = (FloatingActionButton) findViewById(R.id.fabcamera);
@@ -85,18 +93,18 @@ public class GeneralDataActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!d_zero.getText().toString().equals("") && !cant_arcos.getSelectedItem().toString().equals("") && !dosis_prescrita.getText().toString().equals("")
-                        && !normalizacion.getText().toString().equals("") && !peso_maximo_dosis.getText().toString().equals("")) {
+                if (!d_zero.getText().toString().equals("") && !cant_arcos.getSelectedItem().toString().equals("") && !dose_fraction.getText().toString().equals("")
+                        && !total_dose.getText().toString().equals("") && !number_fraction.getText().toString().equals("")) {
                     Intent i = new Intent(GeneralDataActivity.this, ArcoActivity.class);
                     i.putExtra(D_ZERO, d_zero.getText().toString());
                     i.putExtra(ARCOS, cant_arcos.getSelectedItem().toString());
-                    i.putExtra(DOSIS_PRESCRITA, dosis_prescrita.getText().toString());
-                    i.putExtra(NORMALIZACION, normalizacion.getText().toString());
-                    i.putExtra(PESO_MAXIMO_DOSIS, peso_maximo_dosis.getText().toString());
+                    i.putExtra(DOSIS_PRESCRITA, dose_fraction.getText().toString());
+                    i.putExtra(NORMALIZACION, total_dose.getText().toString());
+                    i.putExtra(PESO_MAXIMO_DOSIS, number_fraction.getText().toString());
                     setGeneralData("         ", "           ",
-                            "6X", d_zero.getText().toString(), dosis_prescrita.getText().toString(),
-                            String.valueOf(Double.parseDouble(normalizacion.getText().toString())),
-                            peso_maximo_dosis.getText().toString());
+                            "6X", d_zero.getText().toString(), dose_fraction.getText().toString(),
+                            String.valueOf(Double.parseDouble(total_dose.getText().toString())),
+                            number_fraction.getText().toString());
                     //GenerarPDF.GenerarPDF(GeneralDataActivity.this, dbHandler, String.valueOf(tsLong));
                     //fillRecentProductList(dbHandler, String.valueOf(tsLong));
                     i.putExtra("DATE", String.valueOf(tsLong));
@@ -112,11 +120,28 @@ public class GeneralDataActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(MenuItem menuItem) {
             menuItem.setChecked(true);
             drawerLayout.closeDrawers();
-            Toast.makeText(GeneralDataActivity.this, menuItem.getTitle(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(GeneralDataActivity.this, menuItem.getTitle(), Toast.LENGTH_LONG).show();
             if (menuItem.getTitle().toString().equals("Contact us")){
-                Intent i = new Intent(GeneralDataActivity.this, ContentFragment.class);
+                Intent i = new Intent(GeneralDataActivity.this, Contact.class);
                 GeneralDataActivity.this.startActivity(i);
             }
+            if (menuItem.getTitle().toString().equals("Tolerance")){
+                Intent i = new Intent(GeneralDataActivity.this, Tolerance.class);
+                GeneralDataActivity.this.startActivity(i);
+            }
+            if (menuItem.getTitle().toString().equals("Who we are?")){
+                Intent i = new Intent(GeneralDataActivity.this, WhoWeAre.class);
+                GeneralDataActivity.this.startActivity(i);
+            }
+            if (menuItem.getTitle().toString().equals("Calculation Formalism")){
+                Intent i = new Intent(GeneralDataActivity.this, CalculationFormalism.class);
+                GeneralDataActivity.this.startActivity(i);
+            }
+            if (menuItem.getTitle().toString().equals("My own data")){
+                Intent i = new Intent(GeneralDataActivity.this, MyOwnData.class);
+                GeneralDataActivity.this.startActivity(i);
+            }
+
 
             return true;
             }
@@ -154,6 +179,7 @@ public class GeneralDataActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_18dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        this.getSupportActionBar().setIcon(R.mipmap.ic_launcher);
     }
 
     private void bitmap (){
@@ -203,16 +229,32 @@ public class GeneralDataActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
 
         Log.d("requestCode", "" + requestCode);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE) {
-                Log.d("data", String.valueOf(data.getData()));//onSelectFromGalleryResult(data);
-                Log.i("Response", GenerarPDF.read(String.valueOf(data.getData().getPath())));
-                getPDFData(GenerarPDF.read(String.valueOf(data.getData().getPath())));
+                final ProgressDialog dialog = ProgressDialog.show(GeneralDataActivity.this, "",
+                        "Loading PDF data. Please wait...", true);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        // do the thing that takes a long time
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run()
+                            {
+                                Log.i("Response", GenerarPDF.read(String.valueOf(data.getData().getPath())));
+                                getPDFData(GenerarPDF.read(String.valueOf(data.getData().getPath())));
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                }).start();
             }
             else if (requestCode == REQUEST_CAMERA)
                 Log.d("requestCode", "EntréCamaera");//onCaptureImageResult(data);
@@ -235,32 +277,53 @@ public class GeneralDataActivity extends AppCompatActivity {
     private void getPDFData (String data){
         String[] splinter= data.split("\n");
         Log.i("Splinter", String.valueOf(splinter.length));
-
+        Six_X_Trilogy six_x_trilogy= new Six_X_Trilogy();
+        Integer arcscount=0;
         for (int i=0;i<splinter.length;i++){
             if (splinter[i].startsWith("Total Dose:")){
                 String Aux[]=splinter[i].split(" ");
+                //String SI[]= Aux[2].split(".");
+                six_x_trilogy.setTotal_dose(Double.valueOf(Aux[2]));
                 Log.i("Total Dose", String.valueOf(Aux[2]));
+                total_dose.setText(Aux[2]);
+
             }
             if (splinter[i].startsWith("Dose / Fraction:")){
                 String Aux[]=splinter[i].split(" ");
                 Log.i("Dose/Fraction", String.valueOf(Aux[3]));
+                //String SI[]= Aux[3].split(".");
+                six_x_trilogy.setDose_fraction(Double.valueOf(Aux[3]));
+                dose_fraction.setText(Aux[3]);
             }
-            if (splinter[i].startsWith("Repeat Factor:")){
+            if (splinter[i].startsWith("Number of Fractions:")){
                 String Aux[]=splinter[i].split(" ");
-                Log.i("Repeat Factor", String.valueOf(Aux[2]));
+                Log.i("Number of Fractions", String.valueOf(Aux[3]));
+                six_x_trilogy.setNumber_of_fraction(Integer.valueOf(Aux[3]));
+                number_fraction.setText(Aux[3]);
             }
+
             if (splinter[i].startsWith("Treatment Percentage:")){
                 String Aux[]=splinter[i].split(" ");
                 Log.i("Treatment Percetage", String.valueOf(Aux[2]));
+                String SI[]= Aux[2].split("%");
+                treatment_per.setText(Aux[2]);
+                six_x_trilogy.setTreatment_percentage(Double.valueOf(SI[0]));
             }
+
             if (splinter[i].startsWith("Campo")){
                 String Aux[]=splinter[i].split(" ");
-                Log.i("Campo size", String.valueOf(Aux.length));
-                if (Aux.length==17)
+                arcscount=arcscount+1;
+                if (Aux.length==17){
                     Log.i(Aux[0] + " " + Aux[1], "Cone: "+Aux[6] +" Weight Factor: "+ Aux[10] +" MU: "+ Aux[14]+" Aver. D: "+ Aux[16]  );
-                else if (Aux.length==14)
+                    extrasString.add(Aux[0] + "" + Aux[1]+","+Aux[6] +","+ Aux[10] +","+ Aux[14]+","+ Aux[16]  );
+                }
+                else if (Aux.length==14){
                     Log.i(Aux[0] + " " + Aux[1], "Cone: "+Aux[3] +" Weight Factor: "+ Aux[7] +" MU: "+ Aux[11]+" Aver. D: "+ Aux[13] );
+                    extrasString.add(Aux[0] + "" + Aux[1]+","+Aux[3] +","+ Aux[7] +","+ Aux[11]+","+ Aux[13]  );
+                }
+
             }
         }
+        cant_arcos.setSelection(arcscount - 1);
     }
 }

@@ -10,12 +10,15 @@
             android:title="Calculation Formalism"/>
         <item
             android:id="@+id/menu_seccion_3"
-            android:title="My own data"/>
+            android:title="Tolerance"/>
         <item
             android:id="@+id/menu_seccion_4"
-            android:title="Who we are?"/>
+            android:title="My own data"/>
         <item
             android:id="@+id/menu_seccion_5"
+            android:title="Who we are?"/>
+        <item
+            android:id="@+id/menu_seccion_6"
             android:title="Contact us"/>
     </group>
 </menu>
