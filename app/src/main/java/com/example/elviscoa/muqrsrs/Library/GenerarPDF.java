@@ -64,9 +64,12 @@ public class GenerarPDF {
     private static String planID;
     private static String energy;
     private static String dzero;
-    private static String dosisPrescrita;
-    private static String normalizacion;
-    private static String pesoMaximoDosis;
+    private static String total_dose;
+    private static String number_fraction;
+    private static String dose_fraction;
+    private static String treatment_per;
+    private static String weight_dose_maximum;
+    private static String repeat_factor;
     private static ArrayList<SixXTrilogy> sixXTrilogyArrayList;
 
     private static Font BOLDFONT = new Font(Font.FontFamily.TIMES_ROMAN, 18,
@@ -148,16 +151,22 @@ public class GenerarPDF {
         paragraph.add(new Chunk(planID+"\n",underlineFont));
         addEmptyLine(paragraph, 1);
         paragraph.add(new Chunk("D'o (cGy/MU):"));
-        paragraph.add(new Chunk("  "+dzero+"  ", underlineFont));
-        paragraph.add(new Chunk("; Dose per fraction:"));
-        paragraph.add(new Chunk("  "+dosisPrescrita+"  ",underlineFont));
-        paragraph.add(new Chunk("; % Norm:"));
-        paragraph.add(new Chunk("  "+normalizacion+"  \n",underlineFont));
+        paragraph.add(new Chunk("  " + dzero + "  ", underlineFont));
+        paragraph.add(new Chunk("; Total dose (cGy):"));
+        paragraph.add(new Chunk("  "+total_dose+"  ",underlineFont));
+        paragraph.add(new Chunk("; Number of fraction:"));
+        paragraph.add(new Chunk("  "+number_fraction+"  ",underlineFont));
+        paragraph.add(new Chunk("; Dose/fraction:"));
+        paragraph.add(new Chunk("  "+dose_fraction+"  \n",underlineFont));
 
         paragraph.add(new Chunk("Energy (MV):"));
         paragraph.add(new Chunk("  "+energy+"  ", underlineFont));
-        paragraph.add(new Chunk("; Total Weight:"));
-        paragraph.add(new Chunk("  "+pesoMaximoDosis+"  ", underlineFont));
+        paragraph.add(new Chunk("; Treatment percent:"));
+        paragraph.add(new Chunk("  "+treatment_per+"  ", underlineFont));
+        paragraph.add(new Chunk("; Weight at dose maximum:"));
+        paragraph.add(new Chunk("  "+weight_dose_maximum+"  ", underlineFont));
+        paragraph.add(new Chunk("; Repeat factor:"));
+        paragraph.add(new Chunk("  "+repeat_factor+"  ", underlineFont));
         //add a table
         addEmptyLine(paragraph, 2);
         createFirstTable(paragraph);
@@ -321,9 +330,12 @@ public class GenerarPDF {
                 planID=c.getString(1);
                 energy=c.getString(3);
                 dzero=c.getString(4);
-                dosisPrescrita=c.getString(5);
-                normalizacion=c.getString(6);
-                pesoMaximoDosis=c.getString(7);
+                total_dose=c.getString(5);
+                number_fraction=c.getString(6);
+                dose_fraction=c.getString(7);
+                treatment_per=c.getString(8);
+                weight_dose_maximum=c.getString(9);
+                repeat_factor=c.getString(10);
             }while (c.moveToNext());
         }
         dbHandler.close();
@@ -339,7 +351,7 @@ public class GenerarPDF {
                         + " " + c.getString(4) + " " + c.getString(5)
                         + " " + c.getString(6));
                 SixXTrilogy sixXTrilogy = new SixXTrilogy(c.getString(0),c.getString(1),c.getString(2),
-                        c.getString(3),c.getString(4),c.getString(5),c.getString(6),c.getString(7));
+                        c.getString(3),c.getString(4),c.getString(5),c.getString(6));
                 sixXTrilogyArrayList.add(sixXTrilogy);
             }while (c.moveToNext());
         }

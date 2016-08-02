@@ -36,10 +36,13 @@ public class GeneralDataActivity extends AppCompatActivity {
     //putExtra
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private static final String D_ZERO ="D_ZERO";
-    private static final String ARCOS ="ARCOS";
-    private static final String DOSIS_PRESCRITA="DOSIS_PRESCRITA";
-    private static final String NORMALIZACION="NORMALIZACION";
-    private static final String PESO_MAXIMO_DOSIS="PESO_MAXIMO_DOSIS";
+    private static final String TOTAL_DOSE ="TOTAL_DOSE";
+    private static final String NUMBER_FRACTION ="NUMBER_FRACTION";
+    private static final String DOSE_FRACTION ="DOSE_FRACTION";
+    private static final String TREATMENT_PER ="TREATMENT_PER";
+    private static final String WEIGHT_DOSE_MAXIMUM ="WEIGHT_DOSE_MAXIMUM";
+    private static final String ARCS ="ARCS";
+    private static final String PDFARCOS="PDFARCOS";
     private String drawerTitle;
     private Long tsLong;
     //Array
@@ -94,21 +97,30 @@ public class GeneralDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!d_zero.getText().toString().equals("") && !cant_arcos.getSelectedItem().toString().equals("") && !dose_fraction.getText().toString().equals("")
-                        && !total_dose.getText().toString().equals("") && !number_fraction.getText().toString().equals("")) {
+                        && !total_dose.getText().toString().equals("") && !number_fraction.getText().toString().equals("") && !treatment_per.getText().toString().equals("")
+                        && !weight_dose_maximum.getText().toString().equals("")) {
                     Intent i = new Intent(GeneralDataActivity.this, ArcoActivity.class);
                     i.putExtra(D_ZERO, d_zero.getText().toString());
-                    i.putExtra(ARCOS, cant_arcos.getSelectedItem().toString());
-                    i.putExtra(DOSIS_PRESCRITA, dose_fraction.getText().toString());
-                    i.putExtra(NORMALIZACION, total_dose.getText().toString());
-                    i.putExtra(PESO_MAXIMO_DOSIS, number_fraction.getText().toString());
-                    setGeneralData("         ", "           ",
-                            "6X", d_zero.getText().toString(), dose_fraction.getText().toString(),
-                            String.valueOf(Double.parseDouble(total_dose.getText().toString())),
-                            number_fraction.getText().toString());
-                    //GenerarPDF.GenerarPDF(GeneralDataActivity.this, dbHandler, String.valueOf(tsLong));
-                    //fillRecentProductList(dbHandler, String.valueOf(tsLong));
+                    i.putExtra(TOTAL_DOSE, Double.parseDouble(total_dose.getText().toString()));
+                    i.putExtra(NUMBER_FRACTION, Integer.parseInt(number_fraction.getText().toString()));
+                    i.putExtra(DOSE_FRACTION, Double.parseDouble(dose_fraction.getText().toString()));
+                    i.putExtra(TREATMENT_PER, Double.parseDouble(treatment_per.getText().toString()));
+                    i.putExtra(WEIGHT_DOSE_MAXIMUM, Double.parseDouble(weight_dose_maximum.getText().toString()));
+                    i.putExtra(ARCS, cant_arcos.getSelectedItem().toString());
+                    i.putExtra(PDFARCOS,extrasString.size());
+                    generalDate();
                     i.putExtra("DATE", String.valueOf(tsLong));
-                    Log.d("DATE", String.valueOf(tsLong));
+                    for (int j=0; j<extrasString.size();j++){
+                        i.putExtra(String.valueOf(j), extrasString.get(j));
+                    }
+                    Six_X_Trilogy six_x_trilogyAux= new Six_X_Trilogy(Double.parseDouble(total_dose.getText().toString()), Integer.parseInt(number_fraction.getText().toString())
+                            ,Double.parseDouble(dose_fraction.getText().toString()),Double.parseDouble(treatment_per.getText().toString()),
+                            Double.parseDouble(weight_dose_maximum.getText().toString()));
+                    setGeneralData("           ", "           ",
+                            "6X", d_zero.getText().toString(), total_dose.getText().toString(), number_fraction.getText().toString(), dose_fraction.getText().toString(),
+                            treatment_per.getText().toString(), weight_dose_maximum.getText().toString(), String.valueOf(six_x_trilogyAux.getRepeatFactor()));
+                    Log.i("Repeat factor", "" + six_x_trilogyAux.getRepeatFactor());
+                    fillGereralData(dbHandler,String.valueOf(tsLong));
                     GeneralDataActivity.this.startActivity(i);
                 }
             }
@@ -172,7 +184,21 @@ public class GeneralDataActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private static void fillGereralData(Database dbHandler, String date){
+        Cursor c = dbHandler.getGeneralData(date);
+        if (c.moveToFirst()){
+            do{
+                Log.d("Database Gen", c.getString(0) + " " + c.getString(1)
+                        + " " + c.getString(2) + " " + c.getString(3)
+                        + " " + c.getString(4) + " " + c.getString(5)
+                        + " " + c.getString(6) + " " + c.getString(7)
+                        + " " + c.getString(8) + " " + c.getString(9)
+                        + " " + c.getString(10));
 
+            }while (c.moveToNext());
+        }
+        dbHandler.close();
+    }
     private void setToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -192,12 +218,12 @@ public class GeneralDataActivity extends AppCompatActivity {
 
 
     public void setGeneralData (String PATIENT_ID, String PLAN_ID,
-                                String ENERGY, String D_ZERO, String DOSIS_PRESCRITA,
-                                String NORMALIZACION, String PESO_MAXIMO_DOSIS){
+                                String ENERGY, String D_ZERO, String TOTAL_DOSE, String NUMBER_FRACTION, String DOSE_FRACTION,
+                                String TREATMENT_PER, String WEIGHT_DOSE_MAXIMUM, String REPEAT_FACTOR){
         dbHandler.write();
         dbHandler.createGeneralData(PATIENT_ID, PLAN_ID,
-                generalDate(), ENERGY, D_ZERO, DOSIS_PRESCRITA,
-                NORMALIZACION, PESO_MAXIMO_DOSIS);
+                String.valueOf(tsLong), ENERGY, D_ZERO, TOTAL_DOSE, NUMBER_FRACTION, DOSE_FRACTION,
+                TREATMENT_PER, WEIGHT_DOSE_MAXIMUM, REPEAT_FACTOR);
         dbHandler.close();
         //Toast.makeText(GeneralDataActivity.this, "General", Toast.LENGTH_SHORT).show();
     }
@@ -213,7 +239,9 @@ public class GeneralDataActivity extends AppCompatActivity {
                 Log.d("Database", c.getString(0) + " " + c.getString(1)
                         + " " + c.getString(2) + " " + c.getString(3)
                         + " " + c.getString(4) + " " + c.getString(5)
-                        + " " + c.getString(6) + " " + c.getString(7));
+                        + " " + c.getString(6) + " " + c.getString(7)
+                        + " " + c.getString(8) + " " + c.getString(9)
+                        + " " + c.getString(10));
             }while (c.moveToNext());
         }
         dbHandler.close();
@@ -231,24 +259,27 @@ public class GeneralDataActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
         Log.d("requestCode", "" + requestCode);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE) {
+                //Toast.makeText(GeneralDataActivity.this, "Loading PDF data", Toast.LENGTH_SHORT).show();
                 final ProgressDialog dialog = ProgressDialog.show(GeneralDataActivity.this, "",
                         "Loading PDF data. Please wait...", true);
+                dialog.show();
                 new Thread(new Runnable() {
                     @Override
                     public void run()
                     {
                         // do the thing that takes a long time
-
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         runOnUiThread(new Runnable() {
                             @Override
-                            public void run()
-                            {
-                                Log.i("Response", GenerarPDF.read(String.valueOf(data.getData().getPath())));
+                            public void run() {
+                                //Log.i("Response", GenerarPDF.read(String.valueOf(data.getData().getPath())));
                                 getPDFData(GenerarPDF.read(String.valueOf(data.getData().getPath())));
                                 dialog.dismiss();
                             }
@@ -306,20 +337,25 @@ public class GeneralDataActivity extends AppCompatActivity {
                 String Aux[]=splinter[i].split(" ");
                 Log.i("Treatment Percetage", String.valueOf(Aux[2]));
                 String SI[]= Aux[2].split("%");
-                treatment_per.setText(Aux[2]);
+                treatment_per.setText(SI[0]);
                 six_x_trilogy.setTreatment_percentage(Double.valueOf(SI[0]));
             }
 
             if (splinter[i].startsWith("Campo")){
                 String Aux[]=splinter[i].split(" ");
+                String MU[];
                 arcscount=arcscount+1;
                 if (Aux.length==17){
-                    Log.i(Aux[0] + " " + Aux[1], "Cone: "+Aux[6] +" Weight Factor: "+ Aux[10] +" MU: "+ Aux[14]+" Aver. D: "+ Aux[16]  );
-                    extrasString.add(Aux[0] + "" + Aux[1]+","+Aux[6] +","+ Aux[10] +","+ Aux[14]+","+ Aux[16]  );
+                    MU=Aux[14].split("M");
+                    Log.i(Aux[0] + " " + Aux[1], "Cone: "+Aux[6] +" Weight Factor: "+ Aux[10] +" MU: "+ MU[0]+" Aver. D: "+ Aux[16]  );
+
+                    extrasString.add("ARC " + Aux[1]+","+Aux[6] +","+ Aux[10] +","+ MU[0].substring(0,MU[0].length()-1)+","+ Aux[16]  );
                 }
                 else if (Aux.length==14){
-                    Log.i(Aux[0] + " " + Aux[1], "Cone: "+Aux[3] +" Weight Factor: "+ Aux[7] +" MU: "+ Aux[11]+" Aver. D: "+ Aux[13] );
-                    extrasString.add(Aux[0] + "" + Aux[1]+","+Aux[3] +","+ Aux[7] +","+ Aux[11]+","+ Aux[13]  );
+                    MU=Aux[11].split("M");
+                    Log.i("ARC " + Aux[1], "Cone: " + Aux[3] + " Weight Factor: " + Aux[7] + " MU: " + MU[0]+" Aver. D: "+ Aux[13] );
+
+                    extrasString.add("ARC " + Aux[1]+","+Aux[3] +","+ Aux[7] +","+ MU[0].substring(0,MU[0].length()-1)+","+ Aux[13]  );
                 }
 
             }

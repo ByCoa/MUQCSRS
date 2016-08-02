@@ -5,7 +5,7 @@
     <string name="number_fraction">Number of fraction</string>
     <string name="weight_dose_maximum">Weight at dose maximum</string>
     <string name="dose_fraction">Dose/Fraction</string>
-    <string name="aver_depth_cm">Depth</string>
+    <string name="aver_depth_cm">Depth (mm)</string>
     <string name="peso_arco">Weight Factor</string>
     <string name="mu_tps">MU TPS</string>
     <string name="mu_qc_srs">MU QC SRS</string>
@@ -72,3 +72,4 @@
     <string name="tolerance_title">The Tolerances uses in MU QC SRS comes from 114 AAPM report published in 2011:</string>
 
 </resources>
+<!---->

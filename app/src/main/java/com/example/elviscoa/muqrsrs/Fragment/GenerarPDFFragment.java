@@ -61,13 +61,13 @@ public class GenerarPDFFragment extends Fragment {
                 Log.i("Full All", String.valueOf(fullAll));
                 if (fullAll==true){
                     for (int i = 0; i < arrayList.size(); i++) {
-                        if (!arrayList.get(i).getCone().equals("") && !arrayList.get(i).getAver_depth_cm().equals("") && !arrayList.get(i).getWeight_factor().equals("") && !arrayList.get(i).getMU_TPS().equals("")) {
-                            Log.i("Arco" + i, "Dosis prescrita: " + arrayList.get(i).getDosisprescrita() + " Normalizacion: " + arrayList.get(i).getNormalizacion() + " Peso Maximo Dosis: " + arrayList.get(i).getWeight_dose_maximum()
-                                    + " Cono: " + arrayList.get(i).getCone() + " Output Factor: " + arrayList.get(i).getOutputfactor() + " Profundidad: " + arrayList.get(i).getAver_depth_cm() + " TMR: " + arrayList.get(i).getTMR());
+                        if (!arrayList.get(i).getCone().equals("") && !arrayList.get(i).getAver_depth_cm().equals("") && !arrayList.get(i).getWeight_factor().equals("") && !arrayList.get(i).getMu_tps().equals("")) {
                         database.write();
-                            database.createArc("ARCO" + (i + 1), "" + arrayList.get(i).getCone(), "" + arrayList.get(i).getOutputfactor(),""+ arrayList.get(i).getAver_depth_cm(), ""+arrayList.get(i).getTMR(),""+ arrayList.get(i).getWeight_factor(), ""+arrayList.get(i).getDosisXFraccion(), ""+arrayList.get(i).getMU_TPS(),
-                                    ""+arrayList.get(i).getMU(arrayList.get(i).getOutputfactor(),arrayList.get(i).getTMR()), arcoActivity.getDATE(),arrayList.get(i).getEnergia(),arrayList.get(i).getD_ZERO(),String.valueOf(arrayList.get(i).getDosisprescrita()),
-                                    String.valueOf(arrayList.get(i).getNormalizacion()), String.valueOf(arrayList.get(i).getWeight_dose_maximum()));
+                            database.createArc("ARC" + (i + 1), "" + arrayList.get(i).getCone(), "" + arrayList.get(i).getOutputFactor(),""+ arrayList.get(i).getAver_depth_cm(), ""+arrayList.get(i).getTMR(),
+                                    ""+ arrayList.get(i).getWeight_factor(), ""+arrayList.get(i).getMu_tps(),
+                                    ""+arrayList.get(i).getMUQCSRS(), arcoActivity.getDATE(),arrayList.get(i).getEnergia(),arrayList.get(i).getD_ZERO(),
+                                    ""+arrayList.get(i).getTotal_dose(),""+arrayList.get(i).getNumber_of_fraction(), ""+arrayList.get(i).getDose_fraction(),
+                                    ""+arrayList.get(i).getTreatment_percentage(), ""+arrayList.get(i).getWeight_dose_maximum(),""+arrayList.get(i).getRepeatFactor());
                         database.close();
                         }
                     }

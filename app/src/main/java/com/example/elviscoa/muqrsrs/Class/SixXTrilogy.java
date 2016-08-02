@@ -9,18 +9,15 @@ public class SixXTrilogy {
     private String profundidad;
     private String tmr;
     private String peso_del_arco;
-    private String dosis_fraccion;
     private String mu_tps;
     private String mu_qc_srs;
 
-    public SixXTrilogy(String cono,String outputfactor, String profundidad, String tmr, String peso_del_arco, String dosis_fraccion, String mu_qc_srs, String mu_tps){
-
+    public SixXTrilogy(String cono,String outputfactor, String profundidad, String tmr, String peso_del_arco, String mu_qc_srs, String mu_tps){
         this.cono = cono;
         this.outputfactor = outputfactor;
         this.profundidad = profundidad;
         this.tmr = tmr;
         this.peso_del_arco = peso_del_arco;
-        this.dosis_fraccion = dosis_fraccion;
         this.mu_tps = mu_tps;
         this.mu_qc_srs = mu_qc_srs;
     }
@@ -70,14 +67,6 @@ public class SixXTrilogy {
 
     public void setTmr(String tmr) {
         this.tmr = tmr;
-    }
-
-    public String getDosis_fraccion() {
-        return dosis_fraccion;
-    }
-
-    public void setDosis_fraccion(String dosis_fraccion) {
-        this.dosis_fraccion = dosis_fraccion;
     }
 
     public String getMu_qc_srs() {
