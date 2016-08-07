@@ -1,5 +1,6 @@
 package com.example.elviscoa.muqrsrs.Fragment;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.elviscoa.muqrsrs.Activity.ArcoActivity;
+import com.example.elviscoa.muqrsrs.Activity.GeneralDataActivity;
+import com.example.elviscoa.muqrsrs.Activity.Result;
 import com.example.elviscoa.muqrsrs.Class.Six_X_Trilogy;
+import com.example.elviscoa.muqrsrs.Class.Util;
 import com.example.elviscoa.muqrsrs.Database.Database;
 import com.example.elviscoa.muqrsrs.Library.GenerarPDF;
 import com.example.elviscoa.muqrsrs.R;
@@ -26,17 +30,55 @@ public class GenerarPDFFragment extends Fragment {
     private EditText plan_id;
     private EditText patient_id;
     private Button generarpdf;
+    private Button seerror;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.generarpdf, container, false);
         generarpdf = (Button) view.findViewById(R.id.generarpdf);
         patient_id = (EditText) view.findViewById(R.id.input_patient_id);
         plan_id = (EditText) view.findViewById(R.id.input_plan_id);
+        seerror = (Button) view.findViewById(R.id.errorbutton);
         return view;
     }
 
     public void onActivityCreated (Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        seerror.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ArcoActivity arcoActivity = (ArcoActivity) getActivity();
+                ArrayList<Six_X_Trilogy> arrayList = arcoActivity.getArcs();
+                ArrayList<Boolean> full = arcoActivity.getFull();
+                Boolean fullAll = true;
+                seerror.setEnabled(true);
+                for (int ij = 0; ij < full.size(); ij++) {
+                    Log.i("Full", String.valueOf(full.get(ij)));
+                    if (!full.get(ij)) {
+                        fullAll = false;
+
+                        int aux = ij + 1;
+                        Toast.makeText(getActivity(), "Empty fields in ARC: " + aux, Toast.LENGTH_LONG).show();
+                        seerror.setEnabled(false);
+                        break;
+                    }
+
+                }
+                if (fullAll == true) {
+                    Intent intent = new Intent(arcoActivity, Result.class);
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        if (arrayList.get(i) != null && !arrayList.get(i).getCone().equals("") && !arrayList.get(i).getAver_depth_cm().equals("") && !arrayList.get(i).getWeight_factor().equals("") && !arrayList.get(i).getMu_tps().equals("")) {
+                            String extraData=arrayList.get(i).getMu_tps()+","+(new Util().roundThreeDecimals(arrayList.get(i).getMUQCSRS()))+","+(new Util().roundThreeDecimals(arrayList.get(i).getError()));
+                            Log.i("Error", arrayList.get(i).getMu_tps()+","+(new Util().roundThreeDecimals(arrayList.get(i).getMUQCSRS()))+","+(new Util().roundThreeDecimals(arrayList.get(i).getError())));
+                            intent.putExtra("" + i, extraData);
+                        }
+                    }
+                    intent.putExtra("Size", arrayList.size());
+                    arcoActivity.startActivity(intent);
+                }
+            }
+        });
+
         generarpdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +103,7 @@ public class GenerarPDFFragment extends Fragment {
                 Log.i("Full All", String.valueOf(fullAll));
                 if (fullAll==true){
                     for (int i = 0; i < arrayList.size(); i++) {
-                        if (!arrayList.get(i).getCone().equals("") && !arrayList.get(i).getAver_depth_cm().equals("") && !arrayList.get(i).getWeight_factor().equals("") && !arrayList.get(i).getMu_tps().equals("")) {
+                        if (arrayList.get(i)!=null && !arrayList.get(i).getCone().equals("") && !arrayList.get(i).getAver_depth_cm().equals("") && !arrayList.get(i).getWeight_factor().equals("") && !arrayList.get(i).getMu_tps().equals("")) {
                         database.write();
                             database.createArc("ARC" + (i + 1), "" + arrayList.get(i).getCone(), "" + arrayList.get(i).getOutputFactor(),""+ arrayList.get(i).getAver_depth_cm(), ""+arrayList.get(i).getTMR(),
                                     ""+ arrayList.get(i).getWeight_factor(), ""+arrayList.get(i).getMu_tps(),

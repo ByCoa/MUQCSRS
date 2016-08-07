@@ -27,4 +27,6 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.8'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.2.+'
     compile 'com.itextpdf:itextg:5.5.9'
+    compile 'cz.msebera.android:httpclient:4.3.6'
+    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
 }

@@ -2,6 +2,8 @@ package com.example.elviscoa.muqrsrs.Class;
 
 import android.content.Context;
 
+import com.example.elviscoa.muqrsrs.Library.DownloadFile;
+
 /**
  * Created by soluciones on 7/3/2016.
  */
@@ -148,5 +150,9 @@ public class Six_X_Trilogy {
 
     public void setArc_name(String arc_name) {
         this.arc_name = arc_name;
+    }
+
+    public Double getError (){
+        return (getMu_tps()-getMUQCSRS())/getMUQCSRS();
     }
 }

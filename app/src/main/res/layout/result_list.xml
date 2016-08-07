@@ -1,0 +1,77 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="A1"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"/>
+
+    <LinearLayout
+        android:id="@+id/muLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="8dp"
+        android:layout_toLeftOf="@+id/errorLayout"
+        android:layout_toRightOf="@+id/field">
+
+        <TextView
+            android:id="@+id/muqcsrs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MU QC SRS = 120"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/muQc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MU QC = 122.20"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/errorLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true">
+
+        <TextView
+            android:id="@+id/error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.20%"
+            android:textColor="@color/green_color"
+            android:textSize="30sp"/>
+
+        <ImageView
+            android:id="@+id/errorImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="2dp"
+            android:background="@drawable/oval_green"
+            android:padding="8dp"
+            android:src="@drawable/ic_check_black_24dp"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/muLayout"
+        android:background="@android:color/darker_gray"/>
+
+</RelativeLayout>

@@ -80,7 +80,7 @@ public class ArcoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.arc_data_layout);
 
-        final Bundle extras = getIntent().getExtras();
+            final Bundle extras = getIntent().getExtras();
         if (extras==null) {
 
         } else {

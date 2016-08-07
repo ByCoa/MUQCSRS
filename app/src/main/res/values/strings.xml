@@ -51,6 +51,8 @@
     <string name="arc3_saved">ARC 3 successfully saved</string>
     <string name="arc2_saved">ARC 2 successfully saved</string>
     <string name="arc1_saved">ARC 1 successfully saved</string>
+    <string name="result_warning">WARNING. The results from MU QC should not be used to treat any
+        patient.</string>
     <string name="closeDrawer">Navigation View</string>
     <string name="openDrawer">Navigation View Closed</string>
     <string name="contact_caps">CONTACT</string>
@@ -70,6 +72,7 @@
     <string name="my_own_content">Do you want to use your own SRS dosimetric data with MU QC SRS?</string>
     <string name="tolerance">TOLERANCE</string>
     <string name="tolerance_title">The Tolerances uses in MU QC SRS comes from 114 AAPM report published in 2011:</string>
+    <string name="see_error">See error</string>
 
 </resources>
 <!---->

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.example.elviscoa.muqrsrs.Class.IOCRCallBack;
 import com.example.elviscoa.muqrsrs.Class.OCRAsyncTask;
+import com.example.elviscoa.muqrsrs.Library.DownloadFile;
 import com.example.elviscoa.muqrsrs.R;
 
 /**
@@ -25,11 +26,7 @@ public class MainActivity extends AppCompatActivity implements IOCRCallBack {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mIOCRCallBack = this;
-        mImageUrl = "http://dl.a9t9.com/blog/ocr-online/screenshot.jpg"; // Image url to apply OCR API
-        mLanguage = "eng"; //Language
-        isOverlayRequired = true;
-        init();
+        DownloadFile.Download();
 
     }
 
@@ -41,8 +38,7 @@ public class MainActivity extends AppCompatActivity implements IOCRCallBack {
             btnCallAPI.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //OCRAsyncTask oCRAsyncTask = new OCRAsyncTask(MainActivity.this, mAPiKey, isOverlayRequired, mImageUrl, mLanguage,mIOCRCallBack);
-                    //oCRAsyncTask.execute();
+
 
                 }
             });

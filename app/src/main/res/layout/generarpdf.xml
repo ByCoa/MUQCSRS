@@ -43,4 +43,16 @@
         android:background="@color/accent"
         android:textColor="@color/icons"
         android:id="@+id/generarpdf"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:height="48dp"
+        android:text="@string/see_error"
+        android:background="@color/accent"
+        android:textColor="@color/icons"
+        android:id="@+id/errorbutton"
+        android:layout_below="@+id/generarpdf"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp" />
 </RelativeLayout>

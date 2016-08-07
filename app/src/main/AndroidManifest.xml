@@ -39,6 +39,9 @@
             android:name=".Activity.ArcoActivity">
         </activity>
         <activity
+            android:name=".Activity.Result">
+        </activity>
+        <activity
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat"
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"/>

@@ -130,7 +130,7 @@ public class GeneralDataActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(MenuItem menuItem) {
-            menuItem.setChecked(true);
+            //menuItem.setChecked(true);
             drawerLayout.closeDrawers();
             //Toast.makeText(GeneralDataActivity.this, menuItem.getTitle(), Toast.LENGTH_LONG).show();
             if (menuItem.getTitle().toString().equals("Contact us")){

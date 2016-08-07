@@ -9,4 +9,7 @@
     <color name="icons">#FFFFFF</color>
     <color name="window_background">#EEEEEE</color>
     <color name="divider">#B6B6B6</color>
+    <color name="yellow_color">#FFEE58</color>
+    <color name="green_color">#66BB6A</color>
+    <color name="red_color">#ef5350</color>
 </resources>
