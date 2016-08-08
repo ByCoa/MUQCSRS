@@ -36,10 +36,10 @@ public class Six_X_Trilogy {
         this.mu_tps = mu_tps;
     }
 
-    public Six_X_Trilogy(Double total_dose,Integer number_of_fraction,Double dose_fraction,Double treatment_percentage, Double weight_dose_maximum){
+    public Six_X_Trilogy(Double total_dose,Integer number_of_fraction,Double treatment_percentage, Double weight_dose_maximum){
         this.total_dose = total_dose;
         this.number_of_fraction = number_of_fraction;
-        this.dose_fraction = dose_fraction;
+        this.dose_fraction = total_dose/number_of_fraction;
         this.treatment_percentage = treatment_percentage;
         this.weight_dose_maximum = weight_dose_maximum;
     }
@@ -71,7 +71,7 @@ public class Six_X_Trilogy {
     }
 
     public Double getDose_fraction() {
-        return dose_fraction;
+        return total_dose/number_of_fraction;
     }
 
     public void setDose_fraction(Double dose_fraction) {

@@ -5,7 +5,7 @@
     <string name="number_fraction">Number of fraction</string>
     <string name="weight_dose_maximum">Weight at dose maximum</string>
     <string name="dose_fraction">Dose/Fraction</string>
-    <string name="aver_depth_cm">Depth (mm)</string>
+    <string name="aver_depth_cm">Avg. Depth (mm)</string>
     <string name="peso_arco">Weight Factor</string>
     <string name="mu_tps">MU TPS</string>
     <string name="mu_qc_srs">MU QC SRS</string>
@@ -51,7 +51,7 @@
     <string name="arc3_saved">ARC 3 successfully saved</string>
     <string name="arc2_saved">ARC 2 successfully saved</string>
     <string name="arc1_saved">ARC 1 successfully saved</string>
-    <string name="result_warning">WARNING. The results from MU QC should not be used to treat any
+    <string name="result_warning">WARNING. The results from MU QC SRS should not be used to treat any
         patient.</string>
     <string name="closeDrawer">Navigation View</string>
     <string name="openDrawer">Navigation View Closed</string>

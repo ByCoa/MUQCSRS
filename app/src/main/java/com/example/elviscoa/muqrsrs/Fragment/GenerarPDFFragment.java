@@ -68,8 +68,12 @@ public class GenerarPDFFragment extends Fragment {
                     Intent intent = new Intent(arcoActivity, Result.class);
                     for (int i = 0; i < arrayList.size(); i++) {
                         if (arrayList.get(i) != null && !arrayList.get(i).getCone().equals("") && !arrayList.get(i).getAver_depth_cm().equals("") && !arrayList.get(i).getWeight_factor().equals("") && !arrayList.get(i).getMu_tps().equals("")) {
-                            String extraData=arrayList.get(i).getMu_tps()+","+(new Util().roundThreeDecimals(arrayList.get(i).getMUQCSRS()))+","+(new Util().roundThreeDecimals(arrayList.get(i).getError()));
-                            Log.i("Error", arrayList.get(i).getMu_tps()+","+(new Util().roundThreeDecimals(arrayList.get(i).getMUQCSRS()))+","+(new Util().roundThreeDecimals(arrayList.get(i).getError())));
+                            Double a,b,error;
+                            a= arrayList.get(i).getMUQCSRS();
+                            b= arrayList.get(i).getMu_tps();
+                            error=new Util().roundThreeDecimals(((b - a) / a) * 100);
+                            String extraData=arrayList.get(i).getMu_tps()+","+(new Util().roundThreeDecimals(arrayList.get(i).getMUQCSRS()))+","+error;
+                            Log.i("Error", arrayList.get(i).getMu_tps()+","+(new Util().roundThreeDecimals(arrayList.get(i).getMUQCSRS()))+","+error);
                             intent.putExtra("" + i, extraData);
                         }
                     }

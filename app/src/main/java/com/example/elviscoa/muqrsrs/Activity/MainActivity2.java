@@ -143,7 +143,6 @@ public class MainActivity2 extends Activity {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
 
@@ -158,8 +157,6 @@ public class MainActivity2 extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        ivImage.setImageBitmap(thumbnail);
     }
 
     @SuppressWarnings("deprecation")

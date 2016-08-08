@@ -1,13 +1,21 @@
 package com.example.elviscoa.muqrsrs.Activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,20 +29,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.example.elviscoa.muqrsrs.Class.OCRService;
 import com.example.elviscoa.muqrsrs.Class.Six_X_Trilogy;
+import com.example.elviscoa.muqrsrs.Class.Util;
 import com.example.elviscoa.muqrsrs.Database.Database;
 import com.example.elviscoa.muqrsrs.Library.GenerarPDF;
-import com.example.elviscoa.muqrsrs.Library.compressImage;
+import com.example.elviscoa.muqrsrs.Library.CompressImage;
 import com.example.elviscoa.muqrsrs.R;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GeneralDataActivity extends AppCompatActivity {
     //putExtra
-    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
+    private int REQUEST_CAMERA = 0, SELECT_FILE = 1, SELECT_PDF = 2;
     private static final String D_ZERO ="D_ZERO";
     private static final String TOTAL_DOSE ="TOTAL_DOSE";
     private static final String NUMBER_FRACTION ="NUMBER_FRACTION";
@@ -51,7 +66,6 @@ public class GeneralDataActivity extends AppCompatActivity {
     private EditText d_zero;
     private EditText total_dose;
     private EditText number_fraction;
-    private EditText dose_fraction;
     private EditText treatment_per;
     private EditText weight_dose_maximum;
     private Spinner  cant_arcos;
@@ -61,8 +75,11 @@ public class GeneralDataActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private FloatingActionButton fabpdf;
     private FloatingActionButton fabcamera;
+    private String userChoosenTask;
     //Database
     private Database dbHandler = new Database(this);
+    //
+    private Integer OCR=0;
 
 
 
@@ -73,7 +90,6 @@ public class GeneralDataActivity extends AppCompatActivity {
         setToolbar();
         d_zero          = (EditText) findViewById(R.id.input_d_zero);
         cant_arcos      = (Spinner) findViewById(R.id.cant_arco);
-        dose_fraction = (EditText) findViewById(R.id.input_dose_fraction);
         total_dose = (EditText) findViewById(R.id.input_total_dose);
         number_fraction =(EditText) findViewById(R.id.input_number_fraction);
         treatment_per = (EditText) findViewById(R.id.input_treatment_per);
@@ -89,35 +105,44 @@ public class GeneralDataActivity extends AppCompatActivity {
         fabpdf.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View view) {
-                                    galleryIntent();
+                                    pdfIntent();
                                    }
+        });
+
+        fabcamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectImage();
+            }
         });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!d_zero.getText().toString().equals("") && !cant_arcos.getSelectedItem().toString().equals("") && !dose_fraction.getText().toString().equals("")
+                if (!d_zero.getText().toString().equals("") && !cant_arcos.getSelectedItem().toString().equals("")
                         && !total_dose.getText().toString().equals("") && !number_fraction.getText().toString().equals("") && !treatment_per.getText().toString().equals("")
                         && !weight_dose_maximum.getText().toString().equals("")) {
                     Intent i = new Intent(GeneralDataActivity.this, ArcoActivity.class);
                     i.putExtra(D_ZERO, d_zero.getText().toString());
                     i.putExtra(TOTAL_DOSE, Double.parseDouble(total_dose.getText().toString()));
                     i.putExtra(NUMBER_FRACTION, Integer.parseInt(number_fraction.getText().toString()));
-                    i.putExtra(DOSE_FRACTION, Double.parseDouble(dose_fraction.getText().toString()));
+                    Double dose_fraction = Double.parseDouble(total_dose.getText().toString())/Double.parseDouble(number_fraction.getText().toString());
+                    i.putExtra(DOSE_FRACTION, dose_fraction);
                     i.putExtra(TREATMENT_PER, Double.parseDouble(treatment_per.getText().toString()));
                     i.putExtra(WEIGHT_DOSE_MAXIMUM, Double.parseDouble(weight_dose_maximum.getText().toString()));
                     i.putExtra(ARCS, cant_arcos.getSelectedItem().toString());
                     i.putExtra(PDFARCOS,extrasString.size());
+
                     generalDate();
                     i.putExtra("DATE", String.valueOf(tsLong));
                     for (int j=0; j<extrasString.size();j++){
                         i.putExtra(String.valueOf(j), extrasString.get(j));
                     }
                     Six_X_Trilogy six_x_trilogyAux= new Six_X_Trilogy(Double.parseDouble(total_dose.getText().toString()), Integer.parseInt(number_fraction.getText().toString())
-                            ,Double.parseDouble(dose_fraction.getText().toString()),Double.parseDouble(treatment_per.getText().toString()),
+                            ,Double.parseDouble(treatment_per.getText().toString()),
                             Double.parseDouble(weight_dose_maximum.getText().toString()));
                     setGeneralData("           ", "           ",
-                            "6X", d_zero.getText().toString(), total_dose.getText().toString(), number_fraction.getText().toString(), dose_fraction.getText().toString(),
+                            "6X", d_zero.getText().toString(), total_dose.getText().toString(), number_fraction.getText().toString(), String.valueOf(dose_fraction),
                             treatment_per.getText().toString(), weight_dose_maximum.getText().toString(), String.valueOf(six_x_trilogyAux.getRepeatFactor()));
                     Log.i("Repeat factor", "" + six_x_trilogyAux.getRepeatFactor());
                     fillGereralData(dbHandler,String.valueOf(tsLong));
@@ -199,6 +224,7 @@ public class GeneralDataActivity extends AppCompatActivity {
         }
         dbHandler.close();
     }
+
     private void setToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -211,11 +237,10 @@ public class GeneralDataActivity extends AppCompatActivity {
     private void bitmap (){
 
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.papel1e);
-        bm = compressImage.getResizedBitmap(bm,500);
-        Log.i("Image encode", compressImage.encodeToBase(bm, Bitmap.CompressFormat.JPEG, 100));
+        bm = CompressImage.getResizedBitmap(bm, 500);
+        Log.i("Image encode", CompressImage.encodeToBase(bm, Bitmap.CompressFormat.JPEG, 100));
 
     }
-
 
     public void setGeneralData (String PATIENT_ID, String PLAN_ID,
                                 String ENERGY, String D_ZERO, String TOTAL_DOSE, String NUMBER_FRACTION, String DOSE_FRACTION,
@@ -232,6 +257,7 @@ public class GeneralDataActivity extends AppCompatActivity {
         tsLong = System.currentTimeMillis()/1000;
         return tsLong.toString();
     }
+
     private void fillRecentProductList (Database dbHandler,String date){
         Cursor c = dbHandler.getGeneralData(date);
         if (c.moveToFirst()){
@@ -247,13 +273,12 @@ public class GeneralDataActivity extends AppCompatActivity {
         dbHandler.close();
     }
 
-    private void galleryIntent()
-    {
+    private void pdfIntent(){
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setAction(Intent.ACTION_GET_CONTENT);//
-        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_PDF);
     }
 
     @Override
@@ -261,7 +286,7 @@ public class GeneralDataActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("requestCode", "" + requestCode);
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_FILE) {
+            if (requestCode == SELECT_PDF) {
                 //Toast.makeText(GeneralDataActivity.this, "Loading PDF data", Toast.LENGTH_SHORT).show();
                 final ProgressDialog dialog = ProgressDialog.show(GeneralDataActivity.this, "",
                         "Loading PDF data. Please wait...", true);
@@ -287,15 +312,20 @@ public class GeneralDataActivity extends AppCompatActivity {
                     }
                 }).start();
             }
-            else if (requestCode == REQUEST_CAMERA)
-                Log.d("requestCode", "EntréCamaera");//onCaptureImageResult(data);
+            else if (requestCode == SELECT_FILE){
+                onSelectFromGalleryResult(data);
+            }
+            else if (requestCode == REQUEST_CAMERA){
+                Log.d("requestCode", "EntréCamaera");
+                onCaptureImageResult(data);
+            }
             else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 Log.d("Activity result", "" + result);
                 if (resultCode == RESULT_OK) {
                     Uri resultUri = result.getUri();
                     Log.d("resultUri", "" + resultUri);
-                    //onSelectFromGalleryResult(resultUri);
+                    onSelectFromGalleryResult(resultUri);
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     Exception error = result.getError();
                     Log.d("resultUri", "" + error);
@@ -324,7 +354,7 @@ public class GeneralDataActivity extends AppCompatActivity {
                 Log.i("Dose/Fraction", String.valueOf(Aux[3]));
                 //String SI[]= Aux[3].split(".");
                 six_x_trilogy.setDose_fraction(Double.valueOf(Aux[3]));
-                dose_fraction.setText(Aux[3]);
+
             }
             if (splinter[i].startsWith("Number of Fractions:")){
                 String Aux[]=splinter[i].split(" ");
@@ -361,5 +391,172 @@ public class GeneralDataActivity extends AppCompatActivity {
             }
         }
         cant_arcos.setSelection(arcscount - 1);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case Util.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if(userChoosenTask.equals("Take Photo"))
+                        cameraIntent();
+                    else if(userChoosenTask.equals("Choose from gallery"))
+                        galleryIntent();
+                } else {
+                    //code for deny
+                }
+                break;
+        }
+    }
+
+    private void selectImage() {
+        final CharSequence[] items = { "Take Photo", "Choose from Gallery",
+                "Cancel" };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(GeneralDataActivity.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result = Util.checkPermission(GeneralDataActivity.this);
+
+                if (items[item].equals("Take Photo")) {
+                    userChoosenTask = "Take Photo";
+                    if (result)
+                        cameraIntent();
+
+                } else if (items[item].equals("Choose from Gallery")) {
+                    userChoosenTask = "Choose from Gallery";
+                    if (result)
+                        galleryIntent();
+
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void galleryIntent(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+    }
+
+    private void cameraIntent(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_CAMERA);
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        File destination = new File(Environment.getExternalStorageDirectory(),
+                System.currentTimeMillis() + ".jpg");
+
+        FileOutputStream fo;
+        try {
+            destination.createNewFile();
+            fo = new FileOutputStream(destination);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        OCRService ocrService= new OCRService();
+        ocrService.callOCRAPI(GeneralDataActivity.this,destination);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void onSelectFromGalleryResult(Intent data) {
+
+        Bitmap bm=null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                Log.d("data", "" + data.getData());
+                CropImage.activity(data.getData())
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(this);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void onSelectFromGalleryResult(Uri data) {
+        Log.d("data2", "" + data);
+        final OCRService ocrService = new OCRService();
+        ocrService.callOCRAPI(GeneralDataActivity.this, new File(data.getPath()));
+        final ProgressDialog dialog = ProgressDialog.show(GeneralDataActivity.this, "",
+                "Loading OCR data. Please wait...", true);
+        dialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run()
+            {
+                // do the thing that takes a long time
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Log.i("Response", GenerarPDF.read(String.valueOf(data.getData().getPath())));
+                        //getPDFData(GenerarPDF.read(String.valueOf(data.getData().getPath())));
+                        cant_arcos.setSelection(ocrService.getArc() - 1);
+                        String conoOCR[]= ocrService.getCone().split(",");
+                        String weightOCR[]= ocrService.getWeightFactor().split(",");
+                        dialog.dismiss();
+                        OCR = 3;
+                        for (int i=0;i<ocrService.getArc();i++) {
+                            extrasString.add("ARC " + (i + 1) + "," + conoOCR[i + 1] + "," + weightOCR[i + 1] + ",2.0" + ",20.0");
+                            Log.i("Response", extrasString.get(i));
+                        }
+                    }
+                });
+            }
+        }).start();
+
+        Bitmap bm=null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+    public static Uri getImageContentUri(Context context, File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[] { MediaStore.Images.Media._ID },
+                MediaStore.Images.Media.DATA + "=? ",
+                new String[] { filePath }, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            cursor.close();
+            return Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + id);
+        } else {
+            if (imageFile.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATA, filePath);
+                return context.getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
     }
 }

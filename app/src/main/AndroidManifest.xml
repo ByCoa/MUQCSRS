@@ -14,32 +14,54 @@
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activity.GeneralDataActivity">
+            android:name=".Activity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.Contact">
+            android:name=".Activity.GeneralDataActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+
         </activity>
         <activity
-            android:name=".Activity.Tolerance">
+            android:name=".Activity.Contact"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
-            android:name=".Activity.CalculationFormalism">
+            android:name=".Activity.Tolerance"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
-            android:name=".Activity.MyOwnData">
+            android:name=".Activity.CalculationFormalism"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
-            android:name=".Activity.WhoWeAre">
+            android:name=".Activity.MyOwnData"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
-            android:name=".Activity.ArcoActivity">
+            android:name=".Activity.WhoWeAre"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
-            android:name=".Activity.Result">
+            android:name=".Activity.ArcoActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+        <activity
+            android:name=".Activity.Result"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:screenOrientation="landscape"

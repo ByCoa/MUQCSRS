@@ -171,7 +171,7 @@ public class GenerarPDF {
         addEmptyLine(paragraph, 2);
         createFirstTable(paragraph);
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph("MU QC srs"));
+        paragraph.add(new Paragraph("MU QC SRS"));
         paragraph.add(new Paragraph("Dosimetric"));
         paragraph.add(new Paragraph("Parameters"));
 
@@ -236,7 +236,7 @@ public class GenerarPDF {
         cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellHeader);
 
-        cellHeader = new PdfPCell(new Phrase("MU QC srs"));
+        cellHeader = new PdfPCell(new Phrase("MU QC SRS"));
         cellHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellHeader);
 
