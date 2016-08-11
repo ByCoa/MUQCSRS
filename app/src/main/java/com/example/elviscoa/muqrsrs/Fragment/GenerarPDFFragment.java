@@ -1,6 +1,7 @@
 package com.example.elviscoa.muqrsrs.Fragment;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,16 +30,16 @@ public class GenerarPDFFragment extends Fragment {
     //UI
     private EditText plan_id;
     private EditText patient_id;
-    private Button generarpdf;
-    private Button seerror;
+    private FloatingActionButton generarpdf;
+    private FloatingActionButton seerror;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.generarpdf, container, false);
-        generarpdf = (Button) view.findViewById(R.id.generarpdf);
+        generarpdf = (FloatingActionButton) view.findViewById(R.id.fabcal);
         patient_id = (EditText) view.findViewById(R.id.input_patient_id);
         plan_id = (EditText) view.findViewById(R.id.input_plan_id);
-        seerror = (Button) view.findViewById(R.id.errorbutton);
+        seerror = (FloatingActionButton) view.findViewById(R.id.faberror);
         return view;
     }
 

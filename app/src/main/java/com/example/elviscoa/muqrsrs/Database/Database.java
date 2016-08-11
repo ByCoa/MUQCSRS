@@ -126,8 +126,10 @@ public class Database extends SQLiteOpenHelper {
                                String MU_TPS, String MU_QC_SRS, String DAT, String ENERGY, String D_ZERO,String TOTAL_DOSE,
                                String NUMBER_FRACTION, String DOSE_FRACTION, String TREATMENT_PER,
                                String WEIGHT_DOSE_MAXIMUM, String REPEAT_FACTOR) {
-        if (!(ARC.equals(""))) {
-            ContentValues newArc= new ContentValues();
+        Cursor c = getArc2(DAT,ARC);
+        if (c.moveToFirst()){
+            DATABASE.delete(TABLE_ARCS,"DATE="+DAT,null);
+            ContentValues newArc = new ContentValues();
             newArc.put(this.CONO, CON);
             newArc.put(this.OUTPUT_FACTOR, new Util().roundThreeDecimals(Double.parseDouble(OUT)));
             newArc.put(this.PROFUNDIDAD, String.valueOf(Double.valueOf(PRO)));
@@ -136,10 +138,24 @@ public class Database extends SQLiteOpenHelper {
             newArc.put(this.MU_QC_SRS, new Util().roundThreeDecimals(Double.parseDouble(MU_QC_SRS)));
             newArc.put(this.MU_TPS, new Util().roundThreeDecimals(Double.parseDouble(MU_TPS)));
             newArc.put(this.DATEF, DAT);
-            /*createGeneralData("            ", "             ", DAT, ENERGY, D_ZERO ,TOTAL_DOSE, NUMBER_FRACTION,
-                    DOSE_FRACTION, TREATMENT_PER, WEIGHT_DOSE_MAXIMUM, REPEAT_FACTOR);*/
             newArc.put(this.ARC, ARC);
             DATABASE.insert(TABLE_ARCS, null, newArc);
+        }else {
+            if (!(ARC.equals(""))) {
+                ContentValues newArc = new ContentValues();
+                newArc.put(this.CONO, CON);
+                newArc.put(this.OUTPUT_FACTOR, new Util().roundThreeDecimals(Double.parseDouble(OUT)));
+                newArc.put(this.PROFUNDIDAD, String.valueOf(Double.valueOf(PRO)));
+                newArc.put(this.TMR, new Util().roundThreeDecimals(Double.parseDouble(TMR)));
+                newArc.put(this.PESO_ARCO, String.valueOf(Double.valueOf(PESO_ARCO)));
+                newArc.put(this.MU_QC_SRS, new Util().roundThreeDecimals(Double.parseDouble(MU_QC_SRS)));
+                newArc.put(this.MU_TPS, new Util().roundThreeDecimals(Double.parseDouble(MU_TPS)));
+                newArc.put(this.DATEF, DAT);
+            /*createGeneralData("            ", "             ", DAT, ENERGY, D_ZERO ,TOTAL_DOSE, NUMBER_FRACTION,
+                    DOSE_FRACTION, TREATMENT_PER, WEIGHT_DOSE_MAXIMUM, REPEAT_FACTOR);*/
+                newArc.put(this.ARC, ARC);
+                DATABASE.insert(TABLE_ARCS, null, newArc);
+            }
         }
     }
 
@@ -158,6 +174,12 @@ public class Database extends SQLiteOpenHelper {
     public Cursor getArc(String Date){
         this.write();
         return  this.query("SELECT * FROM ARCS WHERE DATE='"+Date+"'");
+
+    }
+
+    public Cursor getArc2(String Date,String ARC){
+        this.write();
+        return  this.query("SELECT * FROM ARCS WHERE DATE='"+Date+"' AND ARC='"+ARC+"'");
 
     }
 

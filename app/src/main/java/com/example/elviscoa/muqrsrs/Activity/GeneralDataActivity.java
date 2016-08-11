@@ -1,5 +1,6 @@
 package com.example.elviscoa.muqrsrs.Activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -18,6 +19,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -29,6 +31,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.elviscoa.muqrsrs.Class.OCRService;
 import com.example.elviscoa.muqrsrs.Class.Six_X_Trilogy;
@@ -49,6 +52,13 @@ import java.util.ArrayList;
 
 public class GeneralDataActivity extends AppCompatActivity {
     //putExtra
+    // Storage Permissions
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1, SELECT_PDF = 2;
     private static final String D_ZERO ="D_ZERO";
     private static final String TOTAL_DOSE ="TOTAL_DOSE";
@@ -105,7 +115,8 @@ public class GeneralDataActivity extends AppCompatActivity {
         fabpdf.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View view) {
-                                    pdfIntent();
+                                       verifyStoragePermissions(GeneralDataActivity.this);
+                                       pdfIntent();
                                    }
         });
 
@@ -113,6 +124,19 @@ public class GeneralDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 selectImage();
+                /*try
+                { Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Plan Complementario de Compensar");
+                    String sAux = "\n“Soy afiliado al Plan Complementario de Compensar y acabo de instalar su nueva app, te la recomiendo. Descárgala en: \n\n";
+                    sAux = sAux + "http://bit.ly/1xjsicR”\n\n";
+                    i.setPackage("com.google.android.apps.plus");
+                    i.putExtra(Intent.EXTRA_TEXT, sAux);
+                    startActivity(Intent.createChooser(i, "choose one"));
+                }
+                catch(Exception e)
+                { //e.toString();
+                }*/
             }
         });
 
@@ -288,29 +312,37 @@ public class GeneralDataActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_PDF) {
                 //Toast.makeText(GeneralDataActivity.this, "Loading PDF data", Toast.LENGTH_SHORT).show();
-                final ProgressDialog dialog = ProgressDialog.show(GeneralDataActivity.this, "",
-                        "Loading PDF data. Please wait...", true);
-                dialog.show();
-                new Thread(new Runnable() {
+                /*final ProgressDialog dialog = ProgressDialog.show(GeneralDataActivity.this, "",
+                        "Loading PDF data. Please wait...", true);*/
+                //dialog.show();
+
+                String response=GenerarPDF.read(String.valueOf(data.getData().getPath()));
+                getPDFData(response);
+                /*new Thread(new Runnable() {
                     @Override
                     public void run()
                     {
                         // do the thing that takes a long time
+                        String response="";
                         try {
-                            Thread.sleep(5000);
+
+                            Log.i("Response", response);
+                                    Thread.sleep(7000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+                        final String finalResponse = response;
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                //Log.i("Response", GenerarPDF.read(String.valueOf(data.getData().getPath())));
-                                getPDFData(GenerarPDF.read(String.valueOf(data.getData().getPath())));
+                                //
+
+                                //Toast.makeText(GeneralDataActivity.this, "PDF DATA LOAD", Toast.LENGTH_LONG).show();
                                 dialog.dismiss();
                             }
                         });
                     }
-                }).start();
+                }).start();*/
             }
             else if (requestCode == SELECT_FILE){
                 onSelectFromGalleryResult(data);
@@ -469,7 +501,7 @@ public class GeneralDataActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         OCRService ocrService= new OCRService();
-        ocrService.callOCRAPI(GeneralDataActivity.this,destination);
+        ocrService.callOCRAPI(GeneralDataActivity.this, destination);
     }
 
     @SuppressWarnings("deprecation")
@@ -557,6 +589,19 @@ public class GeneralDataActivity extends AppCompatActivity {
             } else {
                 return null;
             }
+        }
+    }
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
         }
     }
 }
