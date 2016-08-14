@@ -55,8 +55,8 @@
             android:id="@+id/input_total_dose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
             android:inputType="number"
+            android:imeOptions="actionNext"
             android:hint="@string/total_dose" />
 
     </android.support.design.widget.TextInputLayout>
@@ -72,7 +72,7 @@
             android:id="@+id/input_number_fraction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
+            android:imeOptions="actionNext"
             android:inputType="numberDecimal"
             android:hint="@string/number_fraction" />
 
@@ -91,7 +91,7 @@
             android:id="@+id/input_treatment_per"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
+            android:imeOptions="actionNext"
             android:inputType="numberDecimal"
             android:hint="@string/treatment_percentage" />
 

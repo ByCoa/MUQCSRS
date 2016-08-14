@@ -106,7 +106,7 @@ public class GeneralDataActivity extends AppCompatActivity {
         weight_dose_maximum = (EditText) findViewById(R.id.input_weight_dose_maximum);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fabpdf = (FloatingActionButton) findViewById(R.id.fabpdf);
-        fabcamera = (FloatingActionButton) findViewById(R.id.fabcamera);
+        //fabcamera = (FloatingActionButton) findViewById(R.id.fabcamera);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_design_support_layout);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         //bitmap();
@@ -120,7 +120,7 @@ public class GeneralDataActivity extends AppCompatActivity {
                                    }
         });
 
-        fabcamera.setOnClickListener(new View.OnClickListener() {
+        /*fabcamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectImage();
@@ -136,9 +136,9 @@ public class GeneralDataActivity extends AppCompatActivity {
                 }
                 catch(Exception e)
                 { //e.toString();
-                }*/
+                }
             }
-        });
+        });*/
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +172,14 @@ public class GeneralDataActivity extends AppCompatActivity {
                     fillGereralData(dbHandler,String.valueOf(tsLong));
                     GeneralDataActivity.this.startActivity(i);
                 }
+                if (weight_dose_maximum.getText().toString().equals(""))
+                    Toast.makeText(GeneralDataActivity.this,"Weight at Dose maximum is empty", Toast.LENGTH_LONG).show();
+                else if (treatment_per.getText().toString().equals(""))
+                    Toast.makeText(GeneralDataActivity.this, "Percentage treatment is empty", Toast.LENGTH_LONG).show();
+                else if (number_fraction.getText().toString().equals(""))
+                    Toast.makeText(GeneralDataActivity.this, "Number of fraction is empty", Toast.LENGTH_LONG).show();
+                else if (total_dose.getText().toString().equals(""))
+                    Toast.makeText(GeneralDataActivity.this, "Total dose is empty", Toast.LENGTH_LONG).show();
             }
         });
 

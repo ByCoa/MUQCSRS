@@ -31,7 +31,9 @@ public class GenerarPDFFragment extends Fragment {
     private EditText plan_id;
     private EditText patient_id;
     private FloatingActionButton generarpdf;
-    private FloatingActionButton seerror;
+    private Button seerror;
+    private FloatingActionButton clear;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,57 +41,24 @@ public class GenerarPDFFragment extends Fragment {
         generarpdf = (FloatingActionButton) view.findViewById(R.id.fabcal);
         patient_id = (EditText) view.findViewById(R.id.input_patient_id);
         plan_id = (EditText) view.findViewById(R.id.input_plan_id);
-        seerror = (FloatingActionButton) view.findViewById(R.id.faberror);
+        seerror = (Button) view.findViewById(R.id.buttongenPDF);
+        clear = (FloatingActionButton) view.findViewById(R.id.faberror);
         return view;
     }
 
     public void onActivityCreated (Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        seerror.setOnClickListener(new View.OnClickListener() {
+        clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final ArcoActivity arcoActivity = (ArcoActivity) getActivity();
-                ArrayList<Six_X_Trilogy> arrayList = arcoActivity.getArcs();
-                ArrayList<Boolean> full = arcoActivity.getFull();
-                Boolean fullAll = true;
-                seerror.setEnabled(true);
-                for (int ij = 0; ij < full.size(); ij++) {
-                    Log.i("Full", String.valueOf(full.get(ij)));
-                    if (!full.get(ij)) {
-                        fullAll = false;
-
-                        int aux = ij + 1;
-                        Toast.makeText(getActivity(), "Empty fields in ARC: " + aux, Toast.LENGTH_LONG).show();
-                        seerror.setEnabled(false);
-                        break;
-                    }
-
-                }
-                if (fullAll == true) {
-                    Intent intent = new Intent(arcoActivity, Result.class);
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        if (arrayList.get(i) != null && !arrayList.get(i).getCone().equals("") && !arrayList.get(i).getAver_depth_cm().equals("") && !arrayList.get(i).getWeight_factor().equals("") && !arrayList.get(i).getMu_tps().equals("")) {
-                            Double a,b,error;
-                            a= arrayList.get(i).getMUQCSRS();
-                            b= arrayList.get(i).getMu_tps();
-                            error=new Util().roundThreeDecimals(((b - a) / a) * 100);
-                            String extraData=arrayList.get(i).getMu_tps()+","+(new Util().roundThreeDecimals(arrayList.get(i).getMUQCSRS()))+","+error;
-                            Log.i("Error", arrayList.get(i).getMu_tps()+","+(new Util().roundThreeDecimals(arrayList.get(i).getMUQCSRS()))+","+error);
-                            intent.putExtra("" + i, extraData);
-                        }
-                    }
-                    intent.putExtra("Size", arrayList.size());
-                    arcoActivity.startActivity(intent);
-                }
-            }
-        });
-
+                Intent intent = new Intent(arcoActivity, GeneralDataActivity.class);
+                arcoActivity.startActivity(intent);
+            }});
         generarpdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 final ArcoActivity arcoActivity = (ArcoActivity) getActivity();
-                Database database = new Database(getActivity());
                 ArrayList<Six_X_Trilogy> arrayList = arcoActivity.getArcs();
                 ArrayList<Boolean> full = arcoActivity.getFull();
                 Boolean fullAll = true;
@@ -99,9 +68,50 @@ public class GenerarPDFFragment extends Fragment {
                     if (!full.get(ij)) {
                         fullAll = false;
 
+                        int aux = ij + 1;
+                        Toast.makeText(getActivity(), "Empty fields in ARC: " + aux, Toast.LENGTH_LONG).show();
+                        generarpdf.setEnabled(false);
+                        break;
+                    }
+
+                }
+                if (fullAll == true) {
+                    Intent intent = new Intent(arcoActivity, Result.class);
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        if (arrayList.get(i) != null && !arrayList.get(i).getCone().equals("") && !arrayList.get(i).getAver_depth_cm().equals("") && !arrayList.get(i).getWeight_factor().equals("") && !arrayList.get(i).getMu_tps().equals("")) {
+                            Double a, b, error;
+                            a = arrayList.get(i).getMUQCSRS();
+                            b = arrayList.get(i).getMu_tps();
+                            error = new Util().roundThreeDecimals(((b - a) / a) * 100);
+                            String extraData = arrayList.get(i).getMu_tps() + "," + (new Util().roundThreeDecimals(arrayList.get(i).getMUQCSRS())) + "," + error;
+                            Log.i("Error", arrayList.get(i).getMu_tps() + "," + (new Util().roundThreeDecimals(arrayList.get(i).getMUQCSRS())) + "," + error);
+                            intent.putExtra("" + i, extraData);
+                        }
+                    }
+                    intent.putExtra("Size", arrayList.size());
+                    arcoActivity.startActivity(intent);
+                }
+            }
+        });
+
+        seerror.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final ArcoActivity arcoActivity = (ArcoActivity) getActivity();
+                Database database = new Database(getActivity());
+                ArrayList<Six_X_Trilogy> arrayList = arcoActivity.getArcs();
+                ArrayList<Boolean> full = arcoActivity.getFull();
+                Boolean fullAll = true;
+                seerror.setEnabled(true);
+                for (int ij = 0; ij < full.size(); ij++) {
+                    Log.i("Full", String.valueOf(full.get(ij)));
+                    if (!full.get(ij)) {
+                        fullAll = false;
+
                         int aux=ij+1;
                         Toast.makeText(getActivity(), "Empty fields in ARC: "+aux, Toast.LENGTH_LONG).show();
-                        generarpdf.setEnabled(false);
+                        seerror.setEnabled(false);
                         break;
                     }
                 }

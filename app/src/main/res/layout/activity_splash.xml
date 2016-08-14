@@ -6,11 +6,10 @@
     <VideoView
         android:id ="@+id/player_video"
         android:layout_width="fill_parent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
         android:layout_height="fill_parent"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="88dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
