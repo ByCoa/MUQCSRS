@@ -28,7 +28,17 @@ public class OCRService {
     private static final String ENDPOINT = "https://api.ocr.space/parse/image";
     private String Cone;
     private String WeightFactor;
+    private String avgDepth;
+    private String muTps;
     private Integer Arc;
+    private boolean[] chosen= new boolean[4];
+
+    public OCRService (){
+        setCone("");
+        setWeightFactor("");
+        setMuTps("");
+        setAvgDepth("");
+    }
 
     public void callOCRAPI (final Context context,File myURI){
         RequestParams params = new RequestParams();
@@ -50,41 +60,67 @@ public class OCRService {
                 Log.i("response", splinter[0]);
                 splinter = splinter[0].split("\\Wr\\Wn");
                 Log.i("response", String.valueOf(splinter.length));
-                setArc(0);
-                setWeightFactor("");
-                setCone("");
-                Arc =0;
-                for (int i=0; i<splinter.length;i++){
-                    if (splinter[i].startsWith("Campo")){
-                        Arc=Arc+1;
+
+
+                if (chosen[0]) {
+                    for (int j = 0; j < Arc; j++) {
+                        if (splinter[j]!=null) {
+                            Log.i("Cone", splinter[j]);
+                            String[] splinter2 = splinter[j].split(" ");
+                            splinter2[0]= splinter2[0].replace("B", "8");
+                            splinter2[0] =splinter2[0].replace("s","5");
+                            splinter2[0] =splinter2[0].replace("S","5");
+                            if (splinter2[0].startsWith("5"))
+                                Cone = Cone + "5,";
+                            else if (splinter2[0] != null && Integer.parseInt(splinter2[0].substring(0,2)) < 31)
+                                Cone = Cone + "" + Integer.parseInt(splinter[2].substring(0,2)) + ",";
+                        }else
+                            Cone = Cone + "5,";
                     }
                 }
 
-                for (int i=0; i<splinter.length;i++){
-                    if (splinter[i].startsWith("Factor")){
-                        for (int j=0;j<Arc;j++){
-                            Log.i("Factor", splinter[i + j + 1]);
-                            if (splinter[i+j+1].startsWith("\\d"))
-                                WeightFactor = WeightFactor+","+splinter[i+j+1];
+                if (chosen[1]) {
+                    String splinter2[];
+                    for (int j = 0; j < Arc; j++) {
+                        if(splinter[j]!=null) {
+                            Log.i("Depth", splinter[j]);
+                            splinter2 = splinter[j].split("\\.");
+                            splinter2[0]= splinter2[0].replace("B", "8");
+                            splinter2[0] =splinter2[0].replace("s","5");
+                            splinter2[0] =splinter2[0].replace("S","5");
+                            if (Double.parseDouble(splinter2[0]) >= 20.0)
+                                avgDepth = avgDepth + "" + Double.parseDouble(splinter2[0]) + ",";
                             else
-                                WeightFactor = WeightFactor+",1.000";
-                        }
-                        break;
+                                avgDepth = avgDepth + "20.0,";
+                        }else
+                            avgDepth = avgDepth + "20.0,";
                     }
                 }
 
-                for (int i=0; i<splinter.length;i++){
-                    if (splinter[i].startsWith("Cone")){
-                        for (int j=0;j<Arc;j++){
-                            Log.i("Cone", splinter[i + j + 1]);
-                            if (splinter[i+j+1].startsWith("\\d"))
-                                Cone = Cone+","+splinter[i+j+1];
-                            else
-                                Cone = Cone+",5";
-                        }
-                        break;
+                if (chosen[2]) {
+                    for (int j = 0; j < Arc; j++) {
+                        Log.i("Weight", splinter[j]);
+                        splinter[j] =splinter[j].replace("B","8");
+                        splinter[j] =splinter[j].replace("s","5");
+                        splinter[j] =splinter[j].replace("S","5");
+                        if (splinter[j]!=null)
+                            WeightFactor = WeightFactor + "" + splinter[j].substring(0,5) +",";
+                        else
+                            WeightFactor = WeightFactor + "1.000,";
                     }
+                }
 
+                if (chosen[3]) {
+                    for (int j = 0; j < Arc; j++) {
+                        Log.i("MuTps", splinter[j]);
+                        splinter[j] =splinter[j].replace("B","8");
+                        splinter[j] =splinter[j].replace("s","5");
+                        splinter[j] =splinter[j].replace("S","5");
+                        if (splinter[j]!=null)
+                            muTps = muTps+ "" + splinter[j].substring(0,3) + ",";
+                        else
+                            muTps = muTps+ "1,";
+                    }
                 }
 
 
@@ -105,6 +141,13 @@ public class OCRService {
     public void setCone(String i){
         this.Cone=i;
     }
+    public void setAvgDepth (String i){
+        this.avgDepth=i;
+    }
+    public void setMuTps(String i){
+        this.muTps=i;
+    }
+
     public void setWeightFactor(String i){
         this.WeightFactor=i;
     }
@@ -116,7 +159,23 @@ public class OCRService {
         return WeightFactor;
     }
 
+    public String getMuTps() {
+        return muTps;
+    }
+
+    public String getAvgDepth() {
+        return avgDepth;
+    }
+
     public String getCone() {
         return Cone;
+    }
+
+    public boolean[] getChosen() {
+        return chosen;
+    }
+
+    public void setChosen(boolean[] chosen) {
+        this.chosen = chosen;
     }
 }

@@ -29,20 +29,29 @@
             android:editable="false"/>
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_d_zero"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
+        android:id="@+id/input_layout_d_zero"
         android:layout_below="@id/input_layout_energia">
-        <EditText
-            android:id="@+id/input_d_zero"
+        <ImageView
+            android:id="@+id/info_doz"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@drawable/ic_info_outline_black_18dp"/>
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/d_zero"
+            android:layout_toRightOf="@+id/info_doz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1"
-            android:editable="false"
-            android:hint="@string/d_zero"/>
-    </android.support.design.widget.TextInputLayout>
+            app:ms_enableFloatingLabel="true"
+            app:ms_floatingLabelText="@string/d_zeron"
+            app:ms_hint="@string/d_zeron"
+            app:ms_multiline="false"/>
+    </RelativeLayout>
+
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_total_dose"
@@ -96,13 +105,24 @@
             android:hint="@string/treatment_percentage" />
 
     </android.support.design.widget.TextInputLayout>
-
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/input_layout_treatment_per">
+        <ImageView
+            android:id="@+id/info_do"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@drawable/ic_info_outline_black_18dp"/>
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_weight_dose_maximum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
-        android:layout_below="@id/input_layout_treatment_per">
+        android:layout_toRightOf="@+id/info_do">
 
         <EditText
             android:id="@+id/input_weight_dose_maximum"
@@ -113,12 +133,15 @@
             android:hint="@string/weight_dose_maximum" />
 
     </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
+
+
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cant_arco"
         android:layout_marginTop="15dp"
-        android:layout_below="@id/input_layout_weight_dose_maximum"
+        android:layout_below="@+id/relative"
         android:entries="@array/cant_arc"
         android:spinnerMode="dialog" />
 

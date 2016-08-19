@@ -1,4 +1,8 @@
 <resources>
+    <string-array name="mu_arrays">
+        <item>SAD</item>
+        <item>SSD</item>
+    </string-array>
     <string name="app_name">MU QC SRS</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="total_dose">Total dose (cGY)</string>
@@ -26,6 +30,7 @@
     <string name="ocr_api_result">OCR API RESULT</string>
     <string name="generar_reporte">Create Report</string>
     <string name="d_zero">D\'o</string>
+    <string name="d_zeron">D\'o (Calibration setup for 1 cGy/MU at dmax)</string>
     <string name="energia">Energy (MV)</string>
     <string name="six_x">6X</string>
     <string name="title_dialog">MU QC SRS - PDF</string>

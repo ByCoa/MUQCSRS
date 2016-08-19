@@ -29,7 +29,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ import com.example.elviscoa.muqrsrs.Database.Database;
 import com.example.elviscoa.muqrsrs.Library.GenerarPDF;
 import com.example.elviscoa.muqrsrs.Library.CompressImage;
 import com.example.elviscoa.muqrsrs.R;
+import com.itextpdf.text.Image;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -50,7 +54,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GeneralDataActivity extends AppCompatActivity {
+import fr.ganfra.materialspinner.MaterialSpinner;
+
+public class GeneralDataActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     //putExtra
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -68,6 +74,7 @@ public class GeneralDataActivity extends AppCompatActivity {
     private static final String WEIGHT_DOSE_MAXIMUM ="WEIGHT_DOSE_MAXIMUM";
     private static final String ARCS ="ARCS";
     private static final String PDFARCOS="PDFARCOS";
+    private boolean[] chosen= new boolean[4];
     private String drawerTitle;
     private Long tsLong;
     //Array
@@ -85,12 +92,17 @@ public class GeneralDataActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private FloatingActionButton fabpdf;
     private FloatingActionButton fabcamera;
+    private ImageView imageView,imageView2;
     private String userChoosenTask;
+    private MaterialSpinner dzero;
     //Database
     private Database dbHandler = new Database(this);
     //
     private Integer OCR=0;
-
+    private String OCRWF="";
+    private String OCRCONE="";
+    private String OCRMUTPS="";
+    private String OCRAD="";
 
 
     @Override
@@ -98,7 +110,7 @@ public class GeneralDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.general_data_layout);
         setToolbar();
-        d_zero          = (EditText) findViewById(R.id.input_d_zero);
+
         cant_arcos      = (Spinner) findViewById(R.id.cant_arco);
         total_dose = (EditText) findViewById(R.id.input_total_dose);
         number_fraction =(EditText) findViewById(R.id.input_number_fraction);
@@ -106,9 +118,58 @@ public class GeneralDataActivity extends AppCompatActivity {
         weight_dose_maximum = (EditText) findViewById(R.id.input_weight_dose_maximum);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fabpdf = (FloatingActionButton) findViewById(R.id.fabpdf);
-        //fabcamera = (FloatingActionButton) findViewById(R.id.fabcamera);
+        dzero = (MaterialSpinner) findViewById (R.id.d_zero);
+        String mEnergyArray[] = getResources().getStringArray(R.array.mu_arrays);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, mEnergyArray);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dzero.setAdapter(arrayAdapter);
+        dzero.setOnItemSelectedListener(this);
+        dzero.setSelection(1);
+        fabcamera = (FloatingActionButton) findViewById(R.id.fabcamera);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_design_support_layout);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        imageView = (ImageView) findViewById(R.id.info_do);
+        imageView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                new android.support.v7.app.AlertDialog.Builder(GeneralDataActivity.this)
+                        .setTitle("Weight dose at maximum information")
+                        .setMessage("Is the relative weighting at the location of the hotspot. You can find it in the Dosimetry Report or in your Eclipse Cone Planning  System. For more detail, please check your operation Manual")
+                        .setPositiveButton("OK", new DialogInterface
+                                .OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
+
+            }
+        });
+
+        imageView2 = (ImageView) findViewById(R.id.info_doz);
+        imageView2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                new android.support.v7.app.AlertDialog.Builder(GeneralDataActivity.this)
+                        .setTitle("D'o Information")
+                        .setMessage("For any doubt about your calibration condition, please contact The Medical Physicist of your institution.")
+                        .setPositiveButton("OK", new DialogInterface
+                                .OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
+
+            }
+        });
+        for (int i=0;i<4;i++)
+            chosen[i]=false;
         //bitmap();
         //read(this);
         //Log.i("Response", String.valueOf(GenerarPDF.read("srs")));
@@ -120,34 +181,32 @@ public class GeneralDataActivity extends AppCompatActivity {
                                    }
         });
 
-        /*fabcamera.setOnClickListener(new View.OnClickListener() {
+        fabcamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Toast.makeText(GeneralDataActivity.this, "Recuerde seleccionar la cantidad de arcos", Toast.LENGTH_SHORT).show();
                 selectImage();
-                /*try
-                { Intent i = new Intent(Intent.ACTION_SEND);
-                    i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_SUBJECT, "Plan Complementario de Compensar");
-                    String sAux = "\n“Soy afiliado al Plan Complementario de Compensar y acabo de instalar su nueva app, te la recomiendo. Descárgala en: \n\n";
-                    sAux = sAux + "http://bit.ly/1xjsicR”\n\n";
-                    i.setPackage("com.google.android.apps.plus");
-                    i.putExtra(Intent.EXTRA_TEXT, sAux);
-                    startActivity(Intent.createChooser(i, "choose one"));
-                }
-                catch(Exception e)
-                { //e.toString();
-                }
             }
-        });*/
+        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!d_zero.getText().toString().equals("") && !cant_arcos.getSelectedItem().toString().equals("")
+                if (!cant_arcos.getSelectedItem().toString().equals("")
                         && !total_dose.getText().toString().equals("") && !number_fraction.getText().toString().equals("") && !treatment_per.getText().toString().equals("")
                         && !weight_dose_maximum.getText().toString().equals("")) {
                     Intent i = new Intent(GeneralDataActivity.this, ArcoActivity.class);
-                    i.putExtra(D_ZERO, d_zero.getText().toString());
+                    String dzeroo;
+                    if (dzero.getSelectedItem().toString().equals("SSD")){
+                        i.putExtra(D_ZERO, "1.03");
+                        dzeroo="1.03";
+                    }
+                    else{
+                        i.putExtra(D_ZERO, "1.00");
+                        dzeroo="1.00";
+                    }
+
                     i.putExtra(TOTAL_DOSE, Double.parseDouble(total_dose.getText().toString()));
                     i.putExtra(NUMBER_FRACTION, Integer.parseInt(number_fraction.getText().toString()));
                     Double dose_fraction = Double.parseDouble(total_dose.getText().toString())/Double.parseDouble(number_fraction.getText().toString());
@@ -155,18 +214,21 @@ public class GeneralDataActivity extends AppCompatActivity {
                     i.putExtra(TREATMENT_PER, Double.parseDouble(treatment_per.getText().toString()));
                     i.putExtra(WEIGHT_DOSE_MAXIMUM, Double.parseDouble(weight_dose_maximum.getText().toString()));
                     i.putExtra(ARCS, cant_arcos.getSelectedItem().toString());
+                    if (OCR==4)
+                        putextraOCRDATA();
                     i.putExtra(PDFARCOS,extrasString.size());
 
                     generalDate();
                     i.putExtra("DATE", String.valueOf(tsLong));
                     for (int j=0; j<extrasString.size();j++){
+                        Log.i("PDF",extrasString.get(j));
                         i.putExtra(String.valueOf(j), extrasString.get(j));
                     }
                     Six_X_Trilogy six_x_trilogyAux= new Six_X_Trilogy(Double.parseDouble(total_dose.getText().toString()), Integer.parseInt(number_fraction.getText().toString())
                             ,Double.parseDouble(treatment_per.getText().toString()),
                             Double.parseDouble(weight_dose_maximum.getText().toString()));
                     setGeneralData("           ", "           ",
-                            "6X", d_zero.getText().toString(), total_dose.getText().toString(), number_fraction.getText().toString(), String.valueOf(dose_fraction),
+                            "6X", dzeroo, total_dose.getText().toString(), number_fraction.getText().toString(), String.valueOf(dose_fraction),
                             treatment_per.getText().toString(), weight_dose_maximum.getText().toString(), String.valueOf(six_x_trilogyAux.getRepeatFactor()));
                     Log.i("Repeat factor", "" + six_x_trilogyAux.getRepeatFactor());
                     fillGereralData(dbHandler,String.valueOf(tsLong));
@@ -290,20 +352,7 @@ public class GeneralDataActivity extends AppCompatActivity {
         return tsLong.toString();
     }
 
-    private void fillRecentProductList (Database dbHandler,String date){
-        Cursor c = dbHandler.getGeneralData(date);
-        if (c.moveToFirst()){
-            do{
-                Log.d("Database", c.getString(0) + " " + c.getString(1)
-                        + " " + c.getString(2) + " " + c.getString(3)
-                        + " " + c.getString(4) + " " + c.getString(5)
-                        + " " + c.getString(6) + " " + c.getString(7)
-                        + " " + c.getString(8) + " " + c.getString(9)
-                        + " " + c.getString(10));
-            }while (c.moveToNext());
-        }
-        dbHandler.close();
-    }
+
 
     private void pdfIntent(){
         Intent intent = new Intent();
@@ -319,7 +368,7 @@ public class GeneralDataActivity extends AppCompatActivity {
         Log.d("requestCode", "" + requestCode);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_PDF) {
-                //Toast.makeText(GeneralDataActivity.this, "Loading PDF data", Toast.LENGTH_SHORT).show();
+
                 /*final ProgressDialog dialog = ProgressDialog.show(GeneralDataActivity.this, "",
                         "Loading PDF data. Please wait...", true);*/
                 //dialog.show();
@@ -449,6 +498,19 @@ public class GeneralDataActivity extends AppCompatActivity {
         }
     }
 
+    public void putextraOCRDATA (){
+        String []a,b,c,d;
+        a=OCRCONE.split(",");
+        b=OCRAD.split(",");
+        c=OCRWF.split(",");
+        d=OCRMUTPS.split(",");
+        for (int i=0;i<b.length-1;i++) {
+            extrasString.add("ARC " + (i + 1) + "," + a[i] + "," + c[i] + "," + d[i] + "," + b[i]);
+            Log.i("Extra","ARC " + (i + 1) + "," + a[i] + "," + c[i] + "," + d[i] + "," + b[i]);
+        }
+
+
+    }
     private void selectImage() {
         final CharSequence[] items = { "Take Photo", "Choose from Gallery",
                 "Cancel" };
@@ -468,8 +530,53 @@ public class GeneralDataActivity extends AppCompatActivity {
                 } else if (items[item].equals("Choose from Gallery")) {
                     userChoosenTask = "Choose from Gallery";
                     if (result)
-                        galleryIntent();
+                        selectPart();
 
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void selectPart() {
+        final CharSequence[] items = { "CONE", "AVG. DEPTH(MM)","WEIGHT FACTOR","MU TPS",
+                "Cancel" };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(GeneralDataActivity.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result = Util.checkPermission(GeneralDataActivity.this);
+
+                if (items[item].equals("CONE")) {
+                    userChoosenTask = "Choose from Gallery";
+                    if (result) {
+                        chosen[0] = true;
+                        galleryIntent();
+                    }
+
+                } else if (items[item].equals("AVG. DEPTH(MM)")) {
+                    userChoosenTask = "Choose from Gallery";
+                    if (result) {
+                        chosen[1] = true;
+                        galleryIntent();
+                    }
+                }
+                if (items[item].equals("WEIGHT FACTOR")) {
+                    userChoosenTask = "Choose from Gallery";
+                    if (result) {
+                        chosen[2] = true;
+                        galleryIntent();
+                    }
+                } else if (items[item].equals("MU TPS")) {
+                    userChoosenTask = "Choose from Gallery";
+                    if (result) {
+                        chosen[3] = true;
+                        galleryIntent();
+                    }
                 } else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
@@ -532,6 +639,9 @@ public class GeneralDataActivity extends AppCompatActivity {
     private void onSelectFromGalleryResult(Uri data) {
         Log.d("data2", "" + data);
         final OCRService ocrService = new OCRService();
+        String Arc[] = cant_arcos.getSelectedItem().toString().split(" ");
+        ocrService.setArc(Integer.valueOf(Arc[0]));
+        ocrService.setChosen(chosen);
         ocrService.callOCRAPI(GeneralDataActivity.this, new File(data.getPath()));
         final ProgressDialog dialog = ProgressDialog.show(GeneralDataActivity.this, "",
                 "Loading OCR data. Please wait...", true);
@@ -542,24 +652,34 @@ public class GeneralDataActivity extends AppCompatActivity {
             {
                 // do the thing that takes a long time
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(8000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //Log.i("Response", GenerarPDF.read(String.valueOf(data.getData().getPath())));
-                        //getPDFData(GenerarPDF.read(String.valueOf(data.getData().getPath())));
-                        cant_arcos.setSelection(ocrService.getArc() - 1);
-                        String conoOCR[]= ocrService.getCone().split(",");
-                        String weightOCR[]= ocrService.getWeightFactor().split(",");
                         dialog.dismiss();
-                        OCR = 3;
-                        for (int i=0;i<ocrService.getArc();i++) {
-                            extrasString.add("ARC " + (i + 1) + "," + conoOCR[i + 1] + "," + weightOCR[i + 1] + ",2.0" + ",20.0");
-                            Log.i("Response", extrasString.get(i));
+                        OCR = OCR+1;
+
+                        if (chosen[0]){
+                            Log.i("OCR",ocrService.getCone());
+                            OCRCONE=ocrService.getCone();
+                            chosen[0]=false;
+                        }else if (chosen[1]){
+                            Log.i("OCR",ocrService.getAvgDepth());
+                            OCRAD=ocrService.getAvgDepth();
+                            chosen[1]=false;
+                        }else if (chosen[2]){
+                            Log.i("OCR",ocrService.getWeightFactor());
+                            OCRWF=ocrService.getWeightFactor();
+                            chosen[2]=false;
+                        }else if (chosen[3]){
+                            Log.i("OCR",ocrService.getMuTps());
+                            OCRMUTPS=ocrService.getMuTps();
+                            chosen[3]=false;
                         }
+
                     }
                 });
             }
@@ -581,9 +701,9 @@ public class GeneralDataActivity extends AppCompatActivity {
         String filePath = imageFile.getAbsolutePath();
         Cursor cursor = context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                new String[] { MediaStore.Images.Media._ID },
+                new String[]{MediaStore.Images.Media._ID},
                 MediaStore.Images.Media.DATA + "=? ",
-                new String[] { filePath }, null);
+                new String[]{filePath }, null);
         if (cursor != null && cursor.moveToFirst()) {
             int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
             cursor.close();
@@ -612,4 +732,24 @@ public class GeneralDataActivity extends AppCompatActivity {
             );
         }
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (parent.getId() == R.id.d_zero) {
+            String d= (String) parent.getItemAtPosition(position);
+            Log.i("dzero", d);
+        }
+        else if (parent.getId() == R.id.info_do){
+
+        }
+        else if (parent.getId() == R.id.info_doz){
+
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
 }

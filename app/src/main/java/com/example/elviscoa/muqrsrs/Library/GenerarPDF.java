@@ -253,7 +253,7 @@ public class GenerarPDF {
             Double a,b;
             a= Double.valueOf(sixXTrilogyArrayList.get(i).getMu_qc_srs());
             b= Double.valueOf(sixXTrilogyArrayList.get(i).getMu_tps());
-            table.addCell(String.valueOf(new Util().roundThreeDecimals(((b - a) / a) * 100)));
+            table.addCell(String.valueOf(Math.abs(new Util().roundThreeDecimals(((b - a) / a) * 100))));
         }
         paragraph.add(table);
 
