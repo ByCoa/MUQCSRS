@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         mVideoView = (VideoView) findViewById(R.id.player_video);
-        String uri = "android.resource://" + getPackageName() + "/" + R.raw.videosrs;
+        String uri = "android.resource://" + getPackageName() + "/" + R.raw.video;
         mVideoView.setVideoURI(Uri.parse(uri));
 
         mVideoView.requestFocus();

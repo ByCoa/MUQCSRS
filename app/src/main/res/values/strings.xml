@@ -5,7 +5,7 @@
     </string-array>
     <string name="app_name">MU QC SRS</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="total_dose">Total dose (cGY)</string>
+    <string name="total_dose">Total dose (cGy)</string>
     <string name="number_fraction">Number of fraction</string>
     <string name="weight_dose_maximum">Weight at dose maximum</string>
     <string name="dose_fraction">Dose/Fraction</string>

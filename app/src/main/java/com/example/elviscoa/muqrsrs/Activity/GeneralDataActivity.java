@@ -176,17 +176,40 @@ public class GeneralDataActivity extends AppCompatActivity implements AdapterVie
         fabpdf.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View view) {
-                                       verifyStoragePermissions(GeneralDataActivity.this);
-                                       pdfIntent();
+               new android.support.v7.app.AlertDialog.Builder(GeneralDataActivity.this)
+                       .setTitle("Information")
+                       .setMessage("This option just work with the \"Plan Parameter Report\" from your Eclipse Cone Planning.")
+                       .setPositiveButton("OK", new DialogInterface
+                               .OnClickListener() {
+                           public void onClick(DialogInterface dialog, int which) {
+                               // continue with delete
+                               verifyStoragePermissions(GeneralDataActivity.this);
+                               pdfIntent();
+                           }
+                       })
+                       .setIcon(android.R.drawable.ic_dialog_info)
+                       .show();
+
                                    }
         });
 
         fabcamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new android.support.v7.app.AlertDialog.Builder(GeneralDataActivity.this)
+                        .setTitle("Information")
+                        .setMessage("This option just work with the \"Plan Parameter Report\" from your Eclipse Cone Planning.")
+                        .setPositiveButton("OK", new DialogInterface
+                                .OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                Toast.makeText(GeneralDataActivity.this, "Recuerde seleccionar la cantidad de arcos", Toast.LENGTH_SHORT).show();
+                                selectImage();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
 
-                Toast.makeText(GeneralDataActivity.this, "Recuerde seleccionar la cantidad de arcos", Toast.LENGTH_SHORT).show();
-                selectImage();
             }
         });
 
@@ -374,7 +397,8 @@ public class GeneralDataActivity extends AppCompatActivity implements AdapterVie
                 //dialog.show();
 
                 String response=GenerarPDF.read(String.valueOf(data.getData().getPath()));
-                getPDFData(response);
+                Log.d("Response", response);
+                getPDFData2(response);
                 /*new Thread(new Runnable() {
                     @Override
                     public void run()
@@ -422,6 +446,33 @@ public class GeneralDataActivity extends AppCompatActivity implements AdapterVie
                 }
             }
         }
+    }
+
+    private void getPDFData2 (String data){
+        String[] splinter= data.split("\n");
+        Integer arcscount=1;
+        for (int i=0;i<splinter.length;i++){
+            if (splinter[i].contains("Campo "+arcscount)){
+                String X[]=splinter[i+4].split(" ");
+                Log.i("PDF 2", X[0] + " " + X[3]);
+                if (splinter[i+14].contains("MU")){
+                    String W=splinter[i+13];
+                    String MU[]=splinter[i+14].split(" ");
+                    Log.i("PDF 2", "MU: "+MU[0] + " W:" + W);
+                } else if(splinter[i+15].contains("MU")){
+                    String W=splinter[i+14];
+                    String MU[]=splinter[i+15].split(" ");
+                    Log.i("PDF 2", "MU: "+MU[0] + " W:" + W);
+                } else if(splinter[i+16].contains("MU")){
+                    String W=splinter[i+15];
+                    String MU[]=splinter[i+16].split(" ");
+                    Log.i("PDF 2", "MU: "+MU[0] + " W:" + W);
+                }
+
+                arcscount++;
+            }
+        }
+
     }
 
     private void getPDFData (String data){

@@ -64,12 +64,15 @@ public class OCRService {
 
                 if (chosen[0]) {
                     for (int j = 0; j < Arc; j++) {
-                        if (splinter[j]!=null) {
+                        if (splinter.length>j && splinter[j]!=null) {
                             Log.i("Cone", splinter[j]);
                             String[] splinter2 = splinter[j].split(" ");
                             splinter2[0]= splinter2[0].replace("B", "8");
+                            splinter2[0]= splinter2[0].replace(" ", "");
                             splinter2[0] =splinter2[0].replace("s","5");
                             splinter2[0] =splinter2[0].replace("S","5");
+                            splinter2[0] =splinter2[0].replace("s ","5");
+                            splinter2[0] =splinter2[0].replace("S ","5");
                             if (splinter2[0].startsWith("5"))
                                 Cone = Cone + "5,";
                             else if (splinter2[0] != null && Integer.parseInt(splinter2[0].substring(0,2)) < 31)
@@ -82,7 +85,7 @@ public class OCRService {
                 if (chosen[1]) {
                     String splinter2[];
                     for (int j = 0; j < Arc; j++) {
-                        if(splinter[j]!=null) {
+                        if(splinter.length>j && splinter[j]!=null) {
                             Log.i("Depth", splinter[j]);
                             splinter2 = splinter[j].split("\\.");
                             splinter2[0]= splinter2[0].replace("B", "8");
@@ -99,12 +102,13 @@ public class OCRService {
 
                 if (chosen[2]) {
                     for (int j = 0; j < Arc; j++) {
-                        Log.i("Weight", splinter[j]);
-                        splinter[j] =splinter[j].replace("B","8");
-                        splinter[j] =splinter[j].replace("s","5");
-                        splinter[j] =splinter[j].replace("S","5");
-                        if (splinter[j]!=null)
-                            WeightFactor = WeightFactor + "" + splinter[j].substring(0,5) +",";
+                        if(splinter.length>j && splinter[j]!=null) {
+                            Log.i("Weight", splinter[j]);
+                            splinter[j] = splinter[j].replace("B", "8");
+                            splinter[j] = splinter[j].replace("s", "5");
+                            splinter[j] = splinter[j].replace("S", "5");
+                            WeightFactor = WeightFactor + "" + splinter[j].substring(0, 5) + ",";
+                        }
                         else
                             WeightFactor = WeightFactor + "1.000,";
                     }
